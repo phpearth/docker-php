@@ -2,6 +2,9 @@ FROM debian:jessie-slim
 
 MAINTAINER Peter Kokot
 
+ENV PHP_VER 7.1.0
+ENV LS_VER 1.4.24
+
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
@@ -13,7 +16,6 @@ ENV FETCH_DEPS \
 # Persistent runtime dependencies
 ENV PHP_DEPS \
         libedit2 \
-        ca-certificates \
         zip \
         unzip \
         git \
@@ -25,10 +27,11 @@ ENV PHP_DEPS \
         libjpeg62-turbo \
         libfreetype6 \
         libxml2 \
-        libxml2-dev
+        libxml2-dev \
+        libgeoip-dev
 
 # PHP build dependencies which get removed
-ENV PHP_BUILD_DEPS \
+ENV BUILD_DEPS \
         build-essential \
         autoconf \
         automake \
@@ -54,28 +57,20 @@ ENV PHP_BUILD_DEPS \
         zlib1g-dev \
         libpng-dev
 
-RUN apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-install-recommends \
-    && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-    && echo 'deb http://packages.dotdeb.org jessie all' | tee --append /etc/apt/sources.list \
-    && echo 'deb-src http://packages.dotdeb.org jessie all' | tee --append /etc/apt/sources.list \
-    && echo 'deb http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
-    && echo 'deb-src http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
-    && wget https://www.dotdeb.org/dotdeb.gpg \
-    && apt-key add dotdeb.gpg \
-    && apt-get update \
+RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-install-recommends \
     && apt-get -y install openssl libssl-dev -t jessie-backports --no-install-recommends \
-    && apt-get -y install nginx --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
-    && apt-get install -y $PHP_DEPS $PHP_BUILD_DEPS --no-install-recommends \
+    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && curl -o php-7.1.0.tar.xz -OL http://fr2.php.net/get/php-7.1.0.tar.xz/from/this/mirror \
+    && curl -o php-$PHP_VER.tar.xz -OL http://fr2.php.net/get/php-$PHP_VER.tar.xz/from/this/mirror \
     && export CFLAGS="$PHP_CFLAGS" \
                   CPPFLAGS="$PHP_CPPFLAGS" \
                   LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php-7.1.0.tar.xz \
-    && rm php-7.1.0.tar.xz \
-    && cd php-7.1.0 \
+    && tar -Jxf php-$PHP_VER.tar.xz \
+    && rm php-$PHP_VER.tar.xz \
+    && cd php-$PHP_VER \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
@@ -114,8 +109,6 @@ RUN apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-i
         --with-png-dir=/usr \
         --enable-gd-native-ttf \
         --with-openssl \
-        --with-fpm-user=www-data \
-        --with-fpm-group=www-data \
         --with-libdir=/lib/x86_64-linux-gnu \
         --enable-ftp \
         --with-kerberos \
@@ -123,23 +116,30 @@ RUN apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-i
         --with-xsl \
         --enable-opcache \
         --enable-intl \
-        --enable-fpm \
+        --with-litespeed \
     && make -j "$(nproc)" \
     && make install \
     && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     && make clean \
-    && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
-    && mkdir /run/php \
-    && echo "daemon off;" >> /etc/nginx/nginx.conf \
+    # OpenLiteSpeed
+    && cd /opt \
+    && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
+    && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
+    && cd openlitespeed-$LS_VER \
+    && ./configure \
+        --prefix=/usr/local/lsws \
+        --with-openssl=/usr \
+        --enable-http2 \
+    && make && make install \
+    && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Composer
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    # Remove dependencies
-    && apt-get purge -y --auto-remove $PHP_BUILD_DEPS $FETCH_DEPS \
+    # Remove build dependencies
+    && apt-get purge -y --auto-remove $BUILD_DEPS $FETCH_DEPS \
     && apt-get -y autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-7.1.0
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-$PHP_VER /opt/openlitespeed-$LS_VER
 
 COPY etc /etc
 COPY usr /usr
