@@ -2,6 +2,8 @@ FROM debian:jessie-slim
 
 MAINTAINER Peter Kokot
 
+ENV PHP_VER 7.1.0
+
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
@@ -28,7 +30,7 @@ ENV PHP_DEPS \
         libxml2-dev
 
 # PHP build dependencies which get removed
-ENV PHP_BUILD_DEPS \
+ENV BUILD_DEPS \
         build-essential \
         autoconf \
         automake \
@@ -67,15 +69,15 @@ RUN apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-i
     && apt-get -y install nginx --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
-    && apt-get install -y $PHP_DEPS $PHP_BUILD_DEPS --no-install-recommends \
+    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && curl -o php-7.1.0.tar.xz -OL http://fr2.php.net/get/php-7.1.0.tar.xz/from/this/mirror \
+    && curl -o php-$PHP_VER.tar.xz -OL http://fr2.php.net/get/php-$PHP_VER.tar.xz/from/this/mirror \
     && export CFLAGS="$PHP_CFLAGS" \
                   CPPFLAGS="$PHP_CPPFLAGS" \
                   LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php-7.1.0.tar.xz \
-    && rm php-7.1.0.tar.xz \
-    && cd php-7.1.0 \
+    && tar -Jxf php-$PHP_VER.tar.xz \
+    && rm php-$PHP_VER.tar.xz \
+    && cd php-$PHP_VER \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
@@ -136,10 +138,10 @@ RUN apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-i
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     # Remove dependencies
-    && apt-get purge -y --auto-remove $PHP_BUILD_DEPS $FETCH_DEPS \
+    && apt-get purge -y --auto-remove $BUILD_DEPS $FETCH_DEPS \
     && apt-get -y autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-7.1.0
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-$PHP_VER
 
 COPY etc /etc
 COPY usr /usr

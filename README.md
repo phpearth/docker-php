@@ -6,9 +6,10 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 
 ## Features
 
-* Debian base image
+* Debian Jessie slim base image
 * Latest PHP 7.1
 * Nginx
+* OpenLiteSpeed
 * Composer
 
 ## Installation
@@ -19,5 +20,4 @@ docker pull phpearth/php
 
 ## License and Contributing
 
-[Contributions](CONTRIBUTNIG.md) are most welcome. This repository is released
-under the [MIT license](LICENSE).
+[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md) are most welcome. This repository is released under the [MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).

@@ -131,6 +131,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-openssl=/usr \
         --enable-http2 \
     && make && make install \
+    && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Composer
