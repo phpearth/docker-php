@@ -2,15 +2,12 @@ FROM debian:jessie-slim
 
 MAINTAINER Peter Kokot
 
-ENV PHP_VER 7.1.0
+ENV PHP_VERSION 7.1.0
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
-
-ENV FETCH_DEPS \
-        curl
 
 # Persistent runtime dependencies
 ENV PHP_DEPS \
@@ -52,7 +49,7 @@ ENV BUILD_DEPS \
         libxslt1-dev \
         libxml2-dev
 
-RUN apt-get update && apt-get -y install $FETCH_DEPS ca-certificates --no-install-recommends \
+RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recommends \
     && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
     && echo 'deb http://packages.dotdeb.org jessie all' | tee --append /etc/apt/sources.list \
     && echo 'deb-src http://packages.dotdeb.org jessie all' | tee --append /etc/apt/sources.list \
@@ -66,13 +63,13 @@ RUN apt-get update && apt-get -y install $FETCH_DEPS ca-certificates --no-instal
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && curl -o php-$PHP_VER.tar.xz -OL http://fr2.php.net/get/php-$PHP_VER.tar.xz/from/this/mirror \
+    && curl -o php-$PHP_VERSION.tar.xz -OL http://fr2.php.net/get/php-$PHP_VERSION.tar.xz/from/this/mirror \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php-$PHP_VER.tar.xz \
-    && rm php-$PHP_VER.tar.xz \
-    && cd php-$PHP_VER \
+    && tar -Jxf php-$PHP_VERSION.tar.xz \
+    && rm php-$PHP_VERSION.tar.xz \
+    && cd php-$PHP_VERSION \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
@@ -128,11 +125,10 @@ RUN apt-get update && apt-get -y install $FETCH_DEPS ca-certificates --no-instal
     && mkdir /run/php \
     && echo "daemon off;" >> /etc/nginx/nginx.conf \
     # Remove dependencies
-    && apt-get purge -y --auto-remove $BUILD_DEPS ca-certificates \
+    && apt-get purge -y --auto-remove $BUILD_DEPS \
     && apt-get -y autoremove \
-    && apt-get purge -y $FETCH_DEPS \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-$PHP_VER \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-$PHP_VERSION \
     # Composer
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && ln -sf /dev/stdout /var/log/nginx/access.log \

@@ -60,7 +60,10 @@ ENV BUILD_DEPS \
         libxml2-dev \
         libjpeg-turbo-dev
 
-RUN apk add --no-cache ca-certificates openssl \
+RUN set -x \
+	  && addgroup -g 82 -S www-data \
+	  && adduser -u 82 -D -S -G www-data www-data \
+    && apk add --no-cache ca-certificates openssl \
     && apk add --no-cache --virtual .fetch-deps $FETCH_DEPS \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
@@ -126,7 +129,7 @@ RUN apk add --no-cache ca-certificates openssl \
     && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
     && make clean \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
-    && mkdir /run/php \
+    && mkdir /run/php && mkdir /run/nginx \
     && echo "daemon off;" >> /etc/nginx/nginx.conf \
     # Remove dependencies
     && rm -rf /usr/src/php-$PHP_VERSION \
