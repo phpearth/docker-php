@@ -2,7 +2,8 @@ FROM debian:jessie-slim
 
 MAINTAINER Peter Kokot
 
-ENV PHP_VERSION 7.1.0
+# PHP download helper script
+COPY download-php.sh /opt/download-php.sh
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
@@ -61,15 +62,15 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && apt-get -y install nginx --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
-    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && curl -o php-$PHP_VERSION.tar.xz -OL http://fr2.php.net/get/php-$PHP_VERSION.tar.xz/from/this/mirror \
+    && /opt/download-php.sh \
+    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php-$PHP_VERSION.tar.xz \
-    && rm php-$PHP_VERSION.tar.xz \
-    && cd php-$PHP_VERSION \
+    && tar -Jxf php.tar.xz \
+    && rm php.tar.xz \
+    && cd php-* \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
@@ -128,13 +129,13 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && apt-get purge -y --auto-remove $BUILD_DEPS \
     && apt-get -y autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-$PHP_VERSION \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/* \
     # Composer
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY etc /etc
-COPY usr /usr
+COPY nginx/etc /etc
+COPY nginx/usr /usr
 
 CMD ["/usr/bin/supervisord"]

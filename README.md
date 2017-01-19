@@ -1,6 +1,6 @@
-# Docker PHP Image
+# Docker PHP Images
 
-This is an unofficial Docker image with PHP, Nginx and OpenLiteSpeed.
+These are unofficial Docker images with PHP, Nginx and OpenLiteSpeed.
 
 For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/).
 
@@ -42,6 +42,14 @@ Alpine Nginx image:
 
 ```bash
 FROM phpearth/php:alpine
+```
+
+## Building Images
+
+For example, to build Nginx PHP image:
+
+```bash
+docker build -t phpearth/php -f ./nginx/Dockerfile .
 ```
 
 ## License and Contributing

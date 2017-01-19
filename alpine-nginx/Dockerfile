@@ -2,7 +2,8 @@ FROM alpine:3.5
 
 MAINTAINER Peter Kokot
 
-ENV PHP_VERSION 7.1.0
+# PHP download helper script
+COPY download-php.sh /usr/src/download-php.sh
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
@@ -69,14 +70,14 @@ RUN set -x \
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apk add --no-cache $PHP_DEPS \
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
-    && mkdir /usr/src && cd /usr/src \
-    && wget -O php.tar.xz http://fr2.php.net/get/php-$PHP_VERSION.tar.xz/from/this/mirror \
+    && cd /usr/src \
+    && /usr/src/download-php.sh \
+    && tar -Jxf php.tar.xz \
+    && rm php.tar.xz \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php.tar.xz \
-    && rm php.tar.xz \
-    && cd php-$PHP_VERSION \
+    && cd php-* \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
@@ -132,14 +133,14 @@ RUN set -x \
     && mkdir /run/php && mkdir /run/nginx \
     && echo "daemon off;" >> /etc/nginx/nginx.conf \
     # Remove dependencies
-    && rm -rf /usr/src/php-$PHP_VERSION \
+    && rm -rf /usr/src/* \
     && apk del .build-deps .fetch-deps \
     # Composer
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY etc /etc
-COPY usr /usr
+COPY alpine-nginx/etc /etc
+COPY alpine-nginx/usr /usr
 
 CMD ["/usr/bin/supervisord"]
