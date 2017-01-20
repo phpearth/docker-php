@@ -72,12 +72,10 @@ RUN set -x \
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && cd /usr/src \
     && /usr/src/download-php.sh \
-    && tar -Jxf php.tar.xz \
-    && rm php.tar.xz \
+    && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
-    && cd php-* \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \

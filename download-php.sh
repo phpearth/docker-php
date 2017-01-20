@@ -26,3 +26,5 @@ if [ -n "$PHP_ASC_URL" ]; then
     gpg --batch --verify php.tar.xz{.asc*,}
     rm -r "$GNUPGHOME"
 fi;
+tar -Jxf php.tar.xz
+rm php.tar.xz php.tar.xz.asc

@@ -2,9 +2,10 @@ FROM debian:jessie-slim
 
 MAINTAINER Peter Kokot
 
-ENV PHP_VER 7.1.0
-ENV LS_VER 1.4.24
+# PHP download helper script
+COPY download-php.sh /opt/download-php.sh
 
+ENV LS_VER 1.4.24
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
@@ -64,13 +65,11 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && curl -o php-$PHP_VER.tar.xz -OL http://fr2.php.net/get/php-$PHP_VER.tar.xz/from/this/mirror \
+    && /opt/download-php.sh \
+    && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
                   CPPFLAGS="$PHP_CPPFLAGS" \
                   LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php-$PHP_VER.tar.xz \
-    && rm php-$PHP_VER.tar.xz \
-    && cd php-$PHP_VER \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
@@ -140,7 +139,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && apt-get purge -y --auto-remove $BUILD_DEPS $FETCH_DEPS \
     && apt-get -y autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/php-$PHP_VER /opt/openlitespeed-$LS_VER
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/*
 
 COPY litespeed/etc /etc
 COPY litespeed/usr /usr

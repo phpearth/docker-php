@@ -62,15 +62,13 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && apt-get -y install nginx --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
+    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
     && /opt/download-php.sh \
-    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
+    && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
-    && tar -Jxf php.tar.xz \
-    && rm php.tar.xz \
-    && cd php-* \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
