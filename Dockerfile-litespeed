@@ -3,7 +3,10 @@ FROM debian:jessie-slim
 MAINTAINER Peter Kokot
 
 # PHP download helper script
-COPY download-php.sh /opt/download-php.sh
+COPY download-php /opt/download-php
+
+# Script for installing PHP extensions
+COPY install-php-ext /usr/local/bin/install-php-ext
 
 ENV LS_VER 1.4.24
 ENV PHP_INI_DIR /usr/local/etc/php
@@ -65,7 +68,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && /opt/download-php.sh \
+    && /opt/download-php \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
                   CPPFLAGS="$PHP_CPPFLAGS" \

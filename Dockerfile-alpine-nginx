@@ -3,7 +3,7 @@ FROM alpine:3.5
 MAINTAINER Peter Kokot
 
 # PHP download helper script
-COPY download-php.sh /usr/src/download-php.sh
+COPY download-php /usr/src/download-php.sh
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
@@ -71,7 +71,7 @@ RUN set -x \
     && apk add --no-cache $PHP_DEPS \
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && cd /usr/src \
-    && /usr/src/download-php.sh \
+    && /usr/src/download-php \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \

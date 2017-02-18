@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Helper installation script for PHP extensions
+
+BUILD_DEPS="autoconf gcc g++ make build-essential"
+
+# Supported extensions
+# Format: key is the PHP extension name, value is the system dependency
+declare -A extensions=(
+    [libsodium]=libsodium-dev
+    [swoole]=
+)
+
+# Output usage documentation and help
+function usage () {
+cat <<END
+Helper installation script for PHP extensions
+Usage: install-php-ext EXTENSION1 EXTENSION2 ...
+END
+}
+
+function install () {
+    if [[ "${!extensions[@]}" =~ "$1" ]]; then
+        if [ ! -z "${extensions[$1]}" ]; then
+            apt-get install -y "${extensions[$1]}" --no-install-recommends
+        fi
+        pecl install $1
+        echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+    else
+        usage
+    fi
+}
+
+# If arguments are passed
+if [ $# -gt 0 ];then
+    # Update APT packages lists and install build dependencies
+    apt-get update && apt-get -y install $BUILD_DEPS --no-install-recommends
+
+    # Install each given extension with its system dependencies
+    while [ "$1" != "" ]; do
+        install ${1} && shift;
+    done;
+
+    # Post installation tasks for making the Docker image smaller
+    apt-get purge -y --auto-remove $BUILD_DEPS
+    apt-get clean
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+else
+    usage
+fi
