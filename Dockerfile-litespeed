@@ -24,7 +24,8 @@ ENV PHP_DEPS \
         libxml2 \
         libxml2-dev \
         libgeoip-dev \
-        wget
+        wget \
+        xz-utils
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
