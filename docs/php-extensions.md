@@ -1,16 +1,46 @@
 # PHP Extensions
 
-By default these images come with some preinstalled PHP extensions that are usually
-required to run some every day PHP applications. However many times you'll want
-to install some other PHP extention as well.
+## Core PHP Extensions
 
-Here's how to install them.
+There are multiple types of PHP extensions. Core PHP extensions are the ones
+located in the [php-src](https://github.com/php/php-src) repository directly and
+have the following installation procedure:
 
-Images include a custom installation script for extensions `install-php-ext`:
+```bash
+# Let's say php source code is located in /usr/src/php
+cd /usr/src/php/ext/extension-name
+phpize
+./configure
+make -jN
+make -jN install
+```
 
 ## Pecl Extensions
 
-Create a Dockerfile for your application and use the script in the following way:
+Pecl extensions are either some of the PHP core extensions that got moved to pecl
+or the community contributed ones. They are located on pecl.php.net. Installation
+is done with the simple `pecl install` command:
+
+```bash
+pecl install {extension-name}
+```
+
+## Installing Extensions
+
+By default these images come with some pre-installed PHP extensions that are
+required to run some every day PHP applications. However many times you'll want
+to install some other PHP extension as well.
+
+Here's how to install them.
+
+Images include a custom installation script for extensions `install-php-ext`
+which does some magic and installs any of the above explained extensions.
+
+```bash
+install-php-ext {extension-name}
+```
+
+To install Create a Dockerfile for your application and use the script in the following way:
 
 ```bash
 FROM phpearth/php
@@ -18,7 +48,8 @@ FROM phpearth/php
 RUN install-php-ext libsodium
 ```
 
-## Currently Supported Extensions
+## Supported Extensions
 
 * [Libsodium](https://github.com/jedisct1/libsodium-php)
 * [Swoole](https://github.com/swoole/swoole-src)
+* [mcrypt](http://php.net/manual/en/book.mcrypt.php)
