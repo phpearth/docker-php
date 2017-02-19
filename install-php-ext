@@ -2,9 +2,6 @@
 
 # Helper installation script for PHP extensions
 
-# System dependencies for building extensions and downloading PHP
-BUILD_DEPS="autoconf gcc g++ make re2c gnupg"
-
 # Output usage documentation and help
 function usage () {
 cat <<END
@@ -35,14 +32,21 @@ for f in ${!os[@]}
 do
     if [[ -f $f ]];then
         case "${os[$f]}" in
+            # Alpine
             apk)
+                # System dependencies for building extensions and downloading PHP
+                BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers"
+                # Tasks before extensions installation
                 pre_install="apk add --no-cache --virtual .build-deps $BUILD_DEPS"
                 install_deps="apk add --no-cache "
                 post_install="apk del .build-deps && rm -rf /usr/src/*"
                 j=$(getconf _NPROCESSORS_ONLN)
                 ;;
 
+            # Debian
             apt-get)
+                # System dependencies for building extensions and downloading PHP
+                BUILD_DEPS="autoconf gcc g++ make re2c"
                 pre_install="apt-get update && apt-get -y install $BUILD_DEPS --no-install-recommends"
                 install_deps="apt-get install -y --no-install-recommends "
                 post_install="apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*"

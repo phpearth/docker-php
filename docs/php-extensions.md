@@ -40,7 +40,7 @@ which does some magic and installs any of the above explained extensions.
 install-php-ext {extension-name}
 ```
 
-To install Create a Dockerfile for your application and use the script in the following way:
+To install create a Dockerfile for your application and use the script in the following way:
 
 ```bash
 FROM phpearth/php
@@ -50,6 +50,11 @@ RUN install-php-ext libsodium
 
 ## Supported Extensions
 
+Core PHP extensions:
+
+* [mcrypt](http://php.net/manual/en/book.mcrypt.php)
+
+PECL extensions:
+
 * [Libsodium](https://github.com/jedisct1/libsodium-php)
 * [Swoole](https://github.com/swoole/swoole-src)
-* [mcrypt](http://php.net/manual/en/book.mcrypt.php)
