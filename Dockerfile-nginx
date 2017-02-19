@@ -1,12 +1,7 @@
 FROM debian:jessie-slim
 
-MAINTAINER Peter Kokot
-
-# PHP download helper script
-COPY download-php /opt/download-php
-
-# Script for installing PHP extensions
-COPY install-php-ext /usr/local/bin/install-php-ext
+# Custom helper scripts to download PHP and manage PHP extensions
+COPY download-php install-php-ext /usr/local/bin/
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
@@ -67,22 +62,21 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && /opt/download-php \
+    && download-php \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
-    && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
         --disable-cgi \
         --with-pdo-mysql \
+        --with-mysqli \
         --without-sqlite3 \
         --without-pdo-sqlite \
         --with-zlib-dir \
         --with-freetype-dir \
-        --enable-mysqlnd \
         --enable-mbstring \
         --with-libxml-dir=/usr \
         --enable-soap \
@@ -103,8 +97,6 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
         --with-mhash \
         --enable-zip \
         --with-pcre-regex \
-        --with-mysqli \
-        --with-mysql-sock=/var/run/mysqld/mysqld.sock \
         --with-jpeg-dir=/usr \
         --with-png-dir=/usr \
         --enable-gd-native-ttf \

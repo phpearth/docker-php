@@ -1,21 +1,13 @@
 FROM debian:jessie-slim
 
-MAINTAINER Peter Kokot
-
-# PHP download helper script
-COPY download-php /opt/download-php
-
-# Script for installing PHP extensions
-COPY install-php-ext /usr/local/bin/install-php-ext
+# Custom helper scripts to download PHP and manage PHP extensions
+COPY download-php install-php-ext /usr/local/bin/
 
 ENV LS_VER 1.4.24
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
-
-ENV FETCH_DEPS \
-        wget
 
 # Persistent runtime dependencies
 ENV PHP_DEPS \
@@ -24,7 +16,6 @@ ENV PHP_DEPS \
         unzip \
         git \
         supervisor \
-        libmcrypt4 \
         libicu52 \
         libxslt1.1 \
         libxslt1-dev \
@@ -32,7 +23,8 @@ ENV PHP_DEPS \
         libfreetype6 \
         libxml2 \
         libxml2-dev \
-        libgeoip-dev
+        libgeoip-dev \
+        wget
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
@@ -51,7 +43,6 @@ ENV BUILD_DEPS \
         libbz2-dev \
         libfcgi-dev \
         libfcgi0ldbl \
-        libmcrypt-dev \
         libkrb5-dev \
         libpq-dev \
         libicu-dev \
@@ -62,35 +53,33 @@ ENV BUILD_DEPS \
         libpng-dev
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-    && apt-get update && apt-get -y install $FETCH_DEPS curl ca-certificates --no-install-recommends \
+    && apt-get update && apt-get -y install curl ca-certificates --no-install-recommends \
     && apt-get -y install openssl libssl-dev -t jessie-backports --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /opt \
-    && /opt/download-php \
+    && download-php \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
                   CPPFLAGS="$PHP_CPPFLAGS" \
                   LDFLAGS="$PHP_LDFLAGS" \
-    && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
         --disable-cgi \
         --with-pdo-mysql \
+        --with-mysqli \
         --without-sqlite3 \
         --without-pdo-sqlite \
         --with-zlib-dir \
         --with-freetype-dir \
-        --enable-mysqlnd \
         --enable-mbstring \
         --with-libxml-dir=/usr \
         --enable-soap \
         --enable-calendar \
         --with-curl \
         --with-libedit \
-        --with-mcrypt \
         --with-zlib \
         --with-gd \
         --disable-rpath \
@@ -105,8 +94,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-mhash \
         --enable-zip \
         --with-pcre-regex \
-        --with-mysqli \
-        --with-mysql-sock=/var/run/mysqld/mysqld.sock \
         --with-jpeg-dir=/usr \
         --with-png-dir=/usr \
         --enable-gd-native-ttf \
@@ -139,7 +126,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     # Composer
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     # Remove build dependencies
-    && apt-get purge -y --auto-remove $BUILD_DEPS $FETCH_DEPS \
+    && apt-get purge -y --auto-remove $BUILD_DEPS \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/*
