@@ -1,6 +1,9 @@
 # Docker PHP Images
 
-These are unofficial Docker images with PHP, Nginx and OpenLiteSpeed.
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/phpearth/php/)
+
+These are customized Docker images crafted with care for
+various tasks we've met. with PHP, Nginx and OpenLiteSpeed.
 
 For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/).
 
@@ -44,14 +47,13 @@ Alpine Nginx image:
 FROM phpearth/php:alpine
 ```
 
-## Building Images
+## Documentation
 
-For example, to build Nginx PHP image:
-
-```bash
-docker build -t phpearth/php -f ./nginx/Dockerfile .
-```
+Check a more [extended documentation](https://github.com/php-earth/docker-php/tree/master/docs)
+for additional information how to use these images and what's included.
 
 ## License and Contributing
 
-[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md) are most welcome. This repository is released under the [MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).
+[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md)
+are most welcome. This repository is released under the
+[MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).

@@ -80,7 +80,6 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
         --with-freetype-dir \
         --enable-mbstring \
         --with-libxml-dir=/usr \
-        --enable-soap \
         --enable-calendar \
         --with-curl \
         --with-libedit \

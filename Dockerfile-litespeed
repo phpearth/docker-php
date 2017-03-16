@@ -3,7 +3,7 @@ FROM debian:jessie-slim
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY download-php install-php-ext /usr/local/bin/
 
-ENV LS_VER 1.4.24
+ENV LS_VER 1.4.25
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
@@ -77,7 +77,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-freetype-dir \
         --enable-mbstring \
         --with-libxml-dir=/usr \
-        --enable-soap \
         --enable-calendar \
         --with-curl \
         --with-libedit \

@@ -20,6 +20,7 @@ declare -A extensions=(
 # Core PHP extensions
 declare -A core_extensions=(
     [mcrypt]=libmcrypt-dev
+    [soap]=libxml2-dev
 )
 
 # Assign package managers and tasks based on operating system

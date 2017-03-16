@@ -50,11 +50,16 @@ RUN install-php-ext libsodium
 
 ## Supported Extensions
 
-Core PHP extensions:
+PHP external extensions:
 
 * [mcrypt](http://php.net/manual/en/book.mcrypt.php)
+* [soap](http://php.net/manual/en/extensions.php)
 
 PECL extensions:
 
 * [Libsodium](https://github.com/jedisct1/libsodium-php)
 * [Swoole](https://github.com/swoole/swoole-src)
+
+## See Also
+
+* [PHP Extensions List/Categorization](http://php.net/manual/en/extensions.php)

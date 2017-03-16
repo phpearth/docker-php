@@ -84,7 +84,6 @@ RUN set -x \
         --with-freetype-dir \
         --enable-mbstring \
         --with-libxml-dir=/usr \
-        --enable-soap \
         --enable-calendar \
         --with-curl \
         --with-libedit \
