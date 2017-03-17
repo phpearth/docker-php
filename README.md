@@ -15,6 +15,7 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 * [OpenLiteSpeed](http://open.litespeedtech.com/)
 * [Composer](https://getcomposer.org)
 * PHP Extensions installation script
+* [runit](http://smarden.org/runit/) for running multiple services without overhead.
 
 ## Tags
 

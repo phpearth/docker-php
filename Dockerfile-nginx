@@ -14,13 +14,13 @@ ENV PHP_DEPS \
         zip \
         unzip \
         git \
-        supervisor \
         libicu52 \
         libxslt1.1 \
         libjpeg62-turbo \
         libfreetype6 \
         libxml2 \
-        xz-utils
+        xz-utils \
+        runit
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
@@ -69,6 +69,9 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
               CPPFLAGS="$PHP_CPPFLAGS" \
               LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
+        # Core configure options
+        --with-libdir=/lib/x86_64-linux-gnu \
+        --disable-rpath \
         # Bundled PHP extensions
         --enable-bcmath \
         --enable-calendar \
@@ -79,6 +82,7 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
         --enable-gd-native-ttf \
         --with-jpeg-dir=/usr \
         --with-png-dir=/usr \
+        --with-freetype-dir \
         --enable-intl \
         --with-pcre-regex \
         --enable-mysqlnd \
@@ -99,14 +103,10 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
         --disable-cgi \
-        --with-freetype-dir \
         --with-libxml-dir=/usr \
         --with-libedit \
-        --disable-rpath \
-        --enable-inline-optimization \
         --with-fpm-user=www-data \
         --with-fpm-group=www-data \
-        --with-libdir=/lib/x86_64-linux-gnu \
         --with-kerberos \
         --enable-opcache \
         --enable-fpm \
@@ -116,7 +116,6 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && make clean \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
     && mkdir /run/php \
-    && echo "daemon off;" >> /etc/nginx/nginx.conf \
     # Remove dependencies
     && apt-get purge -y --auto-remove $BUILD_DEPS \
     && apt-get -y autoremove \
@@ -127,7 +126,6 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY nginx/etc /etc
-COPY nginx/usr /usr
+COPY nginx /
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/sbin/runit-wrapper"]

@@ -109,6 +109,7 @@ PHP extensions:
 PECL extensions:
 
 * [Libsodium](https://github.com/jedisct1/libsodium-php)
+* [mongodb](http://docs.php.net/manual/en/set.mongodb.php)
 * [Redis](https://github.com/phpredis/phpredis/)
 * [Swoole](https://github.com/swoole/swoole-src)
 

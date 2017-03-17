@@ -15,7 +15,6 @@ ENV PHP_DEPS \
         zip \
         unzip \
         git \
-        supervisor \
         libicu52 \
         libxslt1.1 \
         libxslt1-dev \
@@ -25,7 +24,8 @@ ENV PHP_DEPS \
         libxml2-dev \
         libgeoip-dev \
         wget \
-        xz-utils
+        xz-utils \
+        runit
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
@@ -66,6 +66,9 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
                   CPPFLAGS="$PHP_CPPFLAGS" \
                   LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
+        # Core configure options
+        --with-libdir=/lib/x86_64-linux-gnu \
+        --disable-rpath \
         # Bundled PHP extensions
         --enable-bcmath \
         --enable-calendar \
@@ -76,6 +79,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --enable-gd-native-ttf \
         --with-jpeg-dir=/usr \
         --with-png-dir=/usr \
+        --with-freetype-dir \
         --enable-intl \
         --with-pcre-regex \
         --enable-mysqlnd \
@@ -96,12 +100,8 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
         --disable-cgi \
-        --with-freetype-dir \
         --with-libxml-dir=/usr \
         --with-libedit \
-        --disable-rpath \
-        --enable-inline-optimization \
-        --with-libdir=/lib/x86_64-linux-gnu \
         --with-kerberos \
         --enable-opcache \
         --with-litespeed \
@@ -130,7 +130,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/*
 
-COPY litespeed/etc /etc
-COPY litespeed/usr /usr
+COPY litespeed /
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/sbin/runit-wrapper"]

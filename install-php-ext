@@ -16,6 +16,7 @@ declare -A extensions=(
   [libsodium]=libsodium-dev
   [swoole]=
   [redis]=
+  [mongodb]=openssl-dev
 )
 
 # Supported PHP extensions
