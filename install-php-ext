@@ -10,99 +10,103 @@ Usage: install-php-ext EXTENSION1 EXTENSION2 ...
 END
 }
 
-# Supported extensions
+# Supported PECL extensions
 # Format: key is the PHP extension name, value is the system dependency
 declare -A extensions=(
-    [libsodium]=libsodium-dev
-    [swoole]=
+  [libsodium]=libsodium-dev
+  [swoole]=
+  [redis]=
 )
 
-# Core PHP extensions
+# Supported PHP extensions
 declare -A core_extensions=(
-    [mcrypt]=libmcrypt-dev
-    [soap]=libxml2-dev
+  [mcrypt]=libmcrypt-dev
+  [soap]=libxml2-dev
+  [pcntl]=
+  [mysqli]=
+  [pdo_mysql]=
 )
 
 # Assign package managers and tasks based on operating system
 declare -A os=(
-    [/etc/alpine-release]=apk
-    [/etc/debian_version]=apt-get
+  [/etc/alpine-release]=apk
+  [/etc/debian_version]=apt-get
 )
 
 for f in ${!os[@]}
 do
-    if [[ -f $f ]];then
-        case "${os[$f]}" in
-            # Alpine
-            apk)
-                # System dependencies for building extensions and downloading PHP
-                BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers"
-                # Tasks before extensions installation
-                pre_install="apk add --no-cache --virtual .build-deps $BUILD_DEPS"
-                install_deps="apk add --no-cache "
-                post_install="apk del .build-deps && rm -rf /usr/src/*"
-                j=$(getconf _NPROCESSORS_ONLN)
-                ;;
+  if [[ -f $f ]];then
+    case "${os[$f]}" in
+      # Alpine
+      apk)
+        # System dependencies for building extensions and downloading PHP
+        BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers"
+        # Tasks before extensions installation
+        pre_install="apk add --no-cache --virtual .build-deps $BUILD_DEPS"
+        install_deps="apk add --no-cache "
+        post_install="apk del .build-deps && rm -rf /usr/src/*"
+        j=$(getconf _NPROCESSORS_ONLN)
+        ;;
 
-            # Debian
-            apt-get)
-                # System dependencies for building extensions and downloading PHP
-                BUILD_DEPS="autoconf gcc g++ make re2c"
-                pre_install="apt-get update && apt-get -y install $BUILD_DEPS --no-install-recommends"
-                install_deps="apt-get install -y --no-install-recommends "
-                post_install="apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*"
-                j=$(nproc)
-                ;;
+      # Debian
+      apt-get)
+        # System dependencies for building extensions and downloading PHP
+        BUILD_DEPS="autoconf gcc g++ make re2c"
+        pre_install="apt-get update && apt-get -y install $BUILD_DEPS --no-install-recommends"
+        install_deps="apt-get install -y --no-install-recommends "
+        post_install="apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*"
+        j=$(nproc)
+        ;;
 
-            *)
-                usage
-                exit 1
-                ;;
-        esac
-    fi
+      *)
+        usage
+        exit 1
+        ;;
+    esac
+  fi
 done
 
 # Install given extension
 function install () {
-    # If extension has dependencies, install them
-    if [ ! -z "${core_extensions[$1]}" ]; then
-        eval "$install_deps ${core_extensions[$1]}"
-    elif [ ! -z "${extensions[$1]}" ]; then
-        eval "$install_deps ${extensions[$1]}"
-    fi
+  # If extension has dependencies, install them
+  if [ ! -z "${core_extensions[$1]}" ]; then
+    eval "$install_deps ${core_extensions[$1]}"
+  elif [ ! -z "${extensions[$1]}" ]; then
+    eval "$install_deps ${extensions[$1]}"
+  fi
 
-    # Core PHP extension
-    if [[ "${!core_extensions[@]}" =~ "$1" ]]; then
-        cd /usr/src/php-*/ext/$1
-        phpize
-        ./configure
-        make -j"$j"
-        make -j"$j" install
-        echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+  # PHP extension
+  if [[ "${!core_extensions[@]}" =~ "$1" ]]; then
+    cd /usr/src/php-*/ext/$1
+    phpize
+    ./configure
+    make -j"$j"
+    make -j"$j" install
+    echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
 
-    # Pecl extension
-    elif [[ "${!extensions[@]}" =~ "$1" ]]; then
-        pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+  # PECL extension
+  elif [[ "${!extensions[@]}" =~ "$1" ]]; then
+    pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
 
-    # Unsupported extension
-    else
-        usage
-    fi
+  # Unsupported extension
+  else
+    usage
+  fi
 }
 
 # If arguments are passed
 if [ $# -gt 0 ];then
-    # Pre-installation tasks - update packages lists and install build dependencies
-    eval "$pre_install && cd /usr/src/ && download-php"
+  # Pre-installation tasks - update packages lists and install build dependencies
+  eval "$pre_install && cd /usr/src/ && download-php"
 
-    # Install each given extension with its system dependencies
-    while [ "$1" != "" ]; do
-        install ${1} && shift;
-    done;
+  # Install each given extension with its system dependencies
+  while [ "$1" != "" ]; do
+    install ${1} && shift;
+  done;
 
-    # Post installation tasks - removal of build dependencies for smaller Docker image
-    eval $post_install
+  # Post installation tasks - removal of build dependencies for smaller Docker image
+  eval $post_install
 
 else
-    usage
+  usage
 fi

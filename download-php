@@ -12,24 +12,24 @@ PHP_MD5="d604d688be17f4a05b99dbb7fb9581f4"
 curl -o php.tar.xz -OL $PHP_URL
 
 if [ -n "$PHP_SHA256" ]; then
-    echo "$PHP_SHA256 *php.tar.xz" | sha256sum -c -
+  echo "$PHP_SHA256 *php.tar.xz" | sha256sum -c -
 fi;
 
 if [ -n "$PHP_MD5" ]; then
-    echo "$PHP_MD5 *php.tar.xz" | md5sum -c -
+  echo "$PHP_MD5 *php.tar.xz" | md5sum -c -
 fi;
 
 if [ -n "$PHP_ASC_URL" ]; then
-    curl -o php.tar.xz.asc -OL "$PHP_ASC_URL"
-    export GNUPGHOME="$(mktemp -d)"
+  curl -o php.tar.xz.asc -OL "$PHP_ASC_URL"
+  export GNUPGHOME="$(mktemp -d)"
 
-    for key in $GPG_KEY_1 $GPG_KEY_2; do
-        gpg --keyserver ha.pool.sks-keyservers.net --recv-keys $key
-        gpg --fingerprint $key
-    done;
+  for key in $GPG_KEY_1 $GPG_KEY_2; do
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys $key
+    gpg --fingerprint $key
+  done;
 
-    gpg --batch --verify php.tar.xz{.asc*,}
-    rm -r "$GNUPGHOME"
+  gpg --batch --verify php.tar.xz{.asc*,}
+  rm -r "$GNUPGHOME"
 fi;
 
 tar -Jxf php.tar.xz

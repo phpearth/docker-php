@@ -14,3 +14,7 @@ cd /usr/src/php
 make
 make install
 ```
+
+## See Also
+
+* [PHP Internals](http://www.phpinternalsbook.com)

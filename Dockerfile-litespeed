@@ -66,45 +66,44 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
                   CPPFLAGS="$PHP_CPPFLAGS" \
                   LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
+        # Bundled PHP extensions
+        --enable-bcmath \
+        --enable-calendar \
+        --enable-mbstring \
+        --enable-exif \
+        --enable-ftp \
+        --with-gd \
+        --enable-gd-native-ttf \
+        --with-jpeg-dir=/usr \
+        --with-png-dir=/usr \
+        --enable-intl \
+        --with-pcre-regex \
+        --enable-mysqlnd \
+        --with-openssl \
+        --with-xsl \
+        --enable-zip \
+        --enable-sysvsem \
+        --enable-sysvshm \
+        --enable-sysvmsg \
+        --enable-shmop \
+        --enable-sockets \
+        --with-zlib \
+        --with-zlib-dir \
+        --with-bz2 \
+        --with-curl \
+        --with-gettext \
+        --with-mhash \
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
         --disable-cgi \
-        --with-pdo-mysql \
-        --with-mysqli \
-        --without-sqlite3 \
-        --without-pdo-sqlite \
-        --with-zlib-dir \
         --with-freetype-dir \
-        --enable-mbstring \
         --with-libxml-dir=/usr \
-        --enable-calendar \
-        --with-curl \
         --with-libedit \
-        --with-zlib \
-        --with-gd \
         --disable-rpath \
         --enable-inline-optimization \
-        --with-bz2 \
-        --enable-sockets \
-        --enable-sysvsem \
-        --enable-sysvshm \
-        --enable-mbregex \
-        --enable-exif \
-        --enable-bcmath \
-        --with-mhash \
-        --enable-zip \
-        --with-pcre-regex \
-        --with-jpeg-dir=/usr \
-        --with-png-dir=/usr \
-        --enable-gd-native-ttf \
-        --with-openssl \
         --with-libdir=/lib/x86_64-linux-gnu \
-        --enable-ftp \
         --with-kerberos \
-        --with-gettext \
-        --with-xsl \
         --enable-opcache \
-        --enable-intl \
         --with-litespeed \
     && make -j "$(nproc)" \
     && make install \

@@ -14,6 +14,13 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 * [Nginx](https://nginx.org/)
 * [OpenLiteSpeed](http://open.litespeedtech.com/)
 * [Composer](https://getcomposer.org)
+* PHP Extensions installation script
+
+## Tags
+
+* `phpearth/php:latest` - Debian Jessie Slim, Nginx, PHP FPM
+* `phpearth/php:alpine` - Alpine, Nginx, PHP FPM
+* `phpearth/php:litespeed` - Debian Jessie Slim, OpenLiteSpeed, PHP LiteSpeed SAPI
 
 ## Usage
 
