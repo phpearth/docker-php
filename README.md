@@ -16,6 +16,7 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 * [Composer](https://getcomposer.org)
 * PHP Extensions installation script
 * [runit](http://smarden.org/runit/) for running multiple services without overhead.
+* Optimized Docker image sizes
 
 ## Tags
 
@@ -23,18 +24,12 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 * `phpearth/php:alpine` - Alpine, Nginx, PHP FPM
 * `phpearth/php:litespeed` - Debian Jessie Slim, OpenLiteSpeed, PHP LiteSpeed SAPI
 
-## Usage
+## Quick Usage
 
 Create a `Dockerfile` for your setup:
 
 ```bash
 FROM phpearth/php
-```
-
-For OpenLiteSpeed:
-
-```bash
-FROM phpearth/php:litespeed
 ```
 
 To run a CLI PHP script:
@@ -47,12 +42,6 @@ To run Composer:
 
 ```bash
 docker run -it --rm --name composer -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php composer
-```
-
-Alpine Nginx image:
-
-```bash
-FROM phpearth/php:alpine
 ```
 
 ## Documentation
