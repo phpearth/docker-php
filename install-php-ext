@@ -48,6 +48,8 @@ do
           [pdo_mysql]=
           [pspell]=aspell-dev
           [enchant]=enchant-dev
+          [tidy]=tidyhtml-dev
+          [wddx]=libxml2-dev
         )
         ;;
 
@@ -69,6 +71,8 @@ do
           [pdo_mysql]=
           [pspell]="libaspell-dev libpspell-dev"
           [enchant]=libenchant-dev
+          [tidy]=libtidy-dev
+          [wddx]=libxml2-dev
         )
         ;;
 
@@ -79,6 +83,11 @@ do
     esac
   fi
 done
+
+# Supported PHP extensions options for both systems
+declare -A core_extensions_options=(
+  [wddx]="--with-libxml-dir"
+)
 
 # Install given extension
 function install () {
@@ -93,7 +102,7 @@ function install () {
   if [[ "${!core_extensions[@]}" =~ "$1" ]]; then
     cd /usr/src/php-*/ext/$1
     phpize
-    ./configure
+    ./configure ${core_extensions_options[$1]}
     make -j"$j"
     make -j"$j" install
     echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini

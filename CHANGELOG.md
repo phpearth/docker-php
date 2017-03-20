@@ -11,6 +11,13 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [0.0.2] 2017-03-21
+
+### Added
+
+* Tidy extension support
+* WDDX extension support
+
 ## [0.0.1] 2017-03-20
 
 ### Added

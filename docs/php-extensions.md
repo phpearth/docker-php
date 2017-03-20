@@ -108,6 +108,8 @@ PHP extensions:
 * [pdo_mysql](http://php.net/manual/en/ref.pdo-mysql.php)
 * [pspell](http://php.net/manual/en/book.pspell.php)
 * [soap](http://php.net/manual/en/extensions.php)
+* [tidy](http://php.net/manual/en/book.tidy.php)
+* [wddx](http://php.net/manual/en/book.wddx.php)
 
 PECL extensions:
 
@@ -136,9 +138,6 @@ PECL extensions:
 * [Readline](http://php.net/manual/en/book.readline.php)
 * [Recode](http://php.net/manual/en/book.recode.php)
 * [SNMP](http://php.net/manual/en/book.snmp.php)
-* [Tidy](http://php.net/manual/en/book.tidy.php)
-* [WDDX](http://php.net/manual/en/book.wddx.php)
-* [Sybase](http://php.net/manual/en/book.sybase.php)
 * [XML-RPC](http://php.net/manual/en/book.xmlrpc.php)
 
 ## See Also
