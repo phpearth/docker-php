@@ -19,15 +19,6 @@ declare -A extensions=(
   [mongodb]=openssl-dev
 )
 
-# Supported PHP extensions
-declare -A core_extensions=(
-  [mcrypt]=libmcrypt-dev
-  [soap]=libxml2-dev
-  [pcntl]=
-  [mysqli]=
-  [pdo_mysql]=
-)
-
 # Assign package managers and tasks based on operating system
 declare -A os=(
   [/etc/alpine-release]=apk
@@ -47,6 +38,17 @@ do
         install_deps="apk add --no-cache "
         post_install="apk del .build-deps && rm -rf /usr/src/*"
         j=$(getconf _NPROCESSORS_ONLN)
+
+        # Supported PHP extensions for Alpine
+        declare -A core_extensions=(
+          [mcrypt]=libmcrypt-dev
+          [soap]=libxml2-dev
+          [pcntl]=
+          [mysqli]=
+          [pdo_mysql]=
+          [pspell]=aspell-dev
+          [enchant]=enchant-dev
+        )
         ;;
 
       # Debian
@@ -57,6 +59,17 @@ do
         install_deps="apt-get install -y --no-install-recommends "
         post_install="apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*"
         j=$(nproc)
+
+        # Supported PHP extensions for Debian
+        declare -A core_extensions=(
+          [mcrypt]=libmcrypt-dev
+          [soap]=libxml2-dev
+          [pcntl]=
+          [mysqli]=
+          [pdo_mysql]=
+          [pspell]="libaspell-dev libpspell-dev"
+          [enchant]=libenchant-dev
+        )
         ;;
 
       *)
