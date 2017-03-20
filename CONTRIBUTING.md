@@ -40,3 +40,25 @@ The following labels are used:
   scope of the repository or because of some inconsistency.
 * **question** - Attached for questions or discussions.
 * **wontfix** - Attached when decided that issue will not be fixed.
+
+## Release Process
+
+*(For repository maintainers)*
+
+This repository follows [semantic versioning](http://semver.org/). When source
+code changes, new features are implemented, or PHP version gets upgraded, a new
+version (e.g. 1.x.y) is released by the following release process:
+
+* **1. Update Changelog**
+
+  Create an entry in [CHANGELOG.md](CHANGELOG.md) describing all the changes from
+  previous release.
+
+* **2. Tag a New Release**
+
+  Tag a new version on [GitHub](https://github.com/php-earth/docker-php/releases).
+
+* **3. Docker Images**
+
+  With a new tag release, Docker images are build automatically on
+  [Docker Hub](https://hub.docker.com/r/phpearth/php/).

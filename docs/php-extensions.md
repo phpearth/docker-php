@@ -43,6 +43,7 @@ required to run some every day PHP applications. These include the following:
 
 * [bcmath](http://php.net/manual/en/book.bc.php)
 * [calendar](http://php.net/manual/en/book.calendar.php)
+* [ctype](http://php.net/manual/en/book.ctype.php)
 * [curl](http://php.net/manual/en/book.curl.php)
 * [DOM](http://php.net/manual/en/book.dom.php)
 * [exif](http://php.net/manual/en/book.exif.php)
@@ -100,31 +101,31 @@ RUN install-php-ext libsodium
 
 PHP extensions:
 
+* [enchant](http://php.net/manual/en/book.enchant.php)
 * [mcrypt](http://php.net/manual/en/book.mcrypt.php)
-* [soap](http://php.net/manual/en/extensions.php)
-* [pcntl](http://php.net/manual/en/book.pcntl.php)
 * [mysqli](http://php.net/manual/en/book.mysqli.php)
+* [pcntl](http://php.net/manual/en/book.pcntl.php)
 * [pdo_mysql](http://php.net/manual/en/ref.pdo-mysql.php)
+* [pspell](http://php.net/manual/en/book.pspell.php)
+* [soap](http://php.net/manual/en/extensions.php)
 
 PECL extensions:
 
-* [Libsodium](https://github.com/jedisct1/libsodium-php)
+* [libsodium](https://github.com/jedisct1/libsodium-php)
 * [mongodb](http://docs.php.net/manual/en/set.mongodb.php)
-* [Redis](https://github.com/phpredis/phpredis/)
-* [Swoole](https://github.com/swoole/swoole-src)
+* [redis](https://github.com/phpredis/phpredis/)
+* [swoole](https://github.com/swoole/swoole-src)
 
 ## Unsupported Extensions
 
 * [Apache](http://php.net/manual/en/book.apache.php)
 * [COM](http://php.net/manual/en/book.com.php)
-* [ctype](http://php.net/manual/en/book.ctype.php)
 * [DBA](http://php.net/manual/en/book.dba.php)
 * [Firebird/Interbase](http://php.net/manual/en/book.ibase.php)
 * [GMP](http://php.net/manual/en/book.gmp.php)
 * [Imagick](http://php.net/manual/en/book.imagick.php)
 * [Informix](http://php.net/manual/en/book.ifx.php)
 * [IMAP](http://php.net/manual/en/book.imap.php)
-* [Enchant](http://php.net/manual/en/book.enchant.php)
 * [Frontbase](http://php.net/manual/en/book.fbsql.php)
 * [msql](http://php.net/manual/en/book.msql.php)
 * [LDAP](http://php.net/manual/en/book.ldap.php)
@@ -132,7 +133,6 @@ PECL extensions:
 * [OCI8](http://php.net/manual/en/book.oci8.php)
 * [ODBC](http://php.net/manual/en/book.uodbc.php)
 * [PostgreSQL](http://php.net/manual/en/book.pgsql.php)
-* [Pspell](http://php.net/manual/en/book.pspell.php)
 * [Readline](http://php.net/manual/en/book.readline.php)
 * [Recode](http://php.net/manual/en/book.recode.php)
 * [SNMP](http://php.net/manual/en/book.snmp.php)
