@@ -2,4 +2,5 @@
 
 exec 2>&1
 source /env
+
 exec php-fpm --nodaemonize

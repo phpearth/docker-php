@@ -113,10 +113,11 @@ PHP extensions:
 
 PECL extensions:
 
-* [libsodium](https://github.com/jedisct1/libsodium-php)
-* [mongodb](http://docs.php.net/manual/en/set.mongodb.php)
-* [redis](https://github.com/phpredis/phpredis/)
-* [swoole](https://github.com/swoole/swoole-src)
+* [libsodium](https://pecl.php.net/package/libsodium)
+* [memcached](https://pecl.php.net/package/memcached)
+* [mongodb](https://pecl.php.net/package/mongodb)
+* [redis](https://pecl.php.net/package/redis)
+* [swoole](https://pecl.php.net/package/swoole)
 
 ## Unsupported Extensions
 

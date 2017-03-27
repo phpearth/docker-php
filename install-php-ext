@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Helper installation script for PHP extensions
+#
+# PHP and PECL extensions format: key is the PHP extension name, value is the
+# system dependency.
 
 # Output usage documentation and help
 function usage () {
@@ -9,15 +12,6 @@ Helper installation script for PHP extensions
 Usage: install-php-ext EXTENSION1 EXTENSION2 ...
 END
 }
-
-# Supported PECL extensions
-# Format: key is the PHP extension name, value is the system dependency
-declare -A extensions=(
-  [libsodium]=libsodium-dev
-  [swoole]=
-  [redis]=
-  [mongodb]=openssl-dev
-)
 
 # Assign package managers and tasks based on operating system
 declare -A os=(
@@ -32,7 +26,7 @@ do
       # Alpine
       apk)
         # System dependencies for building extensions and downloading PHP
-        BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers"
+        BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers pkgconf"
         # Tasks before extensions installation
         pre_install="apk add --no-cache --virtual .build-deps $BUILD_DEPS"
         install_deps="apk add --no-cache "
@@ -51,12 +45,21 @@ do
           [tidy]=tidyhtml-dev
           [wddx]=libxml2-dev
         )
+
+        # Supported PECL extensions for Alpine
+        declare -A extensions=(
+          [libsodium]=libsodium-dev
+          [swoole]=
+          [redis]=
+          [mongodb]=openssl-dev
+          [memcached]="libmemcached-dev cyrus-sasl-dev zlib-dev"
+        )
         ;;
 
       # Debian
       apt-get)
         # System dependencies for building extensions and downloading PHP
-        BUILD_DEPS="autoconf gcc g++ make re2c"
+        BUILD_DEPS="autoconf gcc g++ make re2c pkg-config"
         pre_install="apt-get update && apt-get -y install $BUILD_DEPS --no-install-recommends"
         install_deps="apt-get install -y --no-install-recommends "
         post_install="apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*"
@@ -73,6 +76,15 @@ do
           [enchant]=libenchant-dev
           [tidy]=libtidy-dev
           [wddx]=libxml2-dev
+        )
+
+        # Supported PECL extensions for Debian
+        declare -A extensions=(
+          [libsodium]=libsodium-dev
+          [swoole]=
+          [redis]=
+          [mongodb]=openssl-dev
+          [memcached]="libmemcached-dev libsasl2-dev zlib1g-dev"
         )
         ;;
 
@@ -109,7 +121,12 @@ function install () {
 
   # PECL extension
   elif [[ "${!extensions[@]}" =~ "$1" ]]; then
-    pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+    # PECL memcached extension prompts for --with-libmemcached-dir
+    if [[ "$1" == "memcached" ]]; then
+      yes 'yes' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+    else
+      pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+    fi
 
   # Unsupported extension
   else
