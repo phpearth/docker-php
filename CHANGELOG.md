@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [0.0.3] 2017-03-27
+
+### Added
+
+* The memcached extension support
+
 ## [0.0.2] 2017-03-21
 
 ### Added
