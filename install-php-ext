@@ -35,24 +35,25 @@ do
 
         # Supported PHP extensions for Alpine
         declare -A core_extensions=(
+          [enchant]=enchant-dev
           [mcrypt]=libmcrypt-dev
-          [soap]=libxml2-dev
-          [pcntl]=
           [mysqli]=
+          [pcntl]=
           [pdo_mysql]=
           [pspell]=aspell-dev
-          [enchant]=enchant-dev
+          [soap]=libxml2-dev
           [tidy]=tidyhtml-dev
           [wddx]=libxml2-dev
         )
 
         # Supported PECL extensions for Alpine
         declare -A extensions=(
+          [imagick]="imagemagick-dev libtool"
           [libsodium]=libsodium-dev
-          [swoole]=
-          [redis]=
-          [mongodb]=openssl-dev
           [memcached]="libmemcached-dev cyrus-sasl-dev zlib-dev"
+          [mongodb]=openssl-dev
+          [redis]=
+          [swoole]=
         )
         ;;
 
@@ -67,24 +68,25 @@ do
 
         # Supported PHP extensions for Debian
         declare -A core_extensions=(
+          [enchant]=libenchant-dev
           [mcrypt]=libmcrypt-dev
+          [mysqli]=
           [soap]=libxml2-dev
           [pcntl]=
-          [mysqli]=
           [pdo_mysql]=
           [pspell]="libaspell-dev libpspell-dev"
-          [enchant]=libenchant-dev
           [tidy]=libtidy-dev
           [wddx]=libxml2-dev
         )
 
         # Supported PECL extensions for Debian
         declare -A extensions=(
+          [imagick]="imagemagick libmagickwand-dev"
           [libsodium]=libsodium-dev
-          [swoole]=
-          [redis]=
-          [mongodb]=openssl-dev
           [memcached]="libmemcached-dev libsasl2-dev zlib1g-dev"
+          [mongodb]=openssl-dev
+          [redis]=
+          [swoole]=
         )
         ;;
 
@@ -124,6 +126,8 @@ function install () {
     # PECL memcached extension prompts for --with-libmemcached-dir
     if [[ "$1" == "memcached" ]]; then
       yes 'yes' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+    elif [[ "$1" == "imagick" ]]; then
+      yes '' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
     else
       pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
     fi

@@ -113,6 +113,7 @@ PHP extensions:
 
 PECL extensions:
 
+* [imagick](https://pecl.php.net/package/imagick)
 * [libsodium](https://pecl.php.net/package/libsodium)
 * [memcached](https://pecl.php.net/package/memcached)
 * [mongodb](https://pecl.php.net/package/mongodb)
@@ -126,7 +127,6 @@ PECL extensions:
 * [DBA](http://php.net/manual/en/book.dba.php)
 * [Firebird/Interbase](http://php.net/manual/en/book.ibase.php)
 * [GMP](http://php.net/manual/en/book.gmp.php)
-* [Imagick](http://php.net/manual/en/book.imagick.php)
 * [Informix](http://php.net/manual/en/book.ifx.php)
 * [IMAP](http://php.net/manual/en/book.imap.php)
 * [Frontbase](http://php.net/manual/en/book.fbsql.php)
