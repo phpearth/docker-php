@@ -36,6 +36,7 @@ do
         # Supported PHP extensions for Alpine
         declare -A core_extensions=(
           [enchant]=enchant-dev
+          [gmp]=gmp-dev
           [mcrypt]=libmcrypt-dev
           [mysqli]=
           [pcntl]=
@@ -72,6 +73,7 @@ do
         # Supported PHP extensions for Debian
         declare -A core_extensions=(
           [enchant]=libenchant-dev
+          [gmp]=libgmp-dev
           [mcrypt]=libmcrypt-dev
           [mysqli]=
           [soap]=libxml2-dev

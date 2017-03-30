@@ -102,6 +102,7 @@ RUN install-php-ext libsodium
 PHP extensions:
 
 * [enchant](http://php.net/manual/en/book.enchant.php)
+* [gmp](http://php.net/manual/en/book.gmp.php)
 * [mcrypt](http://php.net/manual/en/book.mcrypt.php)
 * [mysqli](http://php.net/manual/en/book.mysqli.php)
 * [pcntl](http://php.net/manual/en/book.pcntl.php)
@@ -129,7 +130,6 @@ PECL extensions:
 * [COM](http://php.net/manual/en/book.com.php)
 * [DBA](http://php.net/manual/en/book.dba.php)
 * [Firebird/Interbase](http://php.net/manual/en/book.ibase.php)
-* [GMP](http://php.net/manual/en/book.gmp.php)
 * [Informix](http://php.net/manual/en/book.ifx.php)
 * [IMAP](http://php.net/manual/en/book.imap.php)
 * [Frontbase](http://php.net/manual/en/book.fbsql.php)
