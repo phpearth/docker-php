@@ -110,6 +110,7 @@ PHP extensions:
 * [soap](http://php.net/manual/en/extensions.php)
 * [tidy](http://php.net/manual/en/book.tidy.php)
 * [wddx](http://php.net/manual/en/book.wddx.php)
+* [xmlrpc](http://php.net/manual/en/book.xmlrpc.php)
 
 PECL extensions:
 
@@ -139,7 +140,6 @@ PECL extensions:
 * [Readline](http://php.net/manual/en/book.readline.php)
 * [Recode](http://php.net/manual/en/book.recode.php)
 * [SNMP](http://php.net/manual/en/book.snmp.php)
-* [XML-RPC](http://php.net/manual/en/book.xmlrpc.php)
 
 ## See Also
 

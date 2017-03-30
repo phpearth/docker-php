@@ -44,6 +44,7 @@ do
           [soap]=libxml2-dev
           [tidy]=tidyhtml-dev
           [wddx]=libxml2-dev
+          [xmlrpc]=libxml2-dev
         )
 
         # Supported PECL extensions for Alpine
@@ -77,6 +78,7 @@ do
           [pspell]="libaspell-dev libpspell-dev"
           [tidy]=libtidy-dev
           [wddx]=libxml2-dev
+          [xmlrpc]=libxml2-dev
         )
 
         # Supported PECL extensions for Debian
