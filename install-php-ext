@@ -40,6 +40,8 @@ do
           [mysqli]=
           [pcntl]=
           [pdo_mysql]=
+          [pdo_pgsql]=postgresql-dev
+          [pgsql]=postgresql-dev
           [pspell]=aspell-dev
           [soap]=libxml2-dev
           [tidy]=tidyhtml-dev
@@ -75,6 +77,8 @@ do
           [soap]=libxml2-dev
           [pcntl]=
           [pdo_mysql]=
+          [pdo_pgsql]=postgresql-server-dev-all
+          [pgsql]=postgresql-server-dev-all
           [pspell]="libaspell-dev libpspell-dev"
           [tidy]=libtidy-dev
           [wddx]=libxml2-dev
