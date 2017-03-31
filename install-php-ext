@@ -37,6 +37,7 @@ do
         declare -A core_extensions=(
           [enchant]=enchant-dev
           [gmp]=gmp-dev
+          [ldap]=openldap-dev
           [mcrypt]=libmcrypt-dev
           [mysqli]=
           [pcntl]=
@@ -60,6 +61,11 @@ do
           [redis]=
           [swoole]=
         )
+
+        # Supported PHP extensions options for Alpine
+        declare -A core_extensions_options=(
+          [wddx]="--with-libxml-dir"
+        )
         ;;
 
       # Debian
@@ -75,6 +81,7 @@ do
         declare -A core_extensions=(
           [enchant]=libenchant-dev
           [gmp]=libgmp-dev
+          [ldap]=libldap2-dev
           [mcrypt]=libmcrypt-dev
           [mysqli]=
           [soap]=libxml2-dev
@@ -98,6 +105,12 @@ do
           [redis]=
           [swoole]=
         )
+
+        # Supported PHP extensions options for Debian
+        declare -A core_extensions_options=(
+          [wddx]="--with-libxml-dir"
+          [ldap]="--with-libdir=lib/x86_64-linux-gnu"
+        )
         ;;
 
       *)
@@ -107,11 +120,6 @@ do
     esac
   fi
 done
-
-# Supported PHP extensions options for both systems
-declare -A core_extensions_options=(
-  [wddx]="--with-libxml-dir"
-)
 
 # Install given extension
 function install () {

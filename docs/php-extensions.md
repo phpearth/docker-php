@@ -104,6 +104,7 @@ PHP extensions:
 
 * [enchant](http://php.net/manual/en/book.enchant.php)
 * [gmp](http://php.net/manual/en/book.gmp.php)
+* [ldap](http://php.net/manual/en/book.ldap.php)
 * [mcrypt](http://php.net/manual/en/book.mcrypt.php)
 * [mysqli](http://php.net/manual/en/book.mysqli.php)
 * [pcntl](http://php.net/manual/en/book.pcntl.php)
@@ -136,7 +137,6 @@ PECL extensions:
 * [IMAP](http://php.net/manual/en/book.imap.php)
 * [Frontbase](http://php.net/manual/en/book.fbsql.php)
 * [msql](http://php.net/manual/en/book.msql.php)
-* [LDAP](http://php.net/manual/en/book.ldap.php)
 * [NSAPI](http://php.net/manual/en/book.nsapi.php)
 * [OCI8](http://php.net/manual/en/book.oci8.php)
 * [ODBC](http://php.net/manual/en/book.uodbc.php)
