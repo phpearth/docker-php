@@ -11,7 +11,18 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [0.0.5] 2017-03-31
+
+### Added
+
+* xmlrpc support
+* postgresql and pdo_pgsql support
+* gmp support
+* recode support
+
 ## [0.0.4] 2017-03-28
+
+### Added
 
 * The imagick PECL extension support
 
