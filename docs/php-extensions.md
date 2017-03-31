@@ -62,6 +62,7 @@ required to run some every day PHP applications. These include the following:
 * [Mhash](http://php.net/manual/en/book.mhash.php)
 * [Mysqlnd](http://php.net/manual/en/book.mysqlnd.php)
 * [OpenSSL](http://php.net/manual/en/book.openssl.php)
+* [readline](http://php.net/manual/en/book.readline.php)
 * [SimpleXML](http://php.net/manual/en/book.simplexml.php)
 * [Semaphore](http://php.net/manual/en/book.sem.php)
 * [shmop](http://php.net/manual/en/book.shmop.php)
@@ -139,7 +140,6 @@ PECL extensions:
 * [NSAPI](http://php.net/manual/en/book.nsapi.php)
 * [OCI8](http://php.net/manual/en/book.oci8.php)
 * [ODBC](http://php.net/manual/en/book.uodbc.php)
-* [Readline](http://php.net/manual/en/book.readline.php)
 * [SNMP](http://php.net/manual/en/book.snmp.php)
 
 ## See Also
