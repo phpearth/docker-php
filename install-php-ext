@@ -44,6 +44,7 @@ do
           [pdo_pgsql]=postgresql-dev
           [pgsql]=postgresql-dev
           [pspell]=aspell-dev
+          [recode]=recode-dev
           [soap]=libxml2-dev
           [tidy]=tidyhtml-dev
           [wddx]=libxml2-dev
@@ -82,6 +83,7 @@ do
           [pdo_pgsql]=postgresql-server-dev-all
           [pgsql]=postgresql-server-dev-all
           [pspell]="libaspell-dev libpspell-dev"
+          [recode]=librecode-dev
           [tidy]=libtidy-dev
           [wddx]=libxml2-dev
           [xmlrpc]=libxml2-dev

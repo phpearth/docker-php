@@ -110,6 +110,7 @@ PHP extensions:
 * [pdo_pgsql](http://php.net/manual/en/ref.pdo-pgsql.php)
 * [PostgreSQL](http://php.net/manual/en/book.pgsql.php)
 * [pspell](http://php.net/manual/en/book.pspell.php)
+* [recode](http://php.net/manual/en/book.recode.php)
 * [soap](http://php.net/manual/en/extensions.php)
 * [tidy](http://php.net/manual/en/book.tidy.php)
 * [wddx](http://php.net/manual/en/book.wddx.php)
@@ -139,7 +140,6 @@ PECL extensions:
 * [OCI8](http://php.net/manual/en/book.oci8.php)
 * [ODBC](http://php.net/manual/en/book.uodbc.php)
 * [Readline](http://php.net/manual/en/book.readline.php)
-* [Recode](http://php.net/manual/en/book.recode.php)
 * [SNMP](http://php.net/manual/en/book.snmp.php)
 
 ## See Also
