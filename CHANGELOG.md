@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [0.0.7] 2017-04-01
+
+## Added
+
+* Fixed OpenLiteSpeed installation dependencies
+
 ## [0.0.6] 2017-04-01
 
 ### Added
