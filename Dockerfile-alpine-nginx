@@ -11,9 +11,6 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 # Persistent runtime dependencies
 ENV PHP_DEPS \
         libedit \
-        zip \
-        unzip \
-        git \
         icu \
         gettext \
         libxslt \
@@ -123,8 +120,6 @@ RUN set -x \
     # Remove dependencies
     && rm -rf /usr/src/* \
     && apk del .build-deps \
-    # Composer
-    && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 

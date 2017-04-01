@@ -35,8 +35,10 @@ do
 
         # Supported PHP extensions for Alpine
         declare -A core_extensions=(
+          [dba]=
           [enchant]=enchant-dev
           [gmp]=gmp-dev
+          [imap]="imap-dev krb5-dev openssl-dev"
           [ldap]=openldap-dev
           [mcrypt]=libmcrypt-dev
           [mysqli]=
@@ -46,6 +48,7 @@ do
           [pgsql]=postgresql-dev
           [pspell]=aspell-dev
           [recode]=recode-dev
+          [snmp]=net-snmp-dev
           [soap]=libxml2-dev
           [tidy]=tidyhtml-dev
           [wddx]=libxml2-dev
@@ -54,6 +57,7 @@ do
 
         # Supported PECL extensions for Alpine
         declare -A extensions=(
+          [apcu]=
           [imagick]="imagemagick-dev libtool"
           [libsodium]=libsodium-dev
           [memcached]="libmemcached-dev cyrus-sasl-dev zlib-dev"
@@ -64,6 +68,7 @@ do
 
         # Supported PHP extensions options for Alpine
         declare -A core_extensions_options=(
+          [imap]="--with-kerberos --with-imap-ssl"
           [wddx]="--with-libxml-dir"
         )
         ;;
@@ -79,18 +84,21 @@ do
 
         # Supported PHP extensions for Debian
         declare -A core_extensions=(
+          [dba]=
           [enchant]=libenchant-dev
           [gmp]=libgmp-dev
+          [imap]="libc-client-dev libssl-dev libkrb5-dev"
           [ldap]=libldap2-dev
           [mcrypt]=libmcrypt-dev
           [mysqli]=
-          [soap]=libxml2-dev
           [pcntl]=
           [pdo_mysql]=
           [pdo_pgsql]=postgresql-server-dev-all
           [pgsql]=postgresql-server-dev-all
           [pspell]="libaspell-dev libpspell-dev"
           [recode]=librecode-dev
+          [snmp]="libsnmp-dev snmp"
+          [soap]=libxml2-dev
           [tidy]=libtidy-dev
           [wddx]=libxml2-dev
           [xmlrpc]=libxml2-dev
@@ -98,6 +106,7 @@ do
 
         # Supported PECL extensions for Debian
         declare -A extensions=(
+          [apcu]=
           [imagick]="imagemagick libmagickwand-dev"
           [libsodium]=libsodium-dev
           [memcached]="libmemcached-dev libsasl2-dev zlib1g-dev"
@@ -108,8 +117,9 @@ do
 
         # Supported PHP extensions options for Debian
         declare -A core_extensions_options=(
-          [wddx]="--with-libxml-dir"
+          [imap]="--with-kerberos --with-imap-ssl"
           [ldap]="--with-libdir=lib/x86_64-linux-gnu"
+          [wddx]="--with-libxml-dir"
         )
         ;;
 

@@ -33,14 +33,6 @@ docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/my
 Instead of `phpearth/php` you can also use `phpearth/php:litespeed` or
 `phpearth/php:alpine`.
 
-## Composer
-
-To run Composer:
-
-```bash
-docker run -it --rm --name composer -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php composer
-```
-
 ## Install PHP Extensions
 
 To install additional PHP extensions, use `install-php-ext` script:

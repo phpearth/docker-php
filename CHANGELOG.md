@@ -11,6 +11,14 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [0.0.6] 2017-04-01
+
+### Added
+
+* Added support for multiple PHP extensions
+* Documentation improvements
+* Composer removed from base images
+
 ## [0.0.5] 2017-03-31
 
 ### Added

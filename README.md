@@ -13,7 +13,6 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 * [Latest PHP 7.1](https://php.net)
 * [Nginx](https://nginx.org/)
 * [OpenLiteSpeed](http://open.litespeedtech.com/)
-* [Composer](https://getcomposer.org)
 * PHP Extensions installation script
 * [runit](http://smarden.org/runit/) for running multiple services without overhead.
 * Optimized Docker image sizes
@@ -36,12 +35,6 @@ To run a CLI PHP script:
 
 ```bash
 docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php php script.php
-```
-
-To run Composer:
-
-```bash
-docker run -it --rm --name composer -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php composer
 ```
 
 ## Documentation

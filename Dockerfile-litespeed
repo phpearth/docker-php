@@ -2,6 +2,7 @@ FROM debian:jessie-slim
 
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY download-php install-php-ext /usr/local/bin/
+COPY litespeed/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
 ENV LS_VER 1.4.25
 ENV PHP_INI_DIR /usr/local/etc/php
@@ -12,9 +13,6 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 # Persistent runtime dependencies
 ENV PHP_DEPS \
         libedit2 \
-        zip \
-        unzip \
-        git \
         libicu52 \
         libxslt1.1 \
         libxslt1-dev \
@@ -54,8 +52,7 @@ ENV BUILD_DEPS \
         libpng-dev
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-    && apt-get update && apt-get -y install curl ca-certificates --no-install-recommends \
-    && apt-get -y install openssl libssl-dev -t jessie-backports --no-install-recommends \
+    && apt-get update && apt-get -y install curl ca-certificates openssl libssl-dev --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
@@ -122,8 +119,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
-    # Composer
-    && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     # Remove build dependencies
     && apt-get purge -y --auto-remove $BUILD_DEPS \
     && apt-get -y autoremove \

@@ -42,15 +42,18 @@ By default these images come with some pre-installed PHP extensions that are
 required to run some every day PHP applications. These include the following:
 
 * [bcmath](http://php.net/manual/en/book.bc.php)
+* [Bzip2](http://php.net/manual/en/book.bzip2.php)
 * [calendar](http://php.net/manual/en/book.calendar.php)
 * [ctype](http://php.net/manual/en/book.ctype.php)
 * [curl](http://php.net/manual/en/book.curl.php)
 * [DOM](http://php.net/manual/en/book.dom.php)
 * [exif](http://php.net/manual/en/book.exif.php)
 * [fileinfo](http://php.net/manual/en/book.fileinfo.php)
+* [filter](http://php.net/manual/en/book.filter.php)
 * [ftp](http://php.net/manual/en/book.ftp.php)
 * [GD](http://php.net/manual/en/book.image.php)
 * [Gettext](http://php.net/manual/en/book.gettext.php)
+* [hash](http://php.net/manual/en/book.hash.php)
 * [iconv](http://php.net/manual/en/book.iconv.php)
 * [intl](http://php.net/manual/en/book.intl.php)
 * [JSON](http://php.net/manual/en/book.json.php)
@@ -68,13 +71,13 @@ required to run some every day PHP applications. These include the following:
 * [shmop](http://php.net/manual/en/book.shmop.php)
 * [Sockets](http://php.net/manual/en/book.sockets.php)
 * [SQLite3](http://php.net/manual/en/book.sqlite3.php)
+* [tokenizer](http://php.net/manual/en/book.tokenizer.php)
 * [XML Parser](http://php.net/manual/en/book.xml.php)
 * [XMLReader](http://php.net/manual/en/book.xmlreader.php)
 * [XMLWriter](http://php.net/manual/en/book.xmlwriter.php)
 * [XSL](http://php.net/manual/en/book.xsl.php)
 * [Zip](http://php.net/manual/en/book.zip.php)
 * [Zlib](http://php.net/manual/en/book.zlib.php)
-* [Bzip2](http://php.net/manual/en/book.bzip2.php)
 
 ## Installing Extensions
 
@@ -102,8 +105,10 @@ RUN install-php-ext libsodium
 
 PHP extensions:
 
+* [dba](http://php.net/manual/en/book.dba.php)
 * [enchant](http://php.net/manual/en/book.enchant.php)
 * [gmp](http://php.net/manual/en/book.gmp.php)
+* [imap](http://php.net/manual/en/book.imap.php)
 * [ldap](http://php.net/manual/en/book.ldap.php)
 * [mcrypt](http://php.net/manual/en/book.mcrypt.php)
 * [mysqli](http://php.net/manual/en/book.mysqli.php)
@@ -113,6 +118,7 @@ PHP extensions:
 * [PostgreSQL](http://php.net/manual/en/book.pgsql.php)
 * [pspell](http://php.net/manual/en/book.pspell.php)
 * [recode](http://php.net/manual/en/book.recode.php)
+* [snmp](http://php.net/manual/en/book.snmp.php)
 * [soap](http://php.net/manual/en/extensions.php)
 * [tidy](http://php.net/manual/en/book.tidy.php)
 * [wddx](http://php.net/manual/en/book.wddx.php)
@@ -120,27 +126,13 @@ PHP extensions:
 
 PECL extensions:
 
+* [apcu](https://pecl.php.net/package/APCu)
 * [imagick](https://pecl.php.net/package/imagick)
 * [libsodium](https://pecl.php.net/package/libsodium)
 * [memcached](https://pecl.php.net/package/memcached)
 * [mongodb](https://pecl.php.net/package/mongodb)
 * [redis](https://pecl.php.net/package/redis)
 * [swoole](https://pecl.php.net/package/swoole)
-
-## Unsupported Extensions
-
-* [Apache](http://php.net/manual/en/book.apache.php)
-* [COM](http://php.net/manual/en/book.com.php)
-* [DBA](http://php.net/manual/en/book.dba.php)
-* [Firebird/Interbase](http://php.net/manual/en/book.ibase.php)
-* [Informix](http://php.net/manual/en/book.ifx.php)
-* [IMAP](http://php.net/manual/en/book.imap.php)
-* [Frontbase](http://php.net/manual/en/book.fbsql.php)
-* [msql](http://php.net/manual/en/book.msql.php)
-* [NSAPI](http://php.net/manual/en/book.nsapi.php)
-* [OCI8](http://php.net/manual/en/book.oci8.php)
-* [ODBC](http://php.net/manual/en/book.uodbc.php)
-* [SNMP](http://php.net/manual/en/book.snmp.php)
 
 ## See Also
 
