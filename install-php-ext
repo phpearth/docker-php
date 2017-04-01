@@ -64,6 +64,7 @@ do
           [mongodb]=openssl-dev
           [redis]=
           [swoole]=
+          [xdebug]=
         )
 
         # Supported PHP extensions options for Alpine
@@ -113,6 +114,7 @@ do
           [mongodb]=openssl-dev
           [redis]=
           [swoole]=
+          [xdebug]=
         )
 
         # Supported PHP extensions options for Debian
@@ -156,6 +158,10 @@ function install () {
       yes 'yes' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
     elif [[ "$1" == "imagick" ]]; then
       yes '' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+    # xdebug is Zend extension
+    elif [[ "$1" == "xdebug" ]]; then
+      PHPAPI=`php -i | grep 'PHP API' | sed -e 's/PHP API => //'`
+      pecl install $1 && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
     else
       pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
     fi

@@ -133,6 +133,7 @@ PECL extensions:
 * [mongodb](https://pecl.php.net/package/mongodb)
 * [redis](https://pecl.php.net/package/redis)
 * [swoole](https://pecl.php.net/package/swoole)
+* [xdebug](https://pecl.php.net/package/xdebug)
 
 ## See Also
 
