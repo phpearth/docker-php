@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [0.0.9] 2017-04-13
+
+### Added
+
+* PHP 7.1.4
+
 ## [0.0.8] 2017-04-01
 
 ### Added
