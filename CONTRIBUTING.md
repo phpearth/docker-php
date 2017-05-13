@@ -56,9 +56,9 @@ version (e.g. 1.x.y) is released by the following release process:
 
 * **2. Tag a New Release**
 
-  Tag a new version on [GitHub](https://github.com/php-earth/docker-php/releases).
+  Tag a new version on [GitHub](https://github.com/paradoxcode/docker-php/releases).
 
 * **3. Docker Images**
 
   With a new tag release, Docker images are build automatically on
-  [Docker Hub](https://hub.docker.com/r/phpearth/php/).
+  [Docker Hub](https://hub.docker.com/r/paradoxcode/php/).

@@ -25,7 +25,7 @@ Cons:
 You can also simply install Composer per project.
 
 ```
-FROM phpearth/php
+FROM paradoxcode/php
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 ```
@@ -35,7 +35,7 @@ PHP packages from sources instead of zip archives you will also need to install
 [version control system](https://getcomposer.org/doc/00-intro.md#system-requirements):
 
 ```
-FROM phpearth/php
+FROM paradoxcode/php
 
 RUN apt-get install git \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer

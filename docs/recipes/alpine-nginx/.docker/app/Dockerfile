@@ -1,4 +1,4 @@
-FROM phpearth/php:alpine
+FROM paradoxcode/php:alpine
 
 RUN install-php-ext memcached
 

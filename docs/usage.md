@@ -3,7 +3,7 @@
 Create a `Dockerfile` for your setup:
 
 ```bash
-FROM phpearth/php
+FROM paradoxcode/php
 ```
 
 ## Alpine
@@ -11,7 +11,7 @@ FROM phpearth/php
 Alpine Nginx image:
 
 ```bash
-FROM phpearth/php:alpine
+FROM paradoxcode/php:alpine
 ```
 
 ## OpenLiteSpeed
@@ -19,7 +19,7 @@ FROM phpearth/php:alpine
 For OpenLiteSpeed, create a Dockerfile:
 
 ```bash
-FROM phpearth/php:litespeed
+FROM paradoxcode/php:litespeed
 ```
 
 ## PHP CLI Script
@@ -27,18 +27,18 @@ FROM phpearth/php:litespeed
 To run a CLI PHP script:
 
 ```bash
-docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php php script.php
+docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp paradoxcode/php php script.php
 ```
 
-Instead of `phpearth/php` you can also use `phpearth/php:litespeed` or
-`phpearth/php:alpine`.
+Instead of `paradoxcode/php` you can also use `paradoxcode/php:litespeed` or
+`paradoxcode/php:alpine`.
 
 ## Install PHP Extensions
 
 To install additional PHP extensions, use `install-php-ext` script:
 
 ```bash
-FROM phpearth/php
+FROM paradoxcode/php
 
 RUN install-php-ext libsodium mcrypt soap
 ```

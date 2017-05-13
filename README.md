@@ -1,6 +1,6 @@
 # Docker PHP Images
 
-[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/phpearth/php/)
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/paradoxcode/php/)
 
 These are customized Docker images crafted with care for
 various tasks we've met. with PHP, Nginx and OpenLiteSpeed.
@@ -19,31 +19,31 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 
 ## Tags
 
-* `phpearth/php:latest` - Debian Jessie Slim, Nginx, PHP FPM
-* `phpearth/php:alpine` - Alpine, Nginx, PHP FPM
-* `phpearth/php:litespeed` - Debian Jessie Slim, OpenLiteSpeed, PHP LiteSpeed SAPI
+* `paradoxcode/php:latest` - Debian Jessie Slim, Nginx, PHP FPM
+* `paradoxcode/php:alpine` - Alpine, Nginx, PHP FPM
+* `paradoxcode/php:litespeed` - Debian Jessie Slim, OpenLiteSpeed, PHP LiteSpeed SAPI
 
 ## Quick Usage
 
 Create a `Dockerfile` for your setup:
 
 ```bash
-FROM phpearth/php
+FROM paradoxcode/php
 ```
 
 To run a CLI PHP script:
 
 ```bash
-docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php php script.php
+docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp paradoxcode/php php script.php
 ```
 
 ## Documentation
 
-Check a more [extended documentation](https://github.com/php-earth/docker-php/tree/master/docs)
+Check a more [extended documentation](https://github.com/paradoxcode/docker-php/tree/master/docs)
 for additional information how to use these images and what's included.
 
 ## License and Contributing
 
-[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md)
+[Contributions](https://github.com/paradoxcode/docker-php/blob/master/CONTRIBUTING.md)
 are most welcome. This repository is released under the
-[MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).
+[MIT license](https://github.com/paradoxcode/docker-php/blob/master/LICENSE).

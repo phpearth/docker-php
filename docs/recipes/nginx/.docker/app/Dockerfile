@@ -1,4 +1,4 @@
-FROM phpearth/php
+FROM paradoxcode/php
 
 RUN install-php-ext memcached
 
