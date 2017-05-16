@@ -1,4 +1,4 @@
-FROM paradoxcode/php
+FROM petk/php
 
 RUN install-php-ext memcached
 

@@ -3,7 +3,7 @@
 Create a `Dockerfile` for your setup:
 
 ```bash
-FROM paradoxcode/php
+FROM petk/php
 ```
 
 ## Alpine
@@ -11,7 +11,7 @@ FROM paradoxcode/php
 Alpine Nginx image:
 
 ```bash
-FROM paradoxcode/php:alpine
+FROM petk/php:alpine
 ```
 
 ## OpenLiteSpeed
@@ -19,7 +19,7 @@ FROM paradoxcode/php:alpine
 For OpenLiteSpeed, create a Dockerfile:
 
 ```bash
-FROM paradoxcode/php:litespeed
+FROM petk/php:litespeed
 ```
 
 ## PHP CLI Script
@@ -27,18 +27,18 @@ FROM paradoxcode/php:litespeed
 To run a CLI PHP script:
 
 ```bash
-docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp paradoxcode/php php script.php
+docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp petk/php php script.php
 ```
 
-Instead of `paradoxcode/php` you can also use `paradoxcode/php:litespeed` or
-`paradoxcode/php:alpine`.
+Instead of `petk/php` you can also use `petk/php:litespeed` or
+`petk/php:alpine`.
 
 ## Install PHP Extensions
 
 To install additional PHP extensions, use `install-php-ext` script:
 
 ```bash
-FROM paradoxcode/php
+FROM petk/php
 
 RUN install-php-ext libsodium mcrypt soap
 ```

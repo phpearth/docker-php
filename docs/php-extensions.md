@@ -96,7 +96,7 @@ install-php-ext {extension-name}
 To install create a Dockerfile for your application and use the script in the following way:
 
 ```bash
-FROM paradoxcode/php
+FROM petk/php
 
 RUN install-php-ext libsodium
 ```

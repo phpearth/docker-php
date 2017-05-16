@@ -1,4 +1,4 @@
-FROM paradoxcode/php:alpine
+FROM petk/php:alpine
 
 RUN install-php-ext memcached
 
