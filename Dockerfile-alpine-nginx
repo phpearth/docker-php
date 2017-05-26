@@ -53,7 +53,8 @@ ENV BUILD_DEPS \
         libxslt-dev \
         libxml2-dev \
         libjpeg-turbo-dev \
-        gnupg
+        gnupg \
+        openssl-dev
 
 RUN set -x \
 	  && addgroup -g 82 -S www-data \
