@@ -9,10 +9,15 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
-## [0.1.0] 2017-05-26
+## [1.0.1] 2017-05-26
 
 * New cli tag for using PHP CLI
 * Upgraded to Alpine 3.6 base image
+
+## [1.0.0] 2017-05-13
+
+* Repository refactored
+* PHP 7.1.5
 
 ## [0.0.9] 2017-04-13
 
