@@ -2,8 +2,8 @@
 
 [![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/petk/php/)
 
-These are customized Docker images crafted with care for
-various tasks we've met. with PHP, Nginx and OpenLiteSpeed.
+These are customized Docker images crafted with care for various tasks. Containing
+PHP, Nginx and OpenLiteSpeed.
 
 For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/).
 
@@ -19,9 +19,10 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 
 ## Tags
 
-* `petk/php:latest` - Debian Jessie Slim, Nginx, PHP FPM
-* `petk/php:alpine` - Alpine, Nginx, PHP FPM
-* `petk/php:litespeed` - Debian Jessie Slim, OpenLiteSpeed, PHP LiteSpeed SAPI
+* [`latest` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-nginx) - Debian Jessie Slim, Nginx, PHP FPM
+* [`alpine` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-alpine-nginx) - Alpine, Nginx, PHP FPM
+* [`litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-litespeed) - Debian Jessie Slim, OpenLiteSpeed, PHP LiteSpeed SAPI
+* [`cli` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-cli) - Alpine, PHP CLI
 
 ## Quick Usage
 
@@ -34,7 +35,7 @@ FROM petk/php
 To run a CLI PHP script:
 
 ```bash
-docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp petk/php php script.php
+docker run -it --rm --name my-cli-script -v `pwd`:/usr/src/myapp -w /usr/src/myapp petk/php:cli php script.php
 ```
 
 ## Documentation
