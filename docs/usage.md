@@ -10,15 +10,15 @@ FROM petk/php
 
 Alpine Nginx image:
 
-```bash
-FROM petk/php:alpine
+```Dockerfile
+FROM petk/php:nginx
 ```
 
 ## OpenLiteSpeed
 
 For OpenLiteSpeed, create a Dockerfile:
 
-```bash
+```Dockerfile
 FROM petk/php:litespeed
 ```
 
@@ -30,15 +30,15 @@ To run a CLI PHP script:
 docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp petk/php php script.php
 ```
 
-Instead of `petk/php` you can also use `petk/php:litespeed` or
-`petk/php:alpine`.
+Instead of `petk/php` you can also use `petk/php:litespeed`, `petk/php:nginx` or
+`petk/php:nginx-slim`.
 
 ## Install PHP Extensions
 
 To install additional PHP extensions, use `install-php-ext` script:
 
-```bash
-FROM petk/php
+```Dockerfile
+FROM petk/php:nginx
 
 RUN install-php-ext libsodium mcrypt soap
 ```

@@ -9,10 +9,12 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
-## [1.0.1] 2017-05-26
+## [1.0.1] 2017-05-27
 
-* New cli tag for using PHP CLI
-* Upgraded to Alpine 3.6 base image
+* Refactored Docker tags
+* Upgraded to Alpine 3.6 base images
+* Installation script for Composer and Prestissimo plugin for parallel downloading
+  of PHP packages
 
 ## [1.0.0] 2017-05-13
 

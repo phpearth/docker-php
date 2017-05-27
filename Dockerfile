@@ -1,12 +1,15 @@
 FROM alpine:3.6
 
 # Custom helper scripts to download PHP and manage PHP extensions
-COPY download-php install-php-ext /usr/local/bin/
+COPY bin /usr/local/bin/
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
+
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Persistent runtime dependencies
 ENV PHP_DEPS \
@@ -18,10 +21,7 @@ ENV PHP_DEPS \
         freetype \
         libxml2 \
         curl \
-        nginx \
-        nginx-mod-http-headers-more \
-        bash \
-        runit
+        bash
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
@@ -107,23 +107,16 @@ RUN set -x \
         --disable-cgi \
         --with-libxml-dir=/usr \
         --with-libedit \
-        --with-fpm-user=www-data \
-        --with-fpm-group=www-data \
         --with-kerberos \
         --enable-opcache \
-        --enable-fpm \
     && make -j "$(getconf _NPROCESSORS_ONLN)" \
     && make install \
     && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
     && make clean \
-    && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
-    && mkdir /run/php && mkdir /run/nginx \
     # Remove dependencies
     && rm -rf /usr/src/* \
-    && apk del .build-deps \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    && apk del .build-deps
 
-COPY alpine-nginx /
+COPY tags/latest /
 
-CMD ["/sbin/runit-wrapper"]
+CMD ["php", "-a"]

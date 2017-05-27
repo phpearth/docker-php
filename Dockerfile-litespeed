@@ -1,14 +1,17 @@
 FROM debian:jessie-slim
 
 # Custom helper scripts to download PHP and manage PHP extensions
-COPY download-php install-php-ext /usr/local/bin/
-COPY litespeed/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
+COPY bin /usr/local/bin/
+COPY tags/litespeed/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
 ENV LS_VER 1.4.25
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
+
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Persistent runtime dependencies
 ENV PHP_DEPS \
@@ -125,6 +128,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
 
-COPY litespeed /
+COPY tags/litespeed /
 
 CMD ["/sbin/runit-wrapper"]

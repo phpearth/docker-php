@@ -2,5 +2,5 @@
 
 Here are shown some common examples for using these Docker PHP images.
 
-* [alpine-nginx](alpine-nginx)
-* [nginx](nginx)
+* [nginx-alpine](nginx-alpine)
+* [nginx-slim](nginx-slim)

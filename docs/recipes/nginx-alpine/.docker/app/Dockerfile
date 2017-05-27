@@ -1,4 +1,4 @@
-FROM petk/php:alpine
+FROM petk/php:nginx
 
 RUN install-php-ext memcached
 

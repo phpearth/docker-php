@@ -1,7 +1,8 @@
-FROM alpine:3.6
+FROM debian:jessie-slim
 
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
+COPY tags/nginx-slim/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
@@ -13,60 +14,54 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Persistent runtime dependencies
 ENV PHP_DEPS \
-        libedit \
-        icu \
-        gettext \
-        libxslt \
-        libjpeg-turbo \
-        freetype \
+        libedit2 \
+        libicu52 \
+        libxslt1.1 \
+        libjpeg62-turbo \
+        libfreetype6 \
         libxml2 \
-        curl \
-        nginx \
-        nginx-mod-http-headers-more \
-        bash \
+        xz-utils \
         runit
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
+        build-essential \
         autoconf \
-        file \
-        g++ \
-        gcc \
-        make \
         automake \
         libtool \
         bison \
         re2c \
-        pkgconf \
+        pkg-config \
         libc-dev \
         libedit-dev \
-        curl-dev \
-        freetype-dev \
-        gd-dev \
-        bzip2-dev \
-        fcgi-dev \
-        krb5-dev \
-        libpq \
-        icu-dev \
-        gettext-dev \
-        pcre-dev \
-        expat-dev \
-        zlib-dev \
+        libcurl4-openssl-dev \
+        libfreetype6-dev \
+        libgd-dev \
+        libbz2-dev \
+        libfcgi-dev \
+        libfcgi0ldbl \
+        libkrb5-dev \
+        libpq-dev \
+        libicu-dev \
+        libpcre3-dev \
+        libexpat1-dev \
+        zlib1g-dev \
         libpng-dev \
-        libxslt-dev \
-        libxml2-dev \
-        libjpeg-turbo-dev \
-        gnupg \
-        openssl-dev
+        libxslt1-dev \
+        libxml2-dev
 
-RUN set -x \
-	  && addgroup -g 82 -S www-data \
-	  && adduser -u 82 -D -S -G www-data www-data \
-    && apk add --no-cache ca-certificates openssl \
+RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recommends \
+    && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && echo 'deb http://packages.dotdeb.org jessie all' | tee --append /etc/apt/sources.list \
+    && echo 'deb-src http://packages.dotdeb.org jessie all' | tee --append /etc/apt/sources.list \
+    && echo 'deb http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
+    && echo 'deb-src http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
+    && curl https://www.dotdeb.org/dotdeb.gpg | apt-key add - \
+    && apt-get update \
+    && apt-get -y install openssl libssl-dev nginx --no-install-recommends \
     # PHP
-    && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
-    && apk add --no-cache $PHP_DEPS \
-    && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
+    && mkdir -p $PHP_INI_DIR/conf.d \
+    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /usr/src \
     && download-php \
     && cd php-* \
@@ -115,18 +110,20 @@ RUN set -x \
         --with-kerberos \
         --enable-opcache \
         --enable-fpm \
-    && make -j "$(getconf _NPROCESSORS_ONLN)" \
+    && make -j "$(nproc)" \
     && make install \
-    && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+    && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     && make clean \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
-    && mkdir /run/php && mkdir /run/nginx \
+    && mkdir /run/php \
     # Remove dependencies
-    && rm -rf /usr/src/* \
-    && apk del .build-deps \
+    && apt-get purge -y --auto-remove $BUILD_DEPS \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/* \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY tags/nginx /
+COPY tags/nginx-slim /
 
 CMD ["/sbin/runit-wrapper"]
