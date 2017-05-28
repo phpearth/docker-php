@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Helper installation script for PHP extensions
 #
@@ -6,185 +6,340 @@
 # system dependency.
 
 # Output usage documentation and help
-function usage () {
+usage () {
 cat <<END
 Helper installation script for PHP extensions
 Usage: install-php-ext EXTENSION1 EXTENSION2 ...
 END
 }
 
-# Assign package managers and tasks based on operating system
-declare -A os=(
-  [/etc/alpine-release]=apk
-  [/etc/debian_version]=apt-get
-)
-
-for f in ${!os[@]}
-do
-  if [[ -f $f ]];then
-    case "${os[$f]}" in
-      # Alpine
-      apk)
-        # System dependencies for building extensions and downloading PHP
-        BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers pkgconf"
-        # Tasks before extensions installation
-        pre_install="apk add --no-cache --virtual .build-deps $BUILD_DEPS"
-        install_deps="apk add --no-cache "
-        post_install="apk del .build-deps && rm -rf /usr/src/*"
-        j=$(getconf _NPROCESSORS_ONLN)
-
-        # Supported PHP extensions for Alpine
-        declare -A core_extensions=(
-          [dba]=
-          [enchant]=enchant-dev
-          [gmp]=gmp-dev
-          [imap]="imap-dev krb5-dev openssl-dev"
-          [ldap]=openldap-dev
-          [mcrypt]=libmcrypt-dev
-          [mysqli]=
-          [pcntl]=
-          [pdo_mysql]=
-          [pdo_pgsql]=postgresql-dev
-          [pgsql]=postgresql-dev
-          [pspell]=aspell-dev
-          [recode]=recode-dev
-          [snmp]=net-snmp-dev
-          [soap]=libxml2-dev
-          [tidy]=tidyhtml-dev
-          [wddx]=libxml2-dev
-          [xmlrpc]=libxml2-dev
-        )
-
-        # Supported PECL extensions for Alpine
-        declare -A extensions=(
-          [apcu]=
-          [imagick]="imagemagick-dev libtool"
-          [libsodium]=libsodium-dev
-          [memcached]="libmemcached-dev cyrus-sasl-dev zlib-dev"
-          [mongodb]=openssl-dev
-          [redis]=
-          [swoole]=
-          [xdebug]=
-        )
-
-        # Supported PHP extensions options for Alpine
-        declare -A core_extensions_options=(
-          [imap]="--with-kerberos --with-imap-ssl"
-          [wddx]="--with-libxml-dir"
-        )
-        ;;
-
-      # Debian
-      apt-get)
-        # System dependencies for building extensions and downloading PHP
-        BUILD_DEPS="autoconf gcc g++ make re2c pkg-config"
-        pre_install="apt-get update && apt-get -y install $BUILD_DEPS --no-install-recommends"
-        install_deps="apt-get install -y --no-install-recommends "
-        post_install="apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*"
-        j=$(nproc)
-
-        # Supported PHP extensions for Debian
-        declare -A core_extensions=(
-          [dba]=
-          [enchant]=libenchant-dev
-          [gmp]=libgmp-dev
-          [imap]="libc-client-dev libssl-dev libkrb5-dev"
-          [ldap]=libldap2-dev
-          [mcrypt]=libmcrypt-dev
-          [mysqli]=
-          [pcntl]=
-          [pdo_mysql]=
-          [pdo_pgsql]=postgresql-server-dev-all
-          [pgsql]=postgresql-server-dev-all
-          [pspell]="libaspell-dev libpspell-dev"
-          [recode]=librecode-dev
-          [snmp]="libsnmp-dev snmp"
-          [soap]=libxml2-dev
-          [tidy]=libtidy-dev
-          [wddx]=libxml2-dev
-          [xmlrpc]=libxml2-dev
-        )
-
-        # Supported PECL extensions for Debian
-        declare -A extensions=(
-          [apcu]=
-          [imagick]="imagemagick libmagickwand-dev"
-          [libsodium]=libsodium-dev
-          [memcached]="libmemcached-dev libsasl2-dev zlib1g-dev"
-          [mongodb]=openssl-dev
-          [redis]=
-          [swoole]=
-          [xdebug]=
-        )
-
-        # Supported PHP extensions options for Debian
-        declare -A core_extensions_options=(
-          [imap]="--with-kerberos --with-imap-ssl"
-          [ldap]="--with-libdir=lib/x86_64-linux-gnu"
-          [wddx]="--with-libxml-dir"
-        )
-        ;;
-
-      *)
-        usage
-        exit 1
-        ;;
-    esac
-  fi
-done
-
-# Install given extension
-function install () {
-  # If extension has dependencies, install them
-  if [ ! -z "${core_extensions[$1]}" ]; then
-    eval "$install_deps ${core_extensions[$1]}"
-  elif [ ! -z "${extensions[$1]}" ]; then
-    eval "$install_deps ${extensions[$1]}"
+PHP_INSTALLED="no"
+install_php_ext () {
+  EXT=$1
+  shift;
+  ARGS=$@
+  if [ $PHP_INSTALLED = "no" ]; then
+    cd /usr/src/ && download-php
+    PHP_INSTALLED="yes"
   fi
 
-  # PHP extension
-  if [[ "${!core_extensions[@]}" =~ "$1" ]]; then
-    cd /usr/src/php-*/ext/$1
-    phpize
-    ./configure ${core_extensions_options[$1]}
-    make -j"$j"
-    make -j"$j" install
-    echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+  cd /usr/src/php-*/ext/$EXT
+  phpize
+  ./configure $ARGS
+  make -j"$j"
+  make -j"$j" install
+  echo "extension=$EXT.so" | tee /usr/local/etc/php/conf.d/$EXT.ini
+}
 
-  # PECL extension
-  elif [[ "${!extensions[@]}" =~ "$1" ]]; then
-    # PECL memcached extension prompts for --with-libmemcached-dir
-    if [[ "$1" == "memcached" ]]; then
-      yes 'yes' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
-    elif [[ "$1" == "imagick" ]]; then
-      yes '' | pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
-    # xdebug is Zend extension
-    elif [[ "$1" == "xdebug" ]]; then
-      PHPAPI=`php -i | grep 'PHP API' | sed -e 's/PHP API => //'`
-      pecl install $1 && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
-    else
-      pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+PECL_UPDATED="no"
+install_pecl () {
+  if [ $PECL_UPDATED = "no" ]; then
+    pecl channel-update pecl.php.net
+    PECL_UPDATED="yes"
+  fi
+  pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+}
+
+
+if [ -f /etc/alpine-release ]; then
+  # Alpine
+
+  # System dependencies for building extensions and downloading PHP
+  BUILD_DEPS="autoconf gcc g++ make re2c gnupg linux-headers pkgconf"
+  DEPS=""
+  TASKS=""
+  j=$(getconf _NPROCESSORS_ONLN)
+
+  # If arguments are passed
+  if [ $# -gt 0 ];then
+
+    # Install each given extension with its system dependencies
+    while [ "$1" != "" ]; do
+      case "$1" in
+        # PHP Extensions without dependencies
+        dba|mysqli|pcntl|pdo_mysql)
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        # PHP extensions with dependencies
+        enchant)
+          BUILD_DEPS="$BUILD_DEPS enchant-dev"
+          DEPS="$DEPS enchant"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        gmp)
+          BUILD_DEPS="$BUILD_DEPS gmp-dev"
+          DEPS="$DEPS gmp"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        imap)
+          BUILD_DEPS="$BUILD_DEPS imap-dev krb5-dev openssl-dev"
+          DEPS="$DEPS c-client"
+          TASKS="$TASKS install_php_ext $1 --with-kerberos --with-imap-ssl;"
+        ;;
+        ldap)
+          BUILD_DEPS="$BUILD_DEPS openldap-dev"
+          DEPS="$DEPS libldap"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        mcrypt)
+          BUILD_DEPS="$BUILD_DEPS libmcrypt-dev"
+          DEPS="$DEPS libmcrpyt"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        pdo_pgsql)
+          BUILD_DEPS="$BUILD_DEPS postgresql-dev"
+          DEPS="$DEPS libpq"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        pgsql)
+          BUILD_DEPS="$BUILD_DEPS postgresql-dev"
+          DEPS="$DEPS libpq"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        psell)
+          BUILD_DEPS="$BUILD_DEPS aspell-dev"
+          DEPS="$DEPS aspell"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        recode)
+          BUILD_DEPS="$BUILD_DEPS recode-dev"
+          DEPS="$DEPS recode"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        snmp)
+          BUILD_DEPS="$BUILD_DEPS net-snmp-dev"
+          DEPS="$DEPS net-snmp"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        soap)
+          BUILD_DEPS="$BUILD_DEPS libxml2-dev"
+          DEPS="$DEPS libxml2"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        tidy)
+          BUILD_DEPS="$BUILD_DEPS tidyhtml-dev"
+          DEPS="$DEPS tidyhtml"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        wddx)
+          BUILD_DEPS="$BUILD_DEPS libxml2-dev"
+          DEPS="$DEPS libxml2"
+          TASKS="$TASKS install_php_ext $1 --with-libxml-dir;"
+        ;;
+        xmlrpc)
+          BUILD_DEPS="$BUILD_DEPS libxml2-dev"
+          DEPS="$DEPS libxml2"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        # PECL Extensions
+        apcu)
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        imagick)
+          BUILD_DEPS="$BUILD_DEPS imagemagick-dev libtool"
+          DEPS="$DEPS imagemagick"
+          TASKS="$TASKS yes '' | install_pecl $1;"
+        ;;
+        libsodium)
+          BUILD_DEPS="$BUILD_DEPS libsodium-dev"
+          DEPS="$DEPS libsodium"
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        memcached)
+          BUILD_DEPS="$BUILD_DEPS libmemcached-dev cyrus-sasl-dev zlib-dev"
+          DEPS="$DEPS libmemcached-libs"
+          # PECL memcached extension prompts for --with-libmemcached-dir
+          TASKS="$TASKS yes 'yes' | install_pecl $1;"
+        ;;
+        mongodb)
+          BUILD_DEPS="$BUILD_DEPS openssl-dev"
+          DEPS="$DEPS libssl1.0"
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        redis)
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        swoole)
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        xdebug)
+          # xdebug is Zend extension
+          PHPAPI=`php -i | grep 'PHP API' | sed -e 's/PHP API => //'`
+          TASKS="$TASKS pecl install $1 && echo \"zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so\" | tee /usr/local/etc/php/conf.d/$1.ini;"
+        ;;
+      esac
+
+      shift;
+    done;
+
+    # Pre-installation tasks - update packages lists and install build dependencies
+    eval "apk add --no-cache --virtual .build-deps $BUILD_DEPS"
+
+    # Install extension persistent dependencies
+    if [ ! -z "$DEPS" ]; then
+      apk add --no-cache $DEPS
     fi
 
-  # Unsupported extension
+    # Install extensions
+    if [ ! -z "$TASKS" ]; then
+      eval $TASKS
+    fi
+
+    # Post installation tasks - removal of build dependencies for smaller Docker image size
+    apk del .build-deps && rm -rf /usr/src/*
+
   else
     usage
   fi
-}
+elif [ -f /etc/debian_version ]; then
+  # Debian
 
-# If arguments are passed
-if [ $# -gt 0 ];then
-  # Pre-installation tasks - update packages lists and install build dependencies
-  eval "$pre_install && cd /usr/src/ && download-php"
+  # System dependencies for building extensions and downloading PHP
+  BUILD_DEPS="autoconf gcc g++ make re2c pkg-config"
+  DEPS=""
+  TASKS=""
+  j=$(nproc)
 
-  # Install each given extension with its system dependencies
-  while [ "$1" != "" ]; do
-    install ${1} && shift;
-  done;
+  # If arguments are passed
+  if [ $# -gt 0 ];then
 
-  # Post installation tasks - removal of build dependencies for smaller Docker image
-  eval $post_install
+    # Install each given extension with its system dependencies
+    while [ "$1" != "" ]; do
+      case "$1" in
+        # PHP Extensions without dependencies
+        dba|mysqli|pcntl|pdo_mysql)
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        # PHP extensions with dependencies
+        enchant)
+          BUILD_DEPS="$BUILD_DEPS libenchant-dev"
+          DEPS="$DEPS libenchant1c2a"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        gmp)
+          BUILD_DEPS="$BUILD_DEPS libgmp-dev"
+          DEPS="$DEPS libgmp10"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        imap)
+          BUILD_DEPS="$BUILD_DEPS libc-client-dev libssl-dev libkrb5-dev"
+          DEPS="$DEPS libc-client2007e"
+          TASKS="$TASKS install_php_ext $1 --with-kerberos --with-imap-ssl;"
+        ;;
+        ldap)
+          BUILD_DEPS="$BUILD_DEPS libldap2-dev"
+          TASKS="$TASKS install_php_ext $1 --with-libdir=lib/x86_64-linux-gnu;"
+        ;;
+        mcrypt)
+          BUILD_DEPS="$BUILD_DEPS libmcrypt-dev"
+          DEPS="$DEPS libmcrypt4"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        pdo_pgsql)
+          BUILD_DEPS="$BUILD_DEPS postgresql-server-dev-all"
+          DEPS="$DEPS libpq5"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        pgsql)
+          BUILD_DEPS="$BUILD_DEPS postgresql-server-dev-all"
+          DEPS="$DEPS libpq5"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        psell)
+          BUILD_DEPS="$BUILD_DEPS libaspell-dev libpspell-dev"
+          DEPS="$DEPS libaspell15"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        recode)
+          BUILD_DEPS="$BUILD_DEPS librecode-dev"
+          DEPS="$DEPS librecode0"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        snmp)
+          BUILD_DEPS="$BUILD_DEPS libsnmp-dev snmp"
+          DEPS="$DEPS libsnmp30"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        soap)
+          BUILD_DEPS="$BUILD_DEPS libxml2-dev"
+          DEPS="$DEPS libxml2"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        tidy)
+          BUILD_DEPS="$BUILD_DEPS libtidy-dev"
+          DEPS="$DEPS libtidy-0.99-0"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        wddx)
+          BUILD_DEPS="$BUILD_DEPS libxml2-dev"
+          DEPS="$DEPS libxml2"
+          TASKS="$TASKS install_php_ext $1 --with-libxml-dir;"
+        ;;
+        xmlrpc)
+          BUILD_DEPS="$BUILD_DEPS libxml2-dev"
+          DEPS="$DEPS libxml2"
+          TASKS="$TASKS install_php_ext $1;"
+        ;;
+        # PECL Extensions
+        apcu)
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        imagick)
+          BUILD_DEPS="$BUILD_DEPS libmagickwand-dev"
+          DEPS="$DEPS imagemagick"
+          TASKS="$TASKS yes '' | install_pecl $1;"
+        ;;
+        libsodium)
+          BUILD_DEPS="$BUILD_DEPS libsodium-dev"
+          DEPS="$DEPS libsodium13"
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        memcached)
+          BUILD_DEPS="$BUILD_DEPS libmemcached-dev libsasl2-dev zlib1g-dev"
+          DEPS="$DEPS libmemcachedutil2 libmemcached11"
+          # PECL memcached extension prompts for --with-libmemcached-dir
+          TASKS="$TASKS yes 'yes' | install_pecl $1;"
+        ;;
+        mongodb)
+          BUILD_DEPS="$BUILD_DEPS libssl-dev"
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        redis)
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        swoole)
+          TASKS="$TASKS install_pecl $1;"
+        ;;
+        xdebug)
+          # xdebug is Zend extension
+          PHPAPI=`php -i | grep 'PHP API' | sed -e 's/PHP API => //'`
+          TASKS="$TASKS pecl install $1 && echo \"zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so\" | tee /usr/local/etc/php/conf.d/$1.ini;"
+        ;;
+      esac
+
+      shift;
+    done;
+
+    # Pre-installation tasks - update packages lists and install build dependencies
+    apt-get update && apt-get -y --no-install-recommends install $BUILD_DEPS
+
+    # Install extension persistent dependencies
+    if [ ! -z "$DEPS" ]; then
+      apt-get install -y --no-install-recommends $DEPS
+    fi
+
+    # Install extensions
+    if [ ! -z "$TASKS" ]; then
+      eval $TASKS
+    fi
+
+    # Post installation tasks - removal of build dependencies for smaller Docker image size
+    apt-get purge -y --auto-remove $BUILD_DEPS && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
+  else
+    usage
+  fi
 
 else
-  usage
+  echo "Sorry, unsupported system"
+  exit;
 fi

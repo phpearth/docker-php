@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # PHP version can be passed as an argument for example ./download-php 7.1.0
 PHP_VERSION="${1:-7.1.5}"
@@ -27,7 +27,7 @@ if [ -n "$PHP_ASC_URL" ]; then
     gpg --fingerprint $key
   done;
 
-  gpg --batch --verify php.tar.xz{.asc*,}
+  gpg --batch --verify php.tar.xz.asc php.tar.xz
   rm -r "$GNUPGHOME"
 fi;
 

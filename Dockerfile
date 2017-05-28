@@ -22,8 +22,7 @@ ENV PHP_DEPS \
         libxml2 \
         curl \
         libssl1.0 \
-        ca-certificates \
-        bash
+        ca-certificates
 
 # PHP build dependencies which get removed
 ENV BUILD_DEPS \
