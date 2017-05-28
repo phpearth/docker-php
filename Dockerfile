@@ -14,13 +14,15 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Persistent runtime dependencies
 ENV PHP_DEPS \
         libedit \
-        icu \
-        gettext \
+        icu-libs \
+        libintl \
         libxslt \
         libjpeg-turbo \
         freetype \
         libxml2 \
         curl \
+        libssl1.0 \
+        ca-certificates \
         bash
 
 # PHP build dependencies which get removed
@@ -59,7 +61,6 @@ ENV BUILD_DEPS \
 RUN set -x \
 	  && addgroup -g 82 -S www-data \
 	  && adduser -u 82 -D -S -G www-data www-data \
-    && apk add --no-cache ca-certificates openssl \
     # PHP
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && apk add --no-cache $PHP_DEPS \
@@ -72,7 +73,7 @@ RUN set -x \
               LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
         # Core configure options
-        --with-libdir=/lib/x86_64-linux-gnu \
+        --enable-phpdbg=no \
         --disable-rpath \
         # Bundled PHP extensions
         --enable-bcmath \
@@ -112,7 +113,6 @@ RUN set -x \
     && make -j "$(getconf _NPROCESSORS_ONLN)" \
     && make install \
     && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
-    && make clean \
     # Remove dependencies
     && rm -rf /usr/src/* \
     && apk del .build-deps

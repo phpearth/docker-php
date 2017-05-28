@@ -48,7 +48,8 @@ ENV BUILD_DEPS \
         zlib1g-dev \
         libpng-dev \
         libxslt1-dev \
-        libxml2-dev
+        libxml2-dev \
+        libssl-dev
 
 RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recommends \
     && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
@@ -57,8 +58,7 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && echo 'deb http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
     && echo 'deb-src http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
     && curl https://www.dotdeb.org/dotdeb.gpg | apt-key add - \
-    && apt-get update \
-    && apt-get -y install openssl libssl-dev nginx --no-install-recommends \
+    && apt-get update && apt-get -y --no-install-recommends install openssl nginx \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
@@ -71,6 +71,7 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && ./configure \
         # Core configure options
         --with-libdir=/lib/x86_64-linux-gnu \
+        --enable-phpdbg=no \
         --disable-rpath \
         # Bundled PHP extensions
         --enable-bcmath \
@@ -113,7 +114,6 @@ RUN apt-get update && apt-get -y install curl ca-certificates --no-install-recom
     && make -j "$(nproc)" \
     && make install \
     && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
-    && make clean \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
     && mkdir /run/php \
     # Remove dependencies

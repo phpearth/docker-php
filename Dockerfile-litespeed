@@ -54,11 +54,12 @@ ENV BUILD_DEPS \
         libxslt1-dev \
         libxml2-dev \
         libgeoip-dev \
+        libssl-dev \
         # wget is required by OpenLiteSpeed during installation
         wget
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-    && apt-get update && apt-get -y install curl ca-certificates openssl libssl-dev --no-install-recommends \
+    && apt-get update && apt-get -y install curl ca-certificates openssl --no-install-recommends \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
     && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
@@ -71,6 +72,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && ./configure \
         # Core configure options
         --with-libdir=/lib/x86_64-linux-gnu \
+        --enable-phpdbg=no \
         --disable-rpath \
         # Bundled PHP extensions
         --enable-bcmath \
@@ -111,7 +113,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && make -j "$(nproc)" \
     && make install \
     && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
-    && make clean \
     # OpenLiteSpeed
     && cd /usr/src \
     && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
