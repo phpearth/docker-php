@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Script for downloading and extracting PHP source code. It also checks for
+# file integrity.
+
 # PHP version can be passed as an argument for example ./download-php 7.1.0
 PHP_VERSION="${1:-7.1.5}"
 GPG_KEYS="A917B1ECDA84AEC2B568FED6F50ABC807BD5DCD0 528995BFEDFBA7191D46839EF9BA0ADA31CBD89E"

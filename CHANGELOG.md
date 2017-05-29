@@ -9,11 +9,13 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
-## [1.0.2] 2017-05-28
+## [1.0.2] 2017-05-29
 
 * Improved script for downloading PHP extensions
 * Fixed minor bug in script for downloading Composer
 * Removed bash from Alpine Docker images
+* Refactor Dockerfiles
+* PHP GD extension moved to installation script
 
 ## [1.0.1] 2017-05-27
 

@@ -1,5 +1,7 @@
 FROM debian:jessie-slim
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
 COPY tags/litespeed/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
@@ -14,19 +16,20 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Persistent runtime dependencies
-ENV PHP_DEPS \
+ENV DEPS \
         libedit2 \
         libicu52 \
         libxslt1.1 \
-        libjpeg62-turbo \
-        libfreetype6 \
         libxml2 \
         libgeoip1 \
         xz-utils \
         runit \
-        libexpat1
+        libexpat1 \
+        curl \
+        ca-certificates \
+        openssl
 
-# PHP build dependencies which get removed
+# Build dependencies which get removed
 ENV BUILD_DEPS \
         build-essential \
         autoconf \
@@ -38,8 +41,6 @@ ENV BUILD_DEPS \
         libc-dev \
         libedit-dev \
         libcurl4-openssl-dev \
-        libfreetype6-dev \
-        libgd-dev \
         libbz2-dev \
         libfcgi-dev \
         libfcgi0ldbl \
@@ -50,7 +51,6 @@ ENV BUILD_DEPS \
         libpcre3-dev \
         libexpat1-dev \
         zlib1g-dev \
-        libpng-dev \
         libxslt1-dev \
         libxml2-dev \
         libgeoip-dev \
@@ -59,16 +59,15 @@ ENV BUILD_DEPS \
         wget
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
-    && apt-get update && apt-get -y install curl ca-certificates openssl --no-install-recommends \
+    && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
-    && apt-get install -y $PHP_DEPS $BUILD_DEPS --no-install-recommends \
     && cd /usr/src \
     && download-php \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
-                  CPPFLAGS="$PHP_CPPFLAGS" \
-                  LDFLAGS="$PHP_LDFLAGS" \
+              CPPFLAGS="$PHP_CPPFLAGS" \
+              LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
         # Core configure options
         --with-libdir=/lib/x86_64-linux-gnu \
@@ -80,11 +79,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --enable-mbstring \
         --enable-exif \
         --enable-ftp \
-        --with-gd \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr \
-        --with-png-dir=/usr \
-        --with-freetype-dir \
         --enable-intl \
         --with-pcre-regex \
         --enable-mysqlnd \
@@ -124,10 +118,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Remove build dependencies
-    && apt-get purge -y --auto-remove $BUILD_DEPS \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
+    && apt-get purge -y --auto-remove $BUILD_DEPS && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
 
 COPY tags/litespeed /
 

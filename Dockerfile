@@ -12,13 +12,11 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Persistent runtime dependencies
-ENV PHP_DEPS \
+ENV DEPS \
         libedit \
         icu-libs \
         libintl \
         libxslt \
-        libjpeg-turbo \
-        freetype \
         libxml2 \
         curl \
         libssl1.0 \
@@ -39,8 +37,6 @@ ENV BUILD_DEPS \
         libc-dev \
         libedit-dev \
         curl-dev \
-        freetype-dev \
-        gd-dev \
         bzip2-dev \
         fcgi-dev \
         krb5-dev \
@@ -50,19 +46,17 @@ ENV BUILD_DEPS \
         pcre-dev \
         expat-dev \
         zlib-dev \
-        libpng-dev \
         libxslt-dev \
         libxml2-dev \
-        libjpeg-turbo-dev \
         gnupg \
         openssl-dev
 
 RUN set -x \
 	  && addgroup -g 82 -S www-data \
 	  && adduser -u 82 -D -S -G www-data www-data \
-    # PHP
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
-    && apk add --no-cache $PHP_DEPS \
+    && apk add --no-cache $DEPS \
+    # PHP
     && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
     && cd /usr/src \
     && download-php \
@@ -80,11 +74,6 @@ RUN set -x \
         --enable-mbstring \
         --enable-exif \
         --enable-ftp \
-        --with-gd \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr \
-        --with-png-dir=/usr \
-        --with-freetype-dir \
         --enable-intl \
         --with-pcre-regex \
         --enable-mysqlnd \

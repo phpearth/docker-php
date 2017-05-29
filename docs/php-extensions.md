@@ -51,7 +51,6 @@ required to run some every day PHP applications. These include the following:
 * [fileinfo](http://php.net/manual/en/book.fileinfo.php)
 * [filter](http://php.net/manual/en/book.filter.php)
 * [ftp](http://php.net/manual/en/book.ftp.php)
-* [GD](http://php.net/manual/en/book.image.php)
 * [Gettext](http://php.net/manual/en/book.gettext.php)
 * [hash](http://php.net/manual/en/book.hash.php)
 * [iconv](http://php.net/manual/en/book.iconv.php)
@@ -107,6 +106,7 @@ PHP extensions:
 
 * [dba](http://php.net/manual/en/book.dba.php)
 * [enchant](http://php.net/manual/en/book.enchant.php)
+* [gd](http://php.net/manual/en/book.image.php)
 * [gmp](http://php.net/manual/en/book.gmp.php)
 * [imap](http://php.net/manual/en/book.imap.php)
 * [ldap](http://php.net/manual/en/book.ldap.php)

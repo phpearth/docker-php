@@ -13,3 +13,11 @@ Pin-Priority: 900
 Package: libc-client-dev
 Pin: release a=jessie-backports
 Pin-Priority: 900
+
+Package: libsodium18
+Pin: release a=jessie-backports
+Pin-Priority: 900
+
+Package: libsodium-dev
+Pin: release a=jessie-backports
+Pin-Priority: 900
