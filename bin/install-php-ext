@@ -218,7 +218,7 @@ elif [ -f /etc/debian_version ]; then
   # Debian
 
   # System dependencies for building extensions and downloading PHP
-  BUILD_DEPS_ALL="autoconf gcc g++ make re2c pkg-config"
+  BUILD_DEPS_ALL="autoconf gcc g++ make re2c pkg-config xz-utils"
   DEPS_ALL=""
   TASKS_ALL=""
   j=$(nproc)
@@ -359,7 +359,11 @@ elif [ -f /etc/debian_version ]; then
     fi
 
     # Post installation tasks - removal of build dependencies for smaller Docker image size
-    apt-get purge -y --auto-remove $BUILD_DEPS_ALL && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
+    apt-get purge -y --auto-remove $BUILD_DEPS_ALL $(apt-mark showauto)
+    if [ ! -z "$DEPS_ALL" ]; then
+      DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install $DEPS_ALL
+    fi
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
   else
     usage
   fi

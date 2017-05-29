@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* Optimize Debian images size
 * ...
 
 ## [1.0.2] 2017-05-29

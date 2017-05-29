@@ -20,10 +20,12 @@ ENV DEPS \
         libicu52 \
         libxslt1.1 \
         libxml2 \
-        xz-utils \
         runit \
         openssl \
-        nginx
+        curl \
+        ca-certificates \
+        nginx \
+        libgssapi-krb5-2
 
 # Build dependencies which get removed
 ENV BUILD_DEPS \
@@ -34,6 +36,7 @@ ENV BUILD_DEPS \
         bison \
         re2c \
         pkg-config \
+        xz-utils \
         libc-dev \
         libedit-dev \
         libcurl4-openssl-dev \
@@ -109,8 +112,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certifi
     && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
     && mkdir /run/php \
-    # Remove dependencies
-    && apt-get purge -y --auto-remove $BUILD_DEPS && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/* \
+    # Remove dependencies with removal of deps that got automatically installed
+    && apt-get purge -y --auto-remove $BUILD_DEPS $(apt-mark showauto) \
+    # Reinstall runtime deps
+    && apt-get -y --no-install-recommends install $DEPS \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/* \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 

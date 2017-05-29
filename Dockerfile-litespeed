@@ -21,13 +21,12 @@ ENV DEPS \
         libicu52 \
         libxslt1.1 \
         libxml2 \
-        libgeoip1 \
-        xz-utils \
         runit \
-        libexpat1 \
+        openssl \
         curl \
         ca-certificates \
-        openssl
+        libexpat1 \
+        libgeoip1
 
 # Build dependencies which get removed
 ENV BUILD_DEPS \
@@ -38,6 +37,7 @@ ENV BUILD_DEPS \
         bison \
         re2c \
         pkg-config \
+        xz-utils \
         libc-dev \
         libedit-dev \
         libcurl4-openssl-dev \
@@ -118,7 +118,10 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Remove build dependencies
-    && apt-get purge -y --auto-remove $BUILD_DEPS && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
+    && apt-get purge -y --auto-remove $BUILD_DEPS $(apt-mark showauto) \
+    # Reinstall runtime deps
+    && apt-get -y --no-install-recommends install $DEPS \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
 
 COPY tags/litespeed /
 
