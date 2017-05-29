@@ -21,7 +21,8 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 ## Tags
 
 * [`latest` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile) - PHP CLI, Alpine
-* [`litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
+* [`litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
+* [`litespeed-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
 * [`nginx` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-nginx) - Nginx, PHP FPM, Alpine
 * [`nginx-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
 

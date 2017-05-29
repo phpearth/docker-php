@@ -1,8 +1,10 @@
-FROM alpine:3.6
+FROM debian:jessie-slim
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
-COPY tags/litespeed/patches /tmp/patches
+COPY tags/litespeed-slim/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
 ENV LS_VER 1.4.25
 ENV PHP_INI_DIR /usr/local/etc/php
@@ -15,51 +17,44 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Persistent runtime dependencies
 ENV DEPS \
-        libedit \
+        libedit2 \
         libxml2 \
-        libbz2 \
-        curl \
-        libssl1.0 \
-        ca-certificates \
         runit \
-        geoip \
-        expat \
-        pcre \
-        libstdc++ \
-        openssl
+        libssl1.0.0 \
+        curl \
+        ca-certificates \
+        libexpat1 \
+        libgeoip1
 
 # Build dependencies which get removed
 ENV BUILD_DEPS \
+        build-essential \
         autoconf \
-        file \
-        g++ \
-        gcc \
-        make \
         automake \
         libtool \
         bison \
         re2c \
-        pkgconf \
+        pkg-config \
+        xz-utils \
         libc-dev \
         libedit-dev \
-        curl-dev \
-        bzip2-dev \
-        krb5-dev \
-        pcre-dev \
-        zlib-dev \
+        libcurl4-openssl-dev \
+        libbz2-dev \
+        libkrb5-dev \
+        rcs \
+        libpcre3-dev \
+        libexpat1-dev \
+        zlib1g-dev \
         libxml2-dev \
-        gnupg \
-        openssl-dev \
-        wget \
-        linux-headers \
-        geoip-dev \
-        expat-dev
+        libgeoip-dev \
+        libssl-dev \
+        # wget is required by OpenLiteSpeed during installation
+        wget
 
-RUN set -x \
-    && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
-    && apk add --no-cache $DEPS \
+RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \
     # PHP
-    && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
+    && mkdir -p $PHP_INI_DIR/conf.d \
     && cd /usr/src \
     && download-php \
     && cd php-* \
@@ -68,6 +63,7 @@ RUN set -x \
               LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
         # Core configure options
+        --with-libdir=/lib/x86_64-linux-gnu \
         --enable-phpdbg=no \
         --disable-rpath \
         # Bundled PHP extensions
@@ -98,29 +94,25 @@ RUN set -x \
         --with-kerberos \
         --enable-opcache \
         --with-litespeed \
-    && make -j "$(getconf _NPROCESSORS_ONLN)" \
+    && make -j "$(nproc)" \
     && make install \
-    && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+    && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     # OpenLiteSpeed
     && cd /usr/src \
     && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
     && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
-    && patch /usr/src/openlitespeed-$LS_VER/src/thread/thread.h < /tmp/patches/thread.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/thread/pthreadmutex.cpp < /tmp/patches/pthreadmutex.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/util/pcutil.cpp < /tmp/patches/pcutil.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/main/lshttpdmain.cpp < /tmp/patches/lshttpdmain.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/include/lsr/ls_lock.h < /tmp/patches/ls_lock.h.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/lsr/ls_lock.c < /tmp/patches/ls_lock.c.patch \
-    && cd /usr/src/openlitespeed-$LS_VER \
+    && cd openlitespeed-$LS_VER \
     && ./configure \
-    && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
+    && make -j "$(nproc)" && make install \
     && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
-    # Remove dependencies
-    && rm -rf /usr/src/* \
-    && apk del .build-deps
+    # Remove build dependencies
+    && apt-get purge -y --auto-remove $BUILD_DEPS $(apt-mark showauto) \
+    # Reinstall runtime deps
+    && apt-get -y --no-install-recommends install $DEPS \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
 
-COPY tags/litespeed /
+COPY tags/litespeed-slim /
 
 CMD ["/sbin/runit-wrapper"]
