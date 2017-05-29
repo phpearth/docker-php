@@ -14,7 +14,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Persistent runtime dependencies
 ENV DEPS \
         libedit \
-        icu-libs \
         libintl \
         libxslt \
         libxml2 \
@@ -41,7 +40,6 @@ ENV BUILD_DEPS \
         fcgi-dev \
         krb5-dev \
         libpq \
-        icu-dev \
         gettext-dev \
         pcre-dev \
         expat-dev \
@@ -74,7 +72,6 @@ RUN set -x \
         --enable-mbstring \
         --enable-exif \
         --enable-ftp \
-        --enable-intl \
         --with-pcre-regex \
         --enable-mysqlnd \
         --with-openssl \

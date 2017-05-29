@@ -17,7 +17,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Persistent runtime dependencies
 ENV DEPS \
         libedit2 \
-        libicu52 \
         libxslt1.1 \
         libxml2 \
         runit \
@@ -45,7 +44,6 @@ ENV BUILD_DEPS \
         libfcgi0ldbl \
         libkrb5-dev \
         libpq-dev \
-        libicu-dev \
         libpcre3-dev \
         libexpat1-dev \
         zlib1g-dev \
@@ -80,7 +78,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certifi
         --enable-mbstring \
         --enable-exif \
         --enable-ftp \
-        --enable-intl \
         --with-pcre-regex \
         --enable-mysqlnd \
         --with-openssl \

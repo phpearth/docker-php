@@ -97,6 +97,11 @@ if [ -f /etc/alpine-release ]; then
           DEPS="c-client"
           TASKS="install_php_ext $1 --with-kerberos --with-imap-ssl;"
         ;;
+        intl)
+          BUILD_DEPS="icu-dev"
+          DEPS="icu-libs"
+          TASKS="install_php_ext $1;"
+        ;;
         ldap)
           BUILD_DEPS="openldap-dev"
           DEPS="libldap"
@@ -253,6 +258,11 @@ elif [ -f /etc/debian_version ]; then
           BUILD_DEPS="libc-client-dev libssl-dev libkrb5-dev"
           DEPS="libc-client2007e"
           TASKS="install_php_ext $1 --with-kerberos --with-imap-ssl;"
+        ;;
+        intl)
+          BUILD_DEPS="libicu-dev"
+          DEPS="libicu52"
+          TASKS="install_php_ext $1;"
         ;;
         ldap)
           BUILD_DEPS="libldap2-dev"

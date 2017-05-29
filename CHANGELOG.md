@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* Move intl PHP extension to installation script
 * Optimize Debian images size
 * ...
 
