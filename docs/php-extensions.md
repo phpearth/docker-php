@@ -51,7 +51,6 @@ required to run some every day PHP applications. These include the following:
 * [fileinfo](http://php.net/manual/en/book.fileinfo.php)
 * [filter](http://php.net/manual/en/book.filter.php)
 * [ftp](http://php.net/manual/en/book.ftp.php)
-* [Gettext](http://php.net/manual/en/book.gettext.php)
 * [hash](http://php.net/manual/en/book.hash.php)
 * [iconv](http://php.net/manual/en/book.iconv.php)
 * [JSON](http://php.net/manual/en/book.json.php)
@@ -73,7 +72,6 @@ required to run some every day PHP applications. These include the following:
 * [XML Parser](http://php.net/manual/en/book.xml.php)
 * [XMLReader](http://php.net/manual/en/book.xmlreader.php)
 * [XMLWriter](http://php.net/manual/en/book.xmlwriter.php)
-* [XSL](http://php.net/manual/en/book.xsl.php)
 * [Zip](http://php.net/manual/en/book.zip.php)
 * [Zlib](http://php.net/manual/en/book.zlib.php)
 
@@ -105,6 +103,7 @@ PHP extensions:
 
 * [dba](http://php.net/manual/en/book.dba.php)
 * [enchant](http://php.net/manual/en/book.enchant.php)
+* [gettext](http://php.net/manual/en/book.gettext.php)
 * [gd](http://php.net/manual/en/book.image.php)
 * [gmp](http://php.net/manual/en/book.gmp.php)
 * [imap](http://php.net/manual/en/book.imap.php)
@@ -123,6 +122,7 @@ PHP extensions:
 * [tidy](http://php.net/manual/en/book.tidy.php)
 * [wddx](http://php.net/manual/en/book.wddx.php)
 * [xmlrpc](http://php.net/manual/en/book.xmlrpc.php)
+* [xsl](http://php.net/manual/en/book.xsl.php)
 
 PECL extensions:
 

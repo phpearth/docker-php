@@ -14,9 +14,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Persistent runtime dependencies
 ENV DEPS \
         libedit \
-        libintl \
-        libxslt \
         libxml2 \
+        libbz2 \
         curl \
         libssl1.0 \
         ca-certificates
@@ -37,14 +36,9 @@ ENV BUILD_DEPS \
         libedit-dev \
         curl-dev \
         bzip2-dev \
-        fcgi-dev \
         krb5-dev \
-        libpq \
-        gettext-dev \
         pcre-dev \
-        expat-dev \
         zlib-dev \
-        libxslt-dev \
         libxml2-dev \
         gnupg \
         openssl-dev
@@ -75,7 +69,6 @@ RUN set -x \
         --with-pcre-regex \
         --enable-mysqlnd \
         --with-openssl \
-        --with-xsl \
         --enable-zip \
         --enable-sysvsem \
         --enable-sysvshm \
@@ -86,7 +79,6 @@ RUN set -x \
         --with-zlib-dir \
         --with-bz2 \
         --with-curl \
-        --with-gettext \
         --with-mhash \
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \

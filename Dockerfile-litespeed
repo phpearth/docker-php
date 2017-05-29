@@ -18,10 +18,9 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Persistent runtime dependencies
 ENV DEPS \
         libedit2 \
-        libxslt1.1 \
         libxml2 \
         runit \
-        openssl \
+        libssl1.0.0 \
         curl \
         ca-certificates \
         libexpat1 \
@@ -41,15 +40,11 @@ ENV BUILD_DEPS \
         libedit-dev \
         libcurl4-openssl-dev \
         libbz2-dev \
-        libfcgi-dev \
-        libfcgi0ldbl \
         libkrb5-dev \
-        libpq-dev \
         rcs \
         libpcre3-dev \
         libexpat1-dev \
         zlib1g-dev \
-        libxslt1-dev \
         libxml2-dev \
         libgeoip-dev \
         libssl-dev \
@@ -80,7 +75,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-pcre-regex \
         --enable-mysqlnd \
         --with-openssl \
-        --with-xsl \
         --enable-zip \
         --enable-sysvsem \
         --enable-sysvshm \
@@ -91,7 +85,6 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-zlib-dir \
         --with-bz2 \
         --with-curl \
-        --with-gettext \
         --with-mhash \
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
