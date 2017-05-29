@@ -4,7 +4,7 @@ FROM alpine:3.6
 COPY bin /usr/local/bin/
 
 ENV PHP_INI_DIR /usr/local/etc/php
-ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
+ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 

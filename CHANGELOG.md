@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* Use `-O3` optimization level for GCC when compiling PHP
 * Move intl, xsl and gettext PHP extensions to installation script
 * Optimize Debian images size
 * ...

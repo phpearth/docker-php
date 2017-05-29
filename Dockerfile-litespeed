@@ -8,7 +8,7 @@ COPY tags/litespeed/etc/apt/preferences.d/backports /etc/apt/preferences.d/backp
 
 ENV LS_VER 1.4.25
 ENV PHP_INI_DIR /usr/local/etc/php
-ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
+ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
