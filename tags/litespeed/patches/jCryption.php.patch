@@ -1,0 +1,11 @@
+--- a/dist/admin/html.open/lib/jCryption.php
++++ b/dist/admin/html.open/lib/jCryption.php
+@@ -394,7 +394,7 @@
+ 			$bits_n = $bits_cnt % 8;
+ 			do {
+ 				$str = '';
+-				mt_srand($this->_makeSeed());
++				mt_srand((int)$this->_makeSeed());
+ 				for ($i = 0; $i < $bytes_n; $i++) {
+ 					$str .= chr(sha1(mt_rand() * microtime()) & 0xff);
+ 				}

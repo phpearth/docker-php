@@ -1,0 +1,20 @@
+--- a/configure
++++ b/configure
+@@ -15863,7 +15863,7 @@
+
+
+ if test "$OPENLSWS_BSSL" = no ; then
+-    if test "$OSNAME" = Darwin ; then
++    if test "$OSNAME" = Linux ; then
+         usedynossl=yes
+         CPPFLAGS="$CPPFLAGS -I../../src -I../../include -I/usr/local/include -I/usr/local -I/usr -I/usr/pkg "
+     else
+@@ -16131,7 +16131,7 @@
+
+
+
+-if test "$OSNAME" = Darwin ; then
++if test "$OSNAME" = Linux ; then
+
+
+ # Check whether --with-openssl was given.

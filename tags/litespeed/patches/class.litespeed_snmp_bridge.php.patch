@@ -1,0 +1,8 @@
+--- a/dist/add-ons/snmp_monitoring/class.litespeed_snmp_bridge.php
++++ b/dist/add-ons/snmp_monitoring/class.litespeed_snmp_bridge.php
+@@ -1,4 +1,4 @@
+-<?
++<?php
+
+ /*----------------------------------------
+ LiteSpeed_Stats to SNMP bridge. Relay stats to SNMPD.

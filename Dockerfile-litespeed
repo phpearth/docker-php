@@ -56,6 +56,8 @@ ENV BUILD_DEPS \
         expat-dev
 
 RUN set -x \
+    && addgroup -g 82 -S lsadm \
+    && adduser -u 82 -D -S -G lsadm lsadm \
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && apk add --no-cache $DEPS \
     # PHP
@@ -105,12 +107,20 @@ RUN set -x \
     && cd /usr/src \
     && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
     && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
-    && patch /usr/src/openlitespeed-$LS_VER/src/thread/thread.h < /tmp/patches/thread.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/thread/pthreadmutex.cpp < /tmp/patches/pthreadmutex.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/util/pcutil.cpp < /tmp/patches/pcutil.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/main/lshttpdmain.cpp < /tmp/patches/lshttpdmain.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/include/lsr/ls_lock.h < /tmp/patches/ls_lock.h.patch \
-    && patch /usr/src/openlitespeed-$LS_VER/src/lsr/ls_lock.c < /tmp/patches/ls_lock.c.patch \
+    && cd /usr/src/openlitespeed-$LS_VER \
+    && patch src/thread/thread.h < /tmp/patches/thread.patch \
+    && patch src/thread/pthreadmutex.cpp < /tmp/patches/pthreadmutex.patch \
+    && patch src/util/pcutil.cpp < /tmp/patches/pcutil.patch \
+    && patch src/main/lshttpdmain.cpp < /tmp/patches/lshttpdmain.patch \
+    && patch include/lsr/ls_lock.h < /tmp/patches/ls_lock.h.patch \
+    && patch src/lsr/ls_lock.c < /tmp/patches/ls_lock.c.patch \
+    && patch dist/add-ons/snmp_monitoring/class.litespeed_snmp_bridge.php < /tmp/patches/class.litespeed_snmp_bridge.php.patch \
+    && patch dist/add-ons/snmp_monitoring/class.litespeed_stats.php < /tmp/patches/class.litespeed_stats.php.patch \
+    && patch configure < /tmp/patches/configure.patch \
+    && patch dist/admin/html.open/lib/jCryption.php < /tmp/patches/jCryption.php.patch \
+    && patch dist/admin/html.open/lib/ows/RealTimeStats.php < /tmp/patches/RealTimeStats.php.patch \
+    && patch dist/add-ons/snmp_monitoring/sample.php < /tmp/patches/sample.php.patch \
+    && patch dist/install.sh < /tmp/patches/install.sh.patch \
     && cd /usr/src/openlitespeed-$LS_VER \
     && ./configure \
     && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
