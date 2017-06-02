@@ -7,11 +7,15 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* ...
+
+## [1.0.3] 2017-06-03
+
+* OpenLiteSpeed 1.4.26
 * New tag added for OpenLiteSpeed on Alpine
 * Use `-O3` optimization level for GCC when compiling PHP
 * Move intl, xsl and gettext PHP extensions to installation script
 * Optimize Debian images size
-* ...
 
 ## [1.0.2] 2017-05-29
 
