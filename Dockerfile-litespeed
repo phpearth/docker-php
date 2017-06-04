@@ -125,8 +125,8 @@ RUN set -x \
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Remove dependencies
-    && rm -rf /usr/src/* \
-    && apk del --no-cache .build-deps
+    && rm -rf /usr/src/* /tmp/patches \
+    && apk del --no-cache --purge .build-deps
 
 COPY tags/litespeed /
 

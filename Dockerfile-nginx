@@ -100,7 +100,7 @@ RUN set -x \
     && mkdir /run/php && mkdir /run/nginx \
     # Remove dependencies
     && rm -rf /usr/src/* \
-    && apk del --no-cache .build-deps \
+    && apk del --no-cache --purge .build-deps \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
