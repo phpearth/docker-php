@@ -50,7 +50,6 @@ ENV BUILD_DEPS \
         libxml2-dev \
         gnupg \
         openssl-dev \
-        wget \
         linux-headers \
         geoip-dev \
         expat-dev
@@ -119,7 +118,7 @@ RUN set -x \
     && patch src/thread/pthreadmutex.cpp < /tmp/patches/pthreadmutex.cpp.patch \
     && patch dist/admin/html.open/lib/ows/RealTimeStats.php < /tmp/patches/RealTimeStats.php.patch \
     && patch src/thread/thread.h < /tmp/patches/thread.h.patch \
-    && cd /usr/src/openlitespeed-$LS_VER \
+    && rm dist/admin/misc/php.ini \
     && ./configure \
     && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
     && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
@@ -127,7 +126,7 @@ RUN set -x \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Remove dependencies
     && rm -rf /usr/src/* \
-    && apk del .build-deps
+    && apk del --no-cache .build-deps
 
 COPY tags/litespeed /
 

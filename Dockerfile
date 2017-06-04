@@ -92,7 +92,7 @@ RUN set -x \
     && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
     # Remove dependencies
     && rm -rf /usr/src/* \
-    && apk del .build-deps
+    && apk del --no-cache .build-deps
 
 COPY tags/latest /
 

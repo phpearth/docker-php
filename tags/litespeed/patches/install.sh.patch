@@ -1,8 +1,8 @@
 diff --git a/dist/install.sh b/dist/install.sh
-index 7b072da..0997d6f 100755
+index 7b072da..94f5e00 100755
 --- a/dist/install.sh
 +++ b/dist/install.sh
-@@ -43,12 +43,8 @@ inst_admin_php()
+@@ -43,12 +43,7 @@ inst_admin_php()
      fi
          
      if [ "x$OS" = "xLinux" ] ; then
@@ -13,7 +13,23 @@ index 7b072da..0997d6f 100755
 -        fi
 -        
 +        ln -s /usr/local/bin/lsphp $LSWS_HOME/admin/fcgi-bin/admin_php
-+
          if [ $? = 0 ] ; then 
              HASADMINPHP=y
              echo "admin_php downloaded."
+@@ -281,16 +276,6 @@ chmod 0600 "$LSWS_HOME/admin/conf/jcryption_keypair"
+ chown "$CONF_OWN" "$LSWS_HOME/admin/conf/htpasswd"
+ chmod 0600 "$LSWS_HOME/admin/conf/htpasswd"
+ 
+-
+-#for root user, we'll try to start it automatically
+-INST_USER=`id`
+-INST_USER=`expr "$INST_USER" : 'uid=.*(\(.*\)) gid=.*'`
+-if [ $INST_USER = "root" ]; then
+-    $LSWS_HOME/admin/misc/rc-inst.sh
+-fi
+-
+-
+-
+ echo
+ echo -e "\033[38;5;148mInstallation finished, Enjoy!\033[39m"
+ echo

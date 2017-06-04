@@ -47,9 +47,7 @@ ENV BUILD_DEPS \
         zlib1g-dev \
         libxml2-dev \
         libgeoip-dev \
-        libssl-dev \
-        # wget is required by OpenLiteSpeed during installation
-        wget
+        libssl-dev
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
     && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \
