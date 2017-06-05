@@ -224,7 +224,7 @@ if [ -f /etc/alpine-release ]; then
     fi
 
     # Post installation tasks - removal of build dependencies for smaller Docker image size
-    apk del .build-deps && rm -rf /usr/src/*
+    apk del --no-cache --purge .build-deps && rm -rf /usr/src/*
 
   else
     usage
