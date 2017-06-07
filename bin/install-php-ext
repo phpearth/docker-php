@@ -114,7 +114,7 @@ if [ -f /etc/alpine-release ]; then
         ;;
         mcrypt)
           BUILD_DEPS="libmcrypt-dev"
-          DEPS="libmcrpyt"
+          DEPS="libmcrypt"
           TASKS="install_php_ext $1;"
         ;;
         pdo_pgsql)
