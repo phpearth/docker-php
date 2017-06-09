@@ -52,7 +52,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certifi
     && echo 'deb http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
     && echo 'deb-src http://packages.dotdeb.org jessie-nginx-http2 all' | tee --append /etc/apt/sources.list \
     && curl https://www.dotdeb.org/dotdeb.gpg | apt-key add - \
-    && apt-get update && apt-get install -y --no-install-recommends $DEPS $BUILD_DEPS \
+    && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
     && cd /usr/src \
@@ -101,10 +101,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certifi
     && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
     && mkdir /run/php \
-    # Remove dependencies with removal of deps that got automatically installed
-    && apt-get purge -y --auto-remove $BUILD_DEPS $(apt-mark showauto) \
-    # Reinstall runtime deps
-    && apt-get -y --no-install-recommends install $DEPS \
+    # Remove dependencies with removal of dependencies that got automatically installed
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_DEPS \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/* \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
