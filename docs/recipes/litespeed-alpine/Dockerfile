@@ -1,0 +1,1 @@
+FROM phpearth/php:litespeed

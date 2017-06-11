@@ -50,7 +50,7 @@ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp phpearth/php php s
 
 ## Documentation
 
-Check a more [extended documentation](https://github.com/php-earth/docker-php/tree/master/docs)
+Check a more [extended documentation](https://github.com/php-earth/docker-php/tree/master/docs/README.md)
 for additional information how to use these images and what's included.
 
 ## License and Contributing

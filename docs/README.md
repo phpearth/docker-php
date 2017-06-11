@@ -1,4 +1,6 @@
-&larr; Intro | [Usage](usage.md) &rarr;
+Intro | [Usage](usage.md) &rarr;
+
+---
 
 # Documentation
 
@@ -19,4 +21,6 @@ Docker.
 
 * Official [Docker PHP images](https://hub.docker.com/_/php/)
 
-&larr; Intro | [Usage](usage.md) &rarr;
+---
+
+Intro | [Usage](usage.md) &rarr;
