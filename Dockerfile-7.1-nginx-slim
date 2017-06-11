@@ -67,6 +67,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certifi
         --with-libdir=/lib/x86_64-linux-gnu \
         --enable-phpdbg=no \
         --disable-rpath \
+        --without-pear \
         # Bundled PHP extensions
         --enable-bcmath \
         --enable-calendar \

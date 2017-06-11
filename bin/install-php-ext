@@ -19,7 +19,8 @@ install_php_ext () {
   shift;
   ARGS=$@
   if [ $PHP_INSTALLED = "no" ]; then
-    cd /usr/src/ && download-php
+    PHP_VER=$(echo $(php -v) | cut -c4-7)
+    cd /usr/src/ && download-php PHP_VER
     PHP_INSTALLED="yes"
   fi
 
@@ -31,13 +32,20 @@ install_php_ext () {
   echo "extension=$EXT.so" | tee /usr/local/etc/php/conf.d/$EXT.ini
 }
 
-PECL_UPDATED="no"
+install_pecl_extension () {
+  cd /usr/src
+  curl -OL https://pecl.php.net/get/$1-stable
+  tar -xf $1-stable
+  cd /usr/src/$1-*
+  phpize
+  ./configure
+  make -j"$j"
+  make -j"$j" install
+}
+
 install_pecl () {
-  if [ $PECL_UPDATED = "no" ]; then
-    pecl channel-update pecl.php.net
-    PECL_UPDATED="yes"
-  fi
-  pecl install $1 && echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
+  install_pecl_extension $1
+  echo "extension=$1.so" | tee /usr/local/etc/php/conf.d/$1.ini
 }
 
 append () {
@@ -174,7 +182,7 @@ if [ -f /etc/alpine-release ]; then
         imagick)
           BUILD_DEPS="imagemagick-dev libtool"
           DEPS="imagemagick"
-          TASKS="yes '' | install_pecl $1;"
+          TASKS="install_pecl $1;"
         ;;
         libsodium)
           BUILD_DEPS="libsodium-dev"
@@ -184,8 +192,7 @@ if [ -f /etc/alpine-release ]; then
         memcached)
           BUILD_DEPS="libmemcached-dev cyrus-sasl-dev zlib-dev"
           DEPS="libmemcached-libs"
-          # PECL memcached extension prompts for --with-libmemcached-dir
-          TASKS="yes 'yes' | install_pecl $1;"
+          TASKS="install_pecl $1;"
         ;;
         mongodb)
           BUILD_DEPS="openssl-dev"
@@ -201,7 +208,7 @@ if [ -f /etc/alpine-release ]; then
         xdebug)
           # xdebug is Zend extension
           PHPAPI=`php -i | grep 'PHP API' | sed -e 's/PHP API => //'`
-          TASKS="pecl install $1 && echo \"zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so\" | tee /usr/local/etc/php/conf.d/$1.ini;"
+          TASKS="install_pecl_extension $1 && echo \"zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so\" | tee /usr/local/etc/php/conf.d/$1.ini;"
         ;;
       esac
 
@@ -338,12 +345,12 @@ elif [ -f /etc/debian_version ]; then
         ;;
         # PECL Extensions
         apcu)
-          TASKS="yes '' | install_pecl $1;"
+          TASKS="install_pecl $1;"
         ;;
         imagick)
           BUILD_DEPS="libmagickwand-dev"
           DEPS="imagemagick"
-          TASKS="yes '' | install_pecl $1;"
+          TASKS="install_pecl $1;"
         ;;
         libsodium)
           BUILD_DEPS="libsodium-dev"
@@ -353,8 +360,7 @@ elif [ -f /etc/debian_version ]; then
         memcached)
           BUILD_DEPS="libmemcached-dev libsasl2-dev zlib1g-dev"
           DEPS="libmemcachedutil2 libmemcached11"
-          # PECL memcached extension prompts for --with-libmemcached-dir
-          TASKS="yes 'yes' | install_pecl $1;"
+          TASKS="install_pecl $1;"
         ;;
         mongodb)
           BUILD_DEPS="libssl-dev"
@@ -369,7 +375,7 @@ elif [ -f /etc/debian_version ]; then
         xdebug)
           # xdebug is Zend extension
           PHPAPI=`php -i | grep 'PHP API' | sed -e 's/PHP API => //'`
-          TASKS="pecl install $1 && echo \"zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so\" | tee /usr/local/etc/php/conf.d/$1.ini;"
+          TASKS="install_pecl_extension $1 && echo \"zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-$PHPAPI/$1.so\" | tee /usr/local/etc/php/conf.d/$1.ini;"
         ;;
       esac
 

@@ -65,6 +65,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
         --with-libdir=/lib/x86_64-linux-gnu \
         --enable-phpdbg=no \
         --disable-rpath \
+        --without-pear \
         # Bundled PHP extensions
         --enable-bcmath \
         --enable-calendar \
