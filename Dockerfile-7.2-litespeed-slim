@@ -7,6 +7,7 @@ COPY bin /usr/local/bin/
 COPY tags/litespeed-slim/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
 ENV LS_VER 1.4.26
+ENV PHP_VER 7.2
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
@@ -54,7 +55,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d \
     && cd /usr/src \
-    && download-php \
+    && download-php $PHP_VER \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \

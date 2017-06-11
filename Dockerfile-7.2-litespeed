@@ -1,0 +1,134 @@
+FROM alpine:3.6
+
+# Custom helper scripts to download PHP and manage PHP extensions
+COPY bin /usr/local/bin/
+COPY tags/litespeed/patches /tmp/patches
+
+ENV LS_VER 1.4.26
+ENV PHP_VER 7.2
+ENV PHP_INI_DIR /usr/local/etc/php
+ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
+ENV PHP_CPPFLAGS="$PHP_CFLAGS"
+ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
+
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Persistent runtime dependencies
+ENV DEPS \
+        libedit \
+        libxml2 \
+        libbz2 \
+        curl \
+        libssl1.0 \
+        ca-certificates \
+        runit \
+        geoip \
+        expat \
+        pcre \
+        libstdc++ \
+        openssl
+
+# Build dependencies which get removed
+ENV BUILD_DEPS \
+        autoconf \
+        file \
+        g++ \
+        gcc \
+        make \
+        automake \
+        libtool \
+        bison \
+        re2c \
+        pkgconf \
+        libc-dev \
+        libedit-dev \
+        curl-dev \
+        bzip2-dev \
+        krb5-dev \
+        pcre-dev \
+        zlib-dev \
+        libxml2-dev \
+        gnupg \
+        openssl-dev \
+        linux-headers \
+        geoip-dev \
+        expat-dev
+
+RUN set -x \
+    && addgroup -g 82 -S lsadm \
+    && adduser -u 82 -D -S -G lsadm lsadm \
+    && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
+    && apk add --no-cache $DEPS \
+    # PHP
+    && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
+    && cd /usr/src \
+    && download-php $PHP_VER \
+    && cd php-* \
+    && export CFLAGS="$PHP_CFLAGS" \
+              CPPFLAGS="$PHP_CPPFLAGS" \
+              LDFLAGS="$PHP_LDFLAGS" \
+    && ./configure \
+        # Core configure options
+        --enable-phpdbg=no \
+        --disable-rpath \
+        # Bundled PHP extensions
+        --enable-bcmath \
+        --enable-calendar \
+        --enable-mbstring \
+        --enable-exif \
+        --enable-ftp \
+        --with-pcre-regex \
+        --enable-mysqlnd \
+        --with-openssl \
+        --enable-zip \
+        --enable-sysvsem \
+        --enable-sysvshm \
+        --enable-sysvmsg \
+        --enable-shmop \
+        --enable-sockets \
+        --with-zlib \
+        --with-zlib-dir \
+        --with-bz2 \
+        --with-curl \
+        --with-mhash \
+        --with-config-file-path="$PHP_INI_DIR" \
+        --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
+        --disable-cgi \
+        --with-libxml-dir=/usr \
+        --with-libedit \
+        --with-kerberos \
+        --enable-opcache \
+        --with-litespeed \
+    && make -j "$(getconf _NPROCESSORS_ONLN)" \
+    && make install \
+    && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+    # OpenLiteSpeed
+    && cd /usr/src \
+    && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
+    && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
+    && cd /usr/src/openlitespeed-$LS_VER \
+    && patch configure < /tmp/patches/configure.patch \
+    && patch dist/functions.sh < /tmp/patches/functions.sh.patch \
+    && patch dist/install.sh < /tmp/patches/install.sh.patch \
+    && patch dist/admin/html.open/lib/jCryption.php < /tmp/patches/jCryption.php.patch \
+    && patch src/lsr/ls_lock.c < /tmp/patches/ls_lock.c.patch \
+    && patch include/lsr/ls_lock.h < /tmp/patches/ls_lock.h.patch \
+    && patch src/main/lshttpdmain.cpp < /tmp/patches/lshttpdmain.cpp.patch \
+    && patch src/util/pcutil.cpp < /tmp/patches/pcutil.cpp.patch \
+    && patch src/thread/pthreadmutex.cpp < /tmp/patches/pthreadmutex.cpp.patch \
+    && patch dist/admin/html.open/lib/ows/RealTimeStats.php < /tmp/patches/RealTimeStats.php.patch \
+    && patch src/thread/thread.h < /tmp/patches/thread.h.patch \
+    && rm dist/admin/misc/php.ini \
+    && ./configure \
+    && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
+    && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
+    && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
+    # Remove dependencies
+    && rm -rf /usr/src/* /tmp/patches \
+    && apk del --no-cache --purge .build-deps
+
+COPY tags/litespeed /
+
+CMD ["/sbin/runit-wrapper"]

@@ -3,6 +3,7 @@ FROM alpine:3.6
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
 
+ENV PHP_VER 7.1
 ENV PHP_INI_DIR /usr/local/etc/php
 ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
@@ -54,7 +55,7 @@ RUN set -x \
     # PHP
     && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
     && cd /usr/src \
-    && download-php \
+    && download-php $PHP_VER \
     && cd php-* \
     && export CFLAGS="$PHP_CFLAGS" \
               CPPFLAGS="$PHP_CPPFLAGS" \
