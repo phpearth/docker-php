@@ -9,7 +9,7 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 
 ## Features
 
-* [Latest PHP 7.1](https://php.net)
+* [Latest PHP 7.1](https://php.net) and upcoming PHP 7.2
 * [Composer](https://getcomposer.org) installation script
 * [Nginx](https://nginx.org/)
 * [OpenLiteSpeed](http://open.litespeedtech.com/)
@@ -20,15 +20,20 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 
 ## Tags
 
+### PHP 7.1
+
 * [`latest` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1) - PHP CLI, Alpine
-* [`7.2` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2) - PHP 7.2 CLI, Alpine
 * [`litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
-* [`7.2-litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
 * [`litespeed-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
-* [`7.2-litespeed-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
 * [`nginx` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-nginx) - Nginx, PHP FPM, Alpine
-* [`7.2-nginx` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-nginx) - Nginx, PHP FPM, Alpine
 * [`nginx-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
+
+### PHP 7.2
+
+* [`7.2` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2) - PHP CLI, Alpine
+* [`7.2-litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
+* [`7.2-litespeed-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
+* [`7.2-nginx` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-nginx) - Nginx, PHP FPM, Alpine
 * [`7.2-nginx-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
 
 ## Quick Usage
