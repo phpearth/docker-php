@@ -5,8 +5,6 @@
 Customized Docker images crafted with care for various PHP tasks. Containing
 PHP, Nginx and OpenLiteSpeed.
 
-For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/).
-
 ## Features
 
 * [Latest PHP 7.1](https://php.net) and upcoming PHP 7.2

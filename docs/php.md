@@ -1,3 +1,7 @@
+&larr; [Composer](composer.md) | [PHP Extensions](php-extensions.md) &rarr;
+
+---
+
 # Building PHP From Source
 
 To build PHP from source on Linux you need the following dependencies:
@@ -18,3 +22,7 @@ make install
 ## See Also
 
 * [PHP Internals](http://www.phpinternalsbook.com)
+
+---
+
+&larr; [Composer](composer.md) | [PHP Extensions](php-extensions.md) &rarr;

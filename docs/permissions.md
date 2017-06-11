@@ -1,3 +1,7 @@
+&larr; [PHP Extensions](php-extensions.md) | [Certbot](certbot.md) &rarr;
+
+---
+
 # Permissions
 
 Linux users and groups might seem a bit difficult to set up properly at the
@@ -56,3 +60,7 @@ Recommended read and video tutorials:
 * [Servers for Hackers: Linux Permissions](https://serversforhackers.com/video/linux-permissions)
 * [Servers for Hackers: Linux ACL](https://serversforhackers.com/video/linux-acls)
 * [Symfony: Setting up or Fixing File Permissions](http://symfony.com/doc/current/setup/file_permissions.html)
+
+---
+
+&larr; [PHP Extensions](php-extensions.md) | [Certbot](certbot.md) &rarr;

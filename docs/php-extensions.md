@@ -1,3 +1,7 @@
+&larr; [Building PHP From Source](php.md) | [Permissions](permissions.md) &rarr;
+
+---
+
 # PHP Extensions
 
 There are multiple types of extensions for PHP. PHP extensions are the ones
@@ -138,3 +142,7 @@ PECL extensions:
 ## See Also
 
 * [PHP Extensions List/Categorization](http://php.net/manual/en/extensions.php)
+
+---
+
+&larr; [Building PHP From Source](php.md) | [Permissions](permissions.md) &rarr;

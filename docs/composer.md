@@ -1,3 +1,7 @@
+&larr; [Usage](usage.md) | [Building PHP From Source](php.md) &rarr;
+
+---
+
 # Composer
 
 Composer is a de-facto standard for managing PHP packages. Good practice however
@@ -103,3 +107,7 @@ services:
 ## See Also
 
 [Recipes](recipes) include some more usage examples for better understanding.
+
+---
+
+&larr; [Usage](usage.md) | [Building PHP From Source](php.md) &rarr;
