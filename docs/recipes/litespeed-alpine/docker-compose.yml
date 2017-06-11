@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:8088
+      - 7080:7080
+    volumes:
+      - ./usr/local/lsws/app:/usr/local/lsws/app
