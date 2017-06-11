@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* PEAR removed
 * PHP 7.2.0alpha1
 * ...
 
