@@ -1,0 +1,11 @@
+version: '3.2'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./var/www:/var/www
+    ports:
+      - 80:80
