@@ -75,7 +75,7 @@ build arguments. The following example uses Docker build arguments and the provi
 `download-composer` script:
 
 ```Dockerfile
-FROM petk/php:nginx
+FROM phpearth/php:nginx
 
 ARG APP_ENV=prod
 

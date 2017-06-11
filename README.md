@@ -1,6 +1,6 @@
 # Docker For PHP Developers
 
-[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/petk/php/)
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/phpearth/php/)
 
 Customized Docker images crafted with care for various PHP tasks. Containing
 PHP, Nginx and OpenLiteSpeed.
@@ -22,41 +22,41 @@ For official Docker PHP images visit [Docker Hub](https://hub.docker.com/_/php/)
 
 ### PHP 7.1
 
-* [`latest` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1) - PHP CLI, Alpine
-* [`litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
-* [`litespeed-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
-* [`nginx` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-nginx) - Nginx, PHP FPM, Alpine
-* [`nginx-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.1-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
+* [`latest` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.1) - PHP CLI, Alpine
+* [`litespeed` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.1-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
+* [`litespeed-slim` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.1-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
+* [`nginx` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.1-nginx) - Nginx, PHP FPM, Alpine
+* [`nginx-slim` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.1-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
 
 ### PHP 7.2
 
-* [`7.2` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2) - PHP CLI, Alpine
-* [`7.2-litespeed` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
-* [`7.2-litespeed-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
-* [`7.2-nginx` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-nginx) - Nginx, PHP FPM, Alpine
-* [`7.2-nginx-slim` (*Dockerfile*)](https://github.com/petk/docker-php/tree/master/Dockerfile-7.2-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
+* [`7.2` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.2) - PHP CLI, Alpine
+* [`7.2-litespeed` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.2-litespeed) - OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine
+* [`7.2-litespeed-slim` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.2-litespeed-slim) - OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim
+* [`7.2-nginx` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.2-nginx) - Nginx, PHP FPM, Alpine
+* [`7.2-nginx-slim` (*Dockerfile*)](https://github.com/php-earth/docker-php/tree/master/Dockerfile-7.2-nginx-slim) - PHP FPM, Nginx, Debian Jessie Slim
 
 ## Quick Usage
 
 Create a `Dockerfile` for your setup:
 
 ```Dockerfile
-FROM petk/php:nginx
+FROM phpearth/php:nginx
 ```
 
 To run a CLI PHP script:
 
 ```bash
-docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp petk/php php script.php
+docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp phpearth/php php script.php
 ```
 
 ## Documentation
 
-Check a more [extended documentation](https://github.com/petk/docker-php/tree/master/docs)
+Check a more [extended documentation](https://github.com/php-earth/docker-php/tree/master/docs)
 for additional information how to use these images and what's included.
 
 ## License and Contributing
 
-[Contributions](https://github.com/petk/docker-php/blob/master/CONTRIBUTING.md)
+[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md)
 are most welcome. This repository is released under the
-[MIT license](https://github.com/petk/docker-php/blob/master/LICENSE).
+[MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).

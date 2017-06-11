@@ -92,7 +92,7 @@ install-php-ext {extension-name}
 To install create a Dockerfile for your application and use the script in the following way:
 
 ```Dockerfile
-FROM petk/php
+FROM phpearth/php
 
 RUN install-php-ext libsodium
 ```

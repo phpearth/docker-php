@@ -3,7 +3,7 @@
 Create a `Dockerfile` for your setup:
 
 ```bash
-FROM petk/php
+FROM phpearth/php
 ```
 
 ## Alpine
@@ -11,7 +11,7 @@ FROM petk/php
 Alpine Nginx image:
 
 ```Dockerfile
-FROM petk/php:nginx
+FROM phpearth/php:nginx
 ```
 
 ## OpenLiteSpeed
@@ -19,7 +19,7 @@ FROM petk/php:nginx
 For OpenLiteSpeed, create a Dockerfile:
 
 ```Dockerfile
-FROM petk/php:litespeed
+FROM phpearth/php:litespeed
 ```
 
 ## PHP CLI Script
@@ -27,18 +27,18 @@ FROM petk/php:litespeed
 To run a CLI PHP script:
 
 ```bash
-docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp petk/php php script.php
+docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php php script.php
 ```
 
-Instead of `petk/php` you can also use `petk/php:litespeed`, `petk/php:nginx` or
-`petk/php:nginx-slim`.
+Instead of `phpearth/php` you can also use `phpearth/php:litespeed`, `phpearth/php:nginx` or
+`phpearth/php:nginx-slim`.
 
 ## Install PHP Extensions
 
 To install additional PHP extensions, use `install-php-ext` script:
 
 ```Dockerfile
-FROM petk/php:nginx
+FROM phpearth/php:nginx
 
 RUN install-php-ext libsodium mcrypt soap
 ```
