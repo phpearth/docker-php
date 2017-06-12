@@ -1,0 +1,11 @@
+version: '3.2'
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: .docker/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ../app:/var/www/localhost/htdocs

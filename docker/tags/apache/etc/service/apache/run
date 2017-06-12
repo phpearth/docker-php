@@ -3,4 +3,4 @@
 exec 2>&1
 source /env
 
-exec apache2
+exec /usr/sbin/httpd -D FOREGROUND

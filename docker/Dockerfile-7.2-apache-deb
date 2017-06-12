@@ -44,7 +44,8 @@ ENV BUILD_DEPS \
         libpcre3-dev \
         zlib1g-dev \
         libxml2-dev \
-        libssl-dev
+        libssl-dev \
+        apache2-dev
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
     && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \

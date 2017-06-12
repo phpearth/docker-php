@@ -1,4 +1,4 @@
-&larr; [Usage](02-usage.md) | [Building PHP From Source](05-php.md) &rarr;
+&larr; [Usage](02-usage.md) | [Building PHP From Source](04-php.md) &rarr;
 ---
 
 # Composer
@@ -121,4 +121,4 @@ RUN if [ ${APP_ENV} = "dev" ]; then \
 ```
 
 ---
-&larr; [Usage](02-usage.md) | [Building PHP From Source](05-php.md) &rarr;
+&larr; [Usage](02-usage.md) | [Building PHP From Source](04-php.md) &rarr;
