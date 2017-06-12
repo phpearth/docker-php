@@ -1,10 +1,8 @@
 # Docker For PHP Developers
 
-[![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/)
-[![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
+[![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
 
-Carefully crafted Docker images for PHP developers with latest PHP versions, Nginx,
-OpenLiteSpeed and Apache.
+Carefully crafted Docker images for PHP developers with latest PHP versions, Nginx, OpenLiteSpeed and Apache.
 
 ## Features
 
@@ -20,8 +18,7 @@ OpenLiteSpeed and Apache.
 
 ## Docker Tags
 
-The following list contains all current Docker tags and what is included in each.
-They follow PHP release cycle and supported version.
+The following list contains all current Docker tags and what is included in each. They follow PHP release cycle and supported version.
 
 | Docker Tag | Features | Support Until |
 | ---------- | -------- | ------------- |
@@ -100,6 +97,4 @@ A more detailed documentation and cookbook with Docker and PHP recipes:
 
 ## License and Contributing
 
-[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md)
-are most welcome. This repository is released under the
-[MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).
+[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md) are most welcome. This repository is released under the [MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).
