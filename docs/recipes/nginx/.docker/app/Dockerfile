@@ -1,4 +1,4 @@
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 
 RUN install-php-ext memcached
 

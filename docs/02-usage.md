@@ -11,13 +11,13 @@ Create a `Dockerfile` for your setup:
 ### Alpine Nginx
 
 ```Dockerfile
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 ```
 
 ### Alpine OpenLiteSpeed
 
 ```Dockerfile
-FROM phpearth/php:litespeed
+FROM phpearth/php:7.1-litespeed
 ```
 
 ### PHP CLI Script
@@ -31,13 +31,13 @@ docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/my
 ### Debian Slim Nginx
 
 ```Dockerfile
-FROM phpearth/php:nginx-deb
+FROM phpearth/php:7.1-nginx-deb
 ```
 
 ### Debian Slim OpenLiteSpeed
 
 ```Dockerfile
-FROM phpearth/php:litespeed-deb
+FROM phpearth/php:7.1-litespeed-deb
 ```
 
 ### PHP 7.2
@@ -49,6 +49,8 @@ To use PHP 7.2 images just prepend the tag name with `7.2`:
 * `phpearth/php:7.2-litespeed`
 * `phpearth/php:7.2-nginx-deb`
 * `phpearth/php:7.2-litespeed-deb`
+* `phpearth/php:7.2-apache`
+* `phpearth/php:7.2-apache-deb`
 
 ## Install PHP Extensions
 
@@ -57,7 +59,7 @@ which automatically also installs all system dependencies required to use partic
 PHP extension.
 
 ```Dockerfile
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 
 RUN install-php-ext libsodium mcrypt soap
 ```

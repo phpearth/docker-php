@@ -1,4 +1,4 @@
-FROM phpearth/php:litespeed
+FROM phpearth/php:7.1-litespeed
 
 COPY . /
 

@@ -41,10 +41,10 @@ The following list contains all current Docker tags and what is included in each
 
 ### Nginx
 
-To run Nginx webserver with PHP-FPM, create a `Dockerfile`:
+For example, to run an Nginx HTTP server with PHP FPM, create a `Dockerfile`:
 
 ```Dockerfile
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 ```
 
 And then build Docker image and run Docker container:
@@ -67,7 +67,7 @@ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp phpearth/php php s
 To install Composer:
 
 ```Dockerfile
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 
 RUN install-composer
 ```
@@ -77,7 +77,7 @@ RUN install-composer
 PHP extensions installation:
 
 ```Dockerfile
-FROM phpearth/php:litespeed
+FROM phpearth/php:7.1-litespeed
 
 RUN install-php-ext libsodium intl pdo_mysql
 ```
