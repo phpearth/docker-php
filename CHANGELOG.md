@@ -4,13 +4,16 @@ All notable changes to this project will be documented in this file. This projec
 [keeps a CHANGELOG](http://keepachangelog.com/) and adheres to
 [Semantic Versioning](http://semver.org/).
 
-
 ## [UNREALEASED] 2017-01-01
+
+* ...
+
+## [1.0.4] 2017-06-12
 
 * Repository location refactored
 * PEAR removed
 * PHP 7.2.0alpha1
-* ...
+* Composer installation script with optional prestissimo plugin
 
 ## [1.0.3] 2017-06-03
 
