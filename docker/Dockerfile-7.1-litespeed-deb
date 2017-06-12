@@ -1,0 +1,116 @@
+FROM debian:jessie-slim
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Custom helper scripts to download PHP and manage PHP extensions
+COPY bin /usr/local/bin/
+COPY tags/litespeed-deb/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
+
+ENV LS_VER 1.4.26
+ENV PHP_VER 7.1
+ENV PHP_INI_DIR /usr/local/etc/php
+ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
+ENV PHP_CPPFLAGS="$PHP_CFLAGS"
+ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
+
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Persistent runtime dependencies
+ENV DEPS \
+        libedit2 \
+        libxml2 \
+        runit \
+        libssl1.0.0 \
+        curl \
+        ca-certificates \
+        libexpat1 \
+        libgeoip1
+
+# Build dependencies which get removed
+ENV BUILD_DEPS \
+        build-essential \
+        autoconf \
+        automake \
+        libtool \
+        bison \
+        re2c \
+        pkg-config \
+        xz-utils \
+        libc-dev \
+        libedit-dev \
+        libcurl4-openssl-dev \
+        libbz2-dev \
+        libkrb5-dev \
+        rcs \
+        libpcre3-dev \
+        libexpat1-dev \
+        zlib1g-dev \
+        libxml2-dev \
+        libgeoip-dev \
+        libssl-dev
+
+RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \
+    # PHP
+    && mkdir -p $PHP_INI_DIR/conf.d \
+    && cd /usr/src \
+    && download-php $PHP_VER \
+    && cd php-* \
+    && export CFLAGS="$PHP_CFLAGS" \
+              CPPFLAGS="$PHP_CPPFLAGS" \
+              LDFLAGS="$PHP_LDFLAGS" \
+    && ./configure \
+        # Core configure options
+        --with-libdir=/lib/x86_64-linux-gnu \
+        --enable-phpdbg=no \
+        --disable-rpath \
+        --without-pear \
+        # Bundled PHP extensions
+        --enable-bcmath \
+        --enable-calendar \
+        --enable-mbstring \
+        --enable-exif \
+        --enable-ftp \
+        --with-pcre-regex \
+        --enable-mysqlnd \
+        --with-openssl \
+        --enable-zip \
+        --enable-sysvsem \
+        --enable-sysvshm \
+        --enable-sysvmsg \
+        --enable-shmop \
+        --enable-sockets \
+        --with-zlib \
+        --with-zlib-dir \
+        --with-bz2 \
+        --with-curl \
+        --with-mhash \
+        --with-config-file-path="$PHP_INI_DIR" \
+        --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
+        --disable-cgi \
+        --with-libxml-dir=/usr \
+        --with-libedit \
+        --with-kerberos \
+        --enable-opcache \
+        --with-litespeed \
+    && make -j "$(nproc)" \
+    && make install \
+    && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
+    # OpenLiteSpeed
+    && cd /usr/src \
+    && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
+    && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
+    && cd openlitespeed-$LS_VER \
+    && ./configure \
+    && make -j "$(nproc)" && make install \
+    && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
+    && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
+    # Remove dependencies with removal of dependencies that got automatically installed
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_DEPS \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
+
+COPY tags/litespeed-deb /
+
+CMD ["/sbin/runit-wrapper"]
