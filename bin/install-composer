@@ -1,11 +1,31 @@
 #!/bin/sh
 
-# Script for downloading Composer. It checks for file integrity and also downloads
-# prestissimo Composer plugin for faster parallel downloading of PHP packages.
+# Script for downloading Composer. It checks for file integrity and optionally
+# downloads prestissimo Composer plugin for faster parallel downloading of PHP
+# packages.
+# Usage install-composer [-p]
 
+# Composer version, download url and hash
 COMPOSER_VERSION=1.4.2
 COMPOSER_INSTALLER_URL=https://raw.githubusercontent.com/composer/getcomposer.org/da290238de6d63faace0343efbdd5aa9354332c5/web/installer
 COMPOSER_INSTALLER_HASH=669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410
+
+# A POSIX variable - reset in case getopts has been used previously in the shell.
+OPTIND=1
+
+# Whether to install Prestissimo for parallel downloads, defaults to not install
+prestissimo=0
+
+while getopts "p" opt; do
+  case "$opt" in
+    p) prestissimo=1
+    ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
 
 curl -s -f -L -o /tmp/installer.php $COMPOSER_INSTALLER_URL
 php -r " \
@@ -19,13 +39,16 @@ php -r " \
 
 php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
 
+# Clean downloaded file
 rm /tmp/installer.php
 
 # Update Composer in case there is a new version available
 composer selfupdate
 
 # Install Prestissimo plugin for Composer for faster parallel downloading
-composer global require hirak/prestissimo
+if [ $prestissimo = "1" ] ; then
+  composer global require hirak/prestissimo
+fi
 
 # Clear Composer cache
 composer clearcache

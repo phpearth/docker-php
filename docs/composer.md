@@ -6,7 +6,7 @@
 
 Composer is a de-facto standard for managing PHP packages. Good practice however
 is to not include it in the production Docker images. By default these images
-include a helper installation script `download-composer` so you can easily install
+include a helper installation script `install-composer` so you can easily install
 Composer.
 
 Let's first take a look at how to use Composer with Docker in general. There are
@@ -76,7 +76,7 @@ Cons:
 
 When building production images, you can avoid adding Composer in your image with
 build arguments. The following example uses Docker build arguments and the provided
-`download-composer` script:
+`install-composer` script:
 
 ```Dockerfile
 FROM phpearth/php:nginx
@@ -84,8 +84,8 @@ FROM phpearth/php:nginx
 ARG APP_ENV=prod
 
 RUN if [ ${APP_ENV} = "dev" ]; then \
-        apk add --no-cache git openssh && download-composer \
-    ;fi
+        apk add --no-cache git openssh && install-composer; \
+    fi
 ```
 
 You can set the build arguments in the Docker Compose files. For example:
@@ -104,9 +104,22 @@ services:
       - 80:80
 ```
 
-## See Also
+### Prestissimo Composer Plugin
 
-[Recipes](recipes) include some more usage examples for better understanding.
+[Prestissimo](https://github.com/hirak/prestissimo) is a Composer plugin for faster
+parallel downloading of PHP packages.
+
+You can install prestissimo by providing `-p` option to `install-composer` script.
+
+```Dockerfile
+FROM phpearth/php:nginx
+
+ARG APP_ENV=prod
+
+RUN if [ ${APP_ENV} = "dev" ]; then \
+        apk add --no-cache git openssh && install-composer -p; \
+    fi
+```
 
 ---
 
