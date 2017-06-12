@@ -1,6 +1,6 @@
 # Docker For PHP Developers
 
-[![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
+[![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE) [![Build Status](https://travis-ci.org/php-earth/docker-php.svg?branch=master)](https://travis-ci.org/php-earth/docker-php)
 
 Carefully crafted Docker images for PHP developers with latest PHP versions, Nginx, OpenLiteSpeed and Apache.
 
