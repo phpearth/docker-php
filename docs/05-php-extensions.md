@@ -1,4 +1,5 @@
 &larr; [Building PHP From Source](04-php.md) | [Permissions](06-permissions.md) &rarr;
+
 ---
 
 # PHP Extensions

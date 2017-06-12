@@ -1,4 +1,5 @@
 &larr; [Usage](02-usage.md) | [Building PHP From Source](04-php.md) &rarr;
+
 ---
 
 # Composer
