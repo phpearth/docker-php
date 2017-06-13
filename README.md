@@ -23,6 +23,7 @@ The following list contains all current Docker tags and what is included in each
 | Docker Tag | Features | Support Until |
 | ---------- | -------- | ------------- |
 | [latest](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1) | PHP 7.1 CLI, Alpine | 1 December 2019 |
+| [7.1-cgi](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-cgi) | PHP 7.1 CGI, Alpine | 1 December 2019 |
 | [7.1-litespeed](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-litespeed) | OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine |   1 December 2019 |
 | [7.1-litespeed-deb](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-litespeed-deb) | OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim | 1 December 2019 |
 | [7.1-nginx](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-nginx) | Nginx, PHP FPM, Alpine | 1 December 2019 |
@@ -30,6 +31,7 @@ The following list contains all current Docker tags and what is included in each
 | [7.1-apache](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-apache) | Apache, PHP, Alpine | 1 December 2019 |
 | [7.1-apache-deb](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-apache-deb) | Apache, PHP, Debian Jessie Slim | 1 December 2019 |
 | [7.2](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2) | PHP CLI, Alpine | TBD |
+| [7.2-cgi](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cgi) | PHP 7.2 CGI, Alpine | TBD |
 | [7.2-litespeed](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed) | OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine | TBD |
 | [7.2-litespeed-deb](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed-deb) | OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim | TBD |
 | [7.2-nginx](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx) | Nginx, PHP FPM, Alpine | TBD |
