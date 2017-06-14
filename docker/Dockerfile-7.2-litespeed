@@ -35,8 +35,7 @@ ENV LS_VER="1.4.26" \
         geoip \
         expat \
         pcre \
-        libstdc++ \
-        openssl" \
+        libstdc++" \
     # Build dependencies which get removed
     BUILD_DEPS="autoconf \
         file \
@@ -57,6 +56,7 @@ ENV LS_VER="1.4.26" \
         zlib-dev \
         libxml2-dev \
         gnupg \
+        openssl \
         openssl-dev \
         linux-headers \
         geoip-dev \
@@ -134,7 +134,7 @@ RUN set -x \
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
     # Remove dependencies
-    && rm -rf /usr/src/* /tmp/patches \
+    && rm -rf /usr/src/* /tmp/patches /usr/local/lsws/docs/* \
     && apk del --no-cache --purge .build-deps
 
 COPY tags/litespeed /
