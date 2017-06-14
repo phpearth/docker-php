@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "$CACHE_TAG" == "7.1" ]; then
+  docker tag $IMAGE_NAME $DOCKER_REPO:latest
+  docker push $DOCKER_REPO:latest
+fi

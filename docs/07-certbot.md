@@ -1,4 +1,4 @@
-&larr; [Permissions](06-permissions.md) | [Recipes](08-recipes.md) &rarr;
+&larr; [Permissions](06-permissions.md) | [Building Images](08-build.md) &rarr;
 
 ---
 
@@ -133,4 +133,4 @@ To configure web-server you can also use the
 * [Multiple Docker Compose files](https://docs.docker.com/compose/extends/)
 
 ---
-&larr; [Permissions](06-permissions.md) | [Recipes](08-recipes.md) &rarr;
+&larr; [Permissions](06-permissions.md) | [Building Images](08-build.md) &rarr;
