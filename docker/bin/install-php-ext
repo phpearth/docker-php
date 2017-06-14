@@ -69,7 +69,7 @@ if [ -f /etc/alpine-release ]; then
   # Alpine
 
   # System dependencies for building extensions and downloading PHP
-  BUILD_DEPS_ALL="autoconf gcc g++ make re2c gnupg linux-headers pkgconf"
+  BUILD_DEPS_ALL="autoconf file gcc g++ make automake re2c gnupg linux-headers pkgconf"
   DEPS_ALL=""
   TASKS_ALL=""
   j=$(getconf _NPROCESSORS_ONLN)
