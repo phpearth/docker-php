@@ -110,7 +110,6 @@ RUN set -x \
         --with-litespeed \
     && make -j "$(getconf _NPROCESSORS_ONLN)" \
     && make install \
-    && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
     # OpenLiteSpeed
     && cd /usr/src \
     && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
@@ -130,6 +129,7 @@ RUN set -x \
     && rm dist/admin/misc/php.ini \
     && ./configure \
     && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
+    && { find /usr/local/bin /usr/local/sbin /usr/local/lsws/bin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
     && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
     && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
