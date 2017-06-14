@@ -19,7 +19,7 @@ COPY tags/litespeed/patches /tmp/patches
 ENV LS_VER="1.4.26" \
     PHP_VER="7.1" \
     PHP_INI_DIR="/usr/local/etc/php" \
-    PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3" \
+    PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
     PHP_CPPFLAGS="$PHP_CFLAGS" \
     PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
     # When using Composer, disable the warning about running commands as root/super user
