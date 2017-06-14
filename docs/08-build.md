@@ -30,6 +30,9 @@ neat way to expose additional metadata about particular Docker object. We use
 * `vcs-ref` - Reference to commit in Git repository
 * `schema-version` - Version of the Label Schema in use.
 * `vendor` - Vendor name of the image creators.
+* `name`
+* `description`
+* `url`
 
 ---
 

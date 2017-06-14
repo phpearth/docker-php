@@ -8,7 +8,10 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/php-earth/docker-php.git" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.schema-version="1.0" \
-      org.label-schema.vendor="PHP.earth"
+      org.label-schema.vendor="PHP.earth" \
+      org.label-schema.name="docker-php" \
+      org.label-schema.description="Docker For PHP Developers - Docker images with PHP, Nginx, OpenLiteSpeed, Apache, Alpine and Debian Slim" \
+      org.label-schema.url="https://github.com/php-earth/docker-php"
 
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
