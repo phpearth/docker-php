@@ -2,15 +2,9 @@
 
 [![Build Status](https://img.shields.io/travis/php-earth/docker-php/master.svg?style=plastic)](https://travis-ci.org/php-earth/docker-php) [![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
 
-Carefully crafted Docker images for PHP developers with latest PHP versions, Nginx, OpenLiteSpeed and Apache.
+Carefully crafted Docker images for PHP developers with latest PHP versions 7.1 and upcoming 7.2, [Nginx](https://nginx.org/), [OpenLiteSpeed](http://open.litespeedtech.com/) and [Apache HTTP Server](https://httpd.apache.org/).
 
-## Features
-
-* Latest PHP 7.1 and upcoming PHP 7.2
-* [Nginx](https://nginx.org/)
-* [OpenLiteSpeed](http://open.litespeedtech.com/)
-* [Apache HTTP Server](https://httpd.apache.org/)
-* PHP Extensions installation script
+* PHP extensions installation script
 * [Composer](https://getcomposer.org) installation script
 * [runit](http://smarden.org/runit/) for running multiple services without overhead.
 * Debian Jessie slim or Alpine base image
@@ -43,8 +37,7 @@ The following list contains all current Docker tags and what is included in each
 | | [`7.2-apache-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-apache-deb) | Apache 2.4.10 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-apache-deb "Image size") |
 | | [`7.2-cgi-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cgi-deb) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cgi-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-cgi-deb "Image size") |
 
-Tags follow PHP release cycle and
-[PHP supported versions timeline](http://php.net/supported-versions.php).
+Tags follow PHP release cycle and [PHP supported versions timeline](http://php.net/supported-versions.php).
 
 | PHP | Active Support Until | Security Support Until |
 | --- | -------------------- | ---------------------- |
