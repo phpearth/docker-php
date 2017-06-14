@@ -15,28 +15,23 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
 
-ENV PHP_VER 7.1
-ENV PHP_INI_DIR /usr/local/etc/php
-ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
-ENV PHP_CPPFLAGS="$PHP_CFLAGS"
-ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
-
-# When using Composer, disable the warning about running commands as root/super user
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-# Persistent runtime dependencies
-ENV DEPS \
-        libedit \
+ENV PHP_VER="7.1" \
+    PHP_INI_DIR="/usr/local/etc/php" \
+    PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3" \
+    PHP_CPPFLAGS="$PHP_CFLAGS" \
+    PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
+    # When using Composer, disable the warning about running commands as root/super user
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    # Persistent runtime dependencies
+    DEPS="libedit \
         libxml2 \
         libbz2 \
         curl \
         libssl1.0 \
         ca-certificates \
-        runit
-
-# PHP build dependencies which get removed
-ENV BUILD_DEPS \
-        autoconf \
+        runit" \
+    # PHP build dependencies which get removed
+    BUILD_DEPS="autoconf \
         file \
         g++ \
         gcc \
@@ -55,7 +50,7 @@ ENV BUILD_DEPS \
         zlib-dev \
         libxml2-dev \
         gnupg \
-        openssl-dev
+        openssl-dev"
 
 RUN set -x \
 	  && addgroup -g 82 -S www-data \
@@ -108,6 +103,6 @@ RUN set -x \
     && rm -rf /usr/src/* \
     && apk del --no-cache --purge .build-deps
 
-COPY tags/latest /
+COPY tags/cli /
 
 CMD ["php", "-a"]

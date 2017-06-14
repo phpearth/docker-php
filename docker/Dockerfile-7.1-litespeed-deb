@@ -17,30 +17,25 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 COPY bin /usr/local/bin/
 COPY tags/litespeed-deb/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
-ENV LS_VER 1.4.26
-ENV PHP_VER 7.1
-ENV PHP_INI_DIR /usr/local/etc/php
-ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3"
-ENV PHP_CPPFLAGS="$PHP_CFLAGS"
-ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
-
-# When using Composer, disable the warning about running commands as root/super user
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-# Persistent runtime dependencies
-ENV DEPS \
-        libedit2 \
+ENV LS_VER="1.4.26" \
+    PHP_VER="7.1" \
+    PHP_INI_DIR="/usr/local/etc/php" \
+    PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O3" \
+    PHP_CPPFLAGS="$PHP_CFLAGS" \
+    PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
+    # When using Composer, disable the warning about running commands as root/super user
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    # Persistent runtime dependencies
+    DEPS="libedit2 \
         libxml2 \
         runit \
         libssl1.0.0 \
         curl \
         ca-certificates \
         libexpat1 \
-        libgeoip1
-
-# Build dependencies which get removed
-ENV BUILD_DEPS \
-        build-essential \
+        libgeoip1" \
+    # Build dependencies which get removed
+    BUILD_DEPS="build-essential \
         autoconf \
         automake \
         libtool \
@@ -59,7 +54,7 @@ ENV BUILD_DEPS \
         zlib1g-dev \
         libxml2-dev \
         libgeoip-dev \
-        libssl-dev
+        libssl-dev"
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
     && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \

@@ -1,5 +1,6 @@
-FROM alpine:3.6
+FROM debian:jessie-slim
 
+ARG DEBIAN_FRONTEND=noninteractive
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -14,6 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 # Custom helper scripts to download PHP and manage PHP extensions
 COPY bin /usr/local/bin/
+COPY tags/nginx-deb/etc/apt/preferences.d/backports /etc/apt/preferences.d/backports
 
 ENV PHP_VER="7.2" \
     PHP_INI_DIR="/usr/local/etc/php" \
@@ -23,44 +25,36 @@ ENV PHP_VER="7.2" \
     # When using Composer, disable the warning about running commands as root/super user
     COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
-    DEPS="libedit \
+    DEPS="libedit2 \
         libxml2 \
-        libbz2 \
+        runit \
+        libssl1.0.0 \
         curl \
-        libssl1.0 \
         ca-certificates \
-        nginx \
-        nginx-mod-http-headers-more \
-        runit" \
+        libgssapi-krb5-2" \
     # Build dependencies which get removed
-    BUILD_DEPS="autoconf \
-        file \
-        g++ \
-        gcc \
-        make \
+    BUILD_DEPS="build-essential \
+        autoconf \
         automake \
         libtool \
         bison \
         re2c \
-        pkgconf \
+        pkg-config \
+        xz-utils \
         libc-dev \
         libedit-dev \
-        curl-dev \
-        bzip2-dev \
-        krb5-dev \
-        pcre-dev \
-        zlib-dev \
+        libcurl4-openssl-dev \
+        libbz2-dev \
+        libkrb5-dev \
+        libpcre3-dev \
+        zlib1g-dev \
         libxml2-dev \
-        gnupg \
-        openssl-dev"
+        libssl-dev"
 
-RUN set -x \
-	  && addgroup -g 82 -S www-data \
-	  && adduser -u 82 -D -S -G www-data www-data \
-    && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
-    && apk add --no-cache $DEPS \
+RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && apt-get update && apt-get -y --no-install-recommends install $DEPS $BUILD_DEPS \
     # PHP
-    && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
+    && mkdir -p $PHP_INI_DIR/conf.d \
     && cd /usr/src \
     && download-php $PHP_VER \
     && cd php-* \
@@ -69,6 +63,7 @@ RUN set -x \
               LDFLAGS="$PHP_LDFLAGS" \
     && ./configure \
         # Core configure options
+        --with-libdir=/lib/x86_64-linux-gnu \
         --enable-phpdbg=no \
         --disable-rpath \
         --without-pear \
@@ -94,25 +89,18 @@ RUN set -x \
         --with-mhash \
         --with-config-file-path="$PHP_INI_DIR" \
         --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
-        --disable-cgi \
         --with-libxml-dir=/usr \
         --with-libedit \
-        --with-fpm-user=www-data \
-        --with-fpm-group=www-data \
         --with-kerberos \
         --enable-opcache \
-        --enable-fpm \
-    && make -j "$(getconf _NPROCESSORS_ONLN)" \
+    && make -j "$(nproc)" \
     && make install \
-    && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+    && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     && cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf \
-    && mkdir /run/php && mkdir /run/nginx \
-    # Remove dependencies
-    && rm -rf /usr/src/* \
-    && apk del --no-cache --purge .build-deps \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    # Remove dependencies with removal of dependencies that got automatically installed
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $BUILD_DEPS \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/src/*
 
-COPY tags/nginx /
+COPY tags/cli-deb /
 
 CMD ["/sbin/runit-wrapper"]

@@ -1,6 +1,6 @@
 # Docker For PHP Developers
 
-[![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE) [![Build Status](https://travis-ci.org/php-earth/docker-php.svg?branch=master)](https://travis-ci.org/php-earth/docker-php)
+[![Build Status](https://img.shields.io/travis/php-earth/docker-php/master.svg?style=plastic)](https://travis-ci.org/php-earth/docker-php) [![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
 
 Carefully crafted Docker images for PHP developers with latest PHP versions, Nginx, OpenLiteSpeed and Apache.
 
@@ -18,26 +18,38 @@ Carefully crafted Docker images for PHP developers with latest PHP versions, Ngi
 
 ## Docker Tags
 
-The following list contains all current Docker tags and what is included in each. They follow PHP release cycle and supported version.
+The following list contains all current Docker tags and what is included in each.
 
-| Docker Tag | Features | Size | Support Until |
-| ---------- | -------- | ---- | ------------- |
-| [`latest`, `7.1`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1) | PHP 7.1 CLI, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php.svg)](https://microbadger.com/images/phpearth/php "Image size") | 2019-12-01 |
-| [`7.1-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-cgi) | PHP 7.1 CGI, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-cgi.svg)](https://microbadger.com/images/phpearth/php:7.1-cgi "Image size") | 2019-12-01 |
-| [`7.1-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-litespeed) | OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.1-litespeed "Image size") | 2019-12-01 |
-| [`7.1-litespeed-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-litespeed-deb) | OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-litespeed-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-litespeed-deb "Image size") | 2019-12-01 |
-| [`7.1-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-nginx) | Nginx, PHP FPM, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-nginx.svg)](https://microbadger.com/images/phpearth/php:7.1-nginx "Image size") | 2019-12-01 |
-| [`7.1-nginx-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-nginx-deb) | PHP FPM, Nginx, Debian Jessie Slim | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-nginx-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-nginx-deb "Image size") | 2019-12-01 |
-| [`7.1-apache`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-apache) | Apache, PHP, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-apache.svg)](https://microbadger.com/images/phpearth/php:7.1-apache "Image size") | 2019-12-01 |
-| [`7.1-apache-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-apache-deb) | Apache, PHP, Debian Jessie Slim | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-apache-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-apache-deb "Image size") | 2019-12-01 |
-| [`7.2`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2) | PHP CLI, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") | TBD |
-| [`7.2-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cgi) | PHP 7.2 CGI, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cgi.svg)](https://microbadger.com/images/phpearth/php:7.2-cgi "Image size") | TBD |
-| [`7.2-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed) | OpenLiteSpeed, PHP LiteSpeed SAPI, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed "Image size") | TBD |
-| [`7.2-litespeed-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed-deb) | OpenLiteSpeed, PHP LiteSpeed SAPI, Debian Jessie Slim | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed-deb "Image size") | TBD |
-| [`7.2-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx) | Nginx, PHP FPM, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx "Image size") | TBD |
-| [`7.2-nginx-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx-deb) | PHP FPM, Nginx, Debian Jessie Slim | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx-deb "Image size") | TBD |
-| [`7.2-apache`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-apache) | Apache, PHP, Alpine | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache.svg)](https://microbadger.com/images/phpearth/php:7.2-apache "Image size") | TBD |
-| [`7.2-apache-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-apache-deb) | Apache, PHP, Debian Jessie Slim | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-apache-deb "Image size") | TBD |
+| System | Docker Tag | Features | Size |
+| ------ | ---------- | -------- | ---- |
+| **PHP 7.1.6**@Alpine 3.6 | [`latest`, `7.1`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php.svg)](https://microbadger.com/images/phpearth/php "Image size") |
+| | [`7.1-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-litespeed) | OpenLiteSpeed 1.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.1-litespeed "Image size") |
+| | [`7.1-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-nginx) | Nginx 1.12.0, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-nginx.svg)](https://microbadger.com/images/phpearth/php:7.1-nginx "Image size") |
+| | [`7.1-apache`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-apache) | Apache 2.4.25 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-apache.svg)](https://microbadger.com/images/phpearth/php:7.1-apache "Image size") |
+| | [`7.1-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-cgi) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-cgi.svg)](https://microbadger.com/images/phpearth/php:7.1-cgi "Image size") |
+| **PHP 7.1.6**@Debian 8.8 | [`7.1-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-deb) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-deb "Image size") |
+| | [`7.1-litespeed-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-litespeed-deb) | OpenLiteSpeed 1.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-litespeed-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-litespeed-deb "Image size") |
+| | [`7.1-nginx-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-nginx-deb) | Nginx 1.10.3, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-nginx-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-nginx-deb "Image size") |
+| | [`7.1-apache-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-apache-deb) | Apache 2.4.10 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-apache-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-apache-deb "Image size") |
+| | [`7.1-cgi-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.1-cgi-deb) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-cgi-deb.svg)](https://microbadger.com/images/phpearth/php:7.1-cgi-deb "Image size") |
+| **PHP 7.2.0alpha1**@Alpine 3.6 | [`7.2`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
+| | [`7.2-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed) | OpenLiteSpeed 1.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed "Image size") |
+| | [`7.2-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx) | Nginx 1.12.0, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx "Image size") |
+| | [`7.2-apache`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-apache) | Apache 2.4.25 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache.svg)](https://microbadger.com/images/phpearth/php:7.2-apache "Image size") |
+| | [`7.2-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cgi) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cgi.svg)](https://microbadger.com/images/phpearth/php:7.2-cgi "Image size") |
+| **PHP 7.2.0alpha1**@Debian 8.8 | [`7.2-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-deb) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-deb "Image size") |
+| | [`7.2-litespeed-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed-deb) | OpenLiteSpeed 1.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed-deb "Image size") |
+| | [`7.2-nginx-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx-deb) | Nginx 1.10.3, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx-deb "Image size") |
+| | [`7.2-apache-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-apache-deb) | Apache 2.4.10 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-apache-deb "Image size") |
+| | [`7.2-cgi-deb`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cgi-deb) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cgi-deb.svg)](https://microbadger.com/images/phpearth/php:7.2-cgi-deb "Image size") |
+
+Tags follow PHP release cycle and
+[PHP supported versions timeline](http://php.net/supported-versions.php).
+
+| PHP | Active Support Until | Security Support Until |
+| --- | -------------------- | ---------------------- |
+| 7.1 | 2018-12-01           | 2019-12-01             |
+| 7.2 | TBD                  | TBD                    |
 
 ## Quick Usage
 
