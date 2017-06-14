@@ -1,6 +1,8 @@
 #!/bin/bash
 
+TAG=$(echo $IMAGE_NAME| cut -d':' -f 2)
+
 echo "Build hook running"
 docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
              --build-arg VCS_REF=`git rev-parse --short HEAD` \
-             -t $IMAGE_NAME -f Dockerfile-$CACHE_TAG .
+             -t $IMAGE_NAME -f Dockerfile-$TAG .
