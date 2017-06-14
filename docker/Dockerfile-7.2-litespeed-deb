@@ -104,6 +104,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/so
     && make install \
     && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
     # OpenLiteSpeed
+    && unset CFLAGS CPPFLAGS LDFLAGS \
     && cd /usr/src \
     && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
     && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
