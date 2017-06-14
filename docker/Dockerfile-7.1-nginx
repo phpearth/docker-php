@@ -31,7 +31,7 @@ ENV PHP_VER="7.1" \
         ca-certificates \
         nginx \
         nginx-mod-http-headers-more \
-        runit"
+        runit" \
     # Build dependencies which get removed
     BUILD_DEPS="autoconf \
         file \

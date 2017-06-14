@@ -36,7 +36,7 @@ ENV LS_VER="1.4.26" \
         expat \
         pcre \
         libstdc++ \
-        openssl"
+        openssl" \
     # Build dependencies which get removed
     BUILD_DEPS="autoconf \
         file \
