@@ -27,7 +27,8 @@ ENV PHP_VER="7.1" \
         libxml2 \
         libbz2 \
         curl \
-        libssl1.0 \
+        libressl2.5-libcrypto \
+        libressl2.5-libssl \
         ca-certificates \
         runit \
         apache2" \
@@ -51,7 +52,8 @@ ENV PHP_VER="7.1" \
         zlib-dev \
         libxml2-dev \
         gnupg \
-        apache2-dev"
+        apache2-dev \
+        libressl-dev"
 
 RUN set -x \
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \

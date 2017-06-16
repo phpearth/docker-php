@@ -29,13 +29,16 @@ ENV LS_VER="1.4.26" \
         libxml2 \
         libbz2 \
         curl \
+        libressl2.5-libcrypto \
+        libressl2.5-libssl \
         libssl1.0 \
         ca-certificates \
         runit \
         geoip \
         expat \
         pcre \
-        libstdc++" \
+        libstdc++ \
+        udns" \
     # Build dependencies which get removed
     BUILD_DEPS="autoconf \
         file \
@@ -56,11 +59,11 @@ ENV LS_VER="1.4.26" \
         zlib-dev \
         libxml2-dev \
         gnupg \
-        openssl \
         openssl-dev \
         linux-headers \
         geoip-dev \
-        expat-dev"
+        expat-dev \
+        udns-dev"
 
 RUN set -x \
     && addgroup -g 82 -S lsadm \
@@ -127,7 +130,7 @@ RUN set -x \
     && patch dist/admin/html.open/lib/ows/RealTimeStats.php < /tmp/patches/RealTimeStats.php.patch \
     && patch src/thread/thread.h < /tmp/patches/thread.h.patch \
     && rm dist/admin/misc/php.ini \
-    && ./configure \
+    && ./configure --with-openssl=/usr --disable-static --disable-rpath --enable-adminssl=no --with-pcre \
     && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
     && { find /usr/local/bin /usr/local/sbin /usr/local/lsws/bin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
     && ln -sf /usr/local/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \

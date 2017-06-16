@@ -27,7 +27,8 @@ ENV PHP_VER="7.1" \
         libxml2 \
         libbz2 \
         curl \
-        libssl1.0 \
+        libressl2.5-libcrypto \
+        libressl2.5-libssl \
         ca-certificates \
         runit" \
     # PHP build dependencies which get removed
@@ -50,7 +51,7 @@ ENV PHP_VER="7.1" \
         zlib-dev \
         libxml2-dev \
         gnupg \
-        openssl-dev"
+        libressl-dev"
 
 RUN set -x \
 	  && addgroup -g 82 -S www-data \
