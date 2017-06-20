@@ -6,12 +6,15 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* ...
+
+## [1.0.5] 2017-06-20
+
 * Apache HTTP Server
 * PHP CGI
 * Refactored and stabilized Docker tags
 * Improved documentation
 * Tests
-* ...
 
 ## [1.0.4] 2017-06-12
 
