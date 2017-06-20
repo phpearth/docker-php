@@ -12,7 +12,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.description="Docker For PHP Developers - Docker images with PHP, Nginx, OpenLiteSpeed, Apache, Alpine and Debian Slim" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
-# Custom helper scripts to download PHP and manage PHP extensions
+# OpenLiteSpeed patches
 COPY tags/litespeed/patches /tmp/patches
 
 ENV LS_VER="1.4.26" \
