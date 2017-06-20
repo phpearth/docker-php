@@ -12,98 +12,43 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.description="Docker For PHP Developers - Docker images with PHP, Nginx, OpenLiteSpeed, Apache, Alpine and Debian Slim" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
-# Custom helper scripts to download PHP and manage PHP extensions
-COPY bin /usr/local/bin/
-
-ENV PHP_VER="7.1" \
-    PHP_INI_DIR="/usr/local/etc/php" \
-    PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
-    PHP_CPPFLAGS="$PHP_CFLAGS" \
-    PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie" \
+ENV \
     # When using Composer, disable the warning about running commands as root/super user
     COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
-    DEPS="libedit \
-        libxml2 \
-        libbz2 \
+    DEPS="php7.1 \
+        php7.1-bcmath \
+        php7.1-calendar \
+        php7.1-mbstring \
+        php7.1-exif \
+        php7.1-ftp \
+        php7.1-mysqlnd \
+        php7.1-openssl \
+        php7.1-zip \
+        php7.1-sysvsem \
+        php7.1-sysvshm \
+        php7.1-sysvmsg \
+        php7.1-shmop \
+        php7.1-sockets \
+        php7.1-zlib \
+        php7.1-bz2 \
+        php7.1-curl \
+        php7.1-simplexml \
+        php7.1-xml \
+        php7.1-opcache \
+        php7.1-cgi \
         curl \
-        libressl2.5-libcrypto \
-        libressl2.5-libssl \
         ca-certificates \
-        runit" \
-    # PHP build dependencies which get removed
-    BUILD_DEPS="autoconf \
-        file \
-        g++ \
-        gcc \
-        make \
-        automake \
-        libtool \
-        bison \
-        re2c \
-        pkgconf \
-        libc-dev \
-        libedit-dev \
-        curl-dev \
-        bzip2-dev \
-        krb5-dev \
-        pcre-dev \
-        zlib-dev \
-        libxml2-dev \
-        gnupg \
-        libressl-dev"
+        runit"
+
+# This image include a custom Alpine repository for best possible developer
+# experience with latest versions
+ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
-	  && addgroup -g 82 -S www-data \
-	  && adduser -u 82 -D -S -G www-data www-data \
-    && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
-    && apk add --no-cache $DEPS \
-    # PHP
-    && mkdir -p $PHP_INI_DIR/conf.d /usr/src \
-    && cd /usr/src \
-    && download-php $PHP_VER \
-    && cd php-* \
-    && export CFLAGS="$PHP_CFLAGS" \
-              CPPFLAGS="$PHP_CPPFLAGS" \
-              LDFLAGS="$PHP_LDFLAGS" \
-    && ./configure \
-        # Core configure options
-        --enable-phpdbg=no \
-        --disable-rpath \
-        --without-pear \
-        # Bundled PHP extensions
-        --enable-bcmath \
-        --enable-calendar \
-        --enable-mbstring \
-        --enable-exif \
-        --enable-ftp \
-        --with-pcre-regex \
-        --enable-mysqlnd \
-        --with-openssl \
-        --enable-zip \
-        --enable-sysvsem \
-        --enable-sysvshm \
-        --enable-sysvmsg \
-        --enable-shmop \
-        --enable-sockets \
-        --with-zlib \
-        --with-zlib-dir \
-        --with-bz2 \
-        --with-curl \
-        --with-mhash \
-        --with-config-file-path="$PHP_INI_DIR" \
-        --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
-        --with-libxml-dir=/usr \
-        --with-libedit \
-        --with-kerberos \
-        --enable-opcache \
-    && make -j "$(getconf _NPROCESSORS_ONLN)" \
-    && make install \
-    && { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
-    # Remove dependencies
-    && rm -rf /usr/src/* \
-    && apk del --no-cache --purge .build-deps
-
-COPY tags/cli /
+    && echo "https://alpine.php.earth" >> /etc/apk/repositories \
+    && addgroup -g 82 -S www-data \
+    && adduser -u 82 -D -S -G www-data www-data \
+    && apk add --no-cache $DEPS
 
 CMD ["php", "-a"]
