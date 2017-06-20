@@ -1,4 +1,4 @@
-&larr; [Building Images](08-build.md) | [Documentation Index](/README.md) &rarr;
+&larr; [Building Images](08-build.md) | [Alpine Linux](10-alpine.md) &rarr;
 
 ---
 
@@ -13,4 +13,4 @@ Here are shown some common examples for using these Docker PHP images.
 * [apache](recipes/apache)
 
 ---
-&larr; [Building Images](08-build.md) | [Documentation Index](/README.md) &rarr;
+&larr; [Building Images](08-build.md) | [Alpine Linux](10-alpine.md) &rarr;

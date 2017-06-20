@@ -40,6 +40,19 @@ is done with the simple `pecl install` command:
 pecl install {extension-name}
 ```
 
+Since `pecl` command is part of a Pear system, sometimes you might want to omit
+the Pear installation. You can install each pecl extension also by manually, by
+downloading the `.tgz` TAR archive file compressed with gzip from the pecl.php.net
+site and install it with the PHP development tools that come with the core PHP:
+
+```bash
+git clone https://github.com/{vendor}/{pecl-extension-src}.git
+cd {pecl-extension-src}
+phpize
+./configure
+make && make install
+```
+
 ## Pre-installed Extensions
 
 By default these images come with some pre-installed PHP extensions that are
@@ -93,7 +106,8 @@ extensions.
 install-php-ext {extension-name}
 ```
 
-To install create a Dockerfile for your application and use the script in the following way:
+To install create a `Dockerfile` for your application and use the script in the
+following way:
 
 ```Dockerfile
 FROM phpearth/php

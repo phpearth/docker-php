@@ -4,11 +4,17 @@
 
 # Usage
 
+For using these images you'll usually want to create a `Dockerfile` or go further
+and use Docker Compose to simplify usage of multiple containers for your application.
+
 ## Dockerfile
 
 Create a `Dockerfile` for your setup:
 
 ### Alpine Nginx
+
+For images that use Alpine Linux as a base, you can create a simple Nginx container
+with PHP FPM in the following way:
 
 ```Dockerfile
 FROM phpearth/php:7.1-nginx

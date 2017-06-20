@@ -7,7 +7,7 @@
 Composer is a de-facto standard for managing PHP packages. Good practice however
 is to not include it in the production Docker images. By default these images
 include a helper installation script `install-composer` so you can easily install
-Composer.
+Composer or install it from the particular Linux repository.
 
 Let's first take a look at how to use Composer with Docker in general. There are
 some established best practices:
@@ -26,13 +26,14 @@ Pros:
 Cons:
 
 * It is a separate Docker image so if your application requires additional PHP
-  extensions, or use the scripts defined in the `composer.json` file, you'll either
-  need to install those also for this additional Composer image or pass the
-  `--ignore-platform-reqs` and `--no-scripts` and manage scripts separately.
+  extensions, or use the scripts defined in the `composer.json` file, you'll
+  either need to install those also for this additional Composer image or pass
+  the `--ignore-platform-reqs` and `--no-scripts` and manage scripts separately.
 
 ## 2. Custom Installation
 
-You can also simply install Composer per project basis on your own in your Dockerfile:
+You can also simply install Composer per project basis on your own in your
+`Dockerfile`:
 
 ```Dockerfile
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
