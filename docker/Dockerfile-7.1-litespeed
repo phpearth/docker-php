@@ -39,7 +39,6 @@ ENV LS_VER="1.4.26" \
         php7.1-mbstring \
         php7.1-exif \
         php7.1-ftp \
-        php7.1-mysqlnd \
         php7.1-openssl \
         php7.1-zip \
         php7.1-sysvsem \
@@ -53,6 +52,16 @@ ENV LS_VER="1.4.26" \
         php7.1-simplexml \
         php7.1-xml \
         php7.1-opcache \
+        php7.1-dom \
+        php7.1-xmlreader \
+        php7.1-xmlwriter \
+        php7.1-tokenizer \
+        php7.1-ctype \
+        php7.1-session \
+        php7.1-fileinfo \
+        php7.1-iconv \
+        php7.1-json \
+        php7.1-posix \
         php7.1-litespeed" \
     # Build dependencies which get removed
     BUILD_DEPS="autoconf \
