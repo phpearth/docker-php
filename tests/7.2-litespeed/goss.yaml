@@ -1,9 +1,9 @@
 file:
-  /usr/local/lsws/logs/access.log:
+  /var/log/litespeed/access.log:
     exists: true
     linked-to: /dev/stdout
     filetype: symlink
-  /usr/local/lsws/logs/error.log:
+  /var/log/litespeed/error.log:
     exists: true
     linked-to: /dev/stderr
     filetype: symlink

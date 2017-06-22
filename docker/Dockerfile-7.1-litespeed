@@ -58,8 +58,8 @@ ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 RUN set -x \
     && echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
-    && ln -sf /dev/stdout /var/log/litespeed/access.log \
-    && ln -sf /dev/stderr /var/lib/litespeed/error.log
+    && ln -sf /dev/stdout /var/lib/litespeed/logs/access.log \
+    && ln -sf /dev/stderr /var/lib/litespeed/logs/error.log
 
 COPY tags/litespeed /
 
