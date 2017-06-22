@@ -1,4 +1,4 @@
-&larr; [Certbot](07-certbot.md) | [Recipes](09-recipes.md) &rarr;
+&larr; [Certbot](07-certbot.md) | [Alpine Linux](09-alpine.md) &rarr;
 
 ---
 
@@ -36,4 +36,4 @@ neat way to expose additional metadata about particular Docker object. We use
 
 ---
 
-&larr; [Certbot](07-certbot.md) | [Recipes](09-recipes.md) &rarr;
+&larr; [Certbot](07-certbot.md) | [Alpine Linux](09-alpine.md) &rarr;

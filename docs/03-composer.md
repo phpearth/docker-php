@@ -77,15 +77,15 @@ Cons:
 
 When building production images, you can avoid adding Composer in your image with
 build arguments. The following example uses Docker build arguments and the provided
-`install-composer` script:
+Composer package in [PHP.earth Alpine repository](https://alpine.php.earth):
 
 ```Dockerfile
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 
 ARG APP_ENV=prod
 
 RUN if [ ${APP_ENV} = "dev" ]; then \
-        apk add --no-cache git openssh && install-composer; \
+        apk add --no-cache git openssh composer; \
     fi
 ```
 
@@ -110,15 +110,14 @@ services:
 [Prestissimo](https://github.com/hirak/prestissimo) is a Composer plugin for faster
 parallel downloading of PHP packages.
 
-You can install prestissimo by providing `-p` option to `install-composer` script.
-
 ```Dockerfile
-FROM phpearth/php:nginx
+FROM phpearth/php:7.1-nginx
 
 ARG APP_ENV=prod
 
 RUN if [ ${APP_ENV} = "dev" ]; then \
-        apk add --no-cache git openssh && install-composer -p; \
+        apk add --no-cache git openssh composer \
+        && composer global require hirak/prestissimo; \
     fi
 ```
 

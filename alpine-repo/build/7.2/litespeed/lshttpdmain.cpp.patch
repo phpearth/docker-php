@@ -1,0 +1,12 @@
+diff --git a/src/main/lshttpdmain.cpp b/src/main/lshttpdmain.cpp
+index 512206e..9abee97 100644
+--- a/src/main/lshttpdmain.cpp
++++ b/src/main/lshttpdmain.cpp
+@@ -46,7 +46,6 @@
+ #include <util/stringlist.h>
+ #include <util/signalutil.h>
+ #include <util/vmembuf.h>
+-#include <sys/sysctl.h>
+ 
+ #include <extensions/cgi/cgidworker.h>
+ #include <extensions/registry/extappregistry.h>

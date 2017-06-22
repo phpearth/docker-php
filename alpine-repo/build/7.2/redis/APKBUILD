@@ -1,0 +1,44 @@
+# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+
+pkgname=php7-redis
+_pkgreal=redis
+pkgver=3.1.2
+pkgrel=0
+_phpver=7
+pkgdesc="PHP extension for interfacing with redis"
+url="http://pecl.php.net/package/$_pkgreal"
+arch="all"
+license="PHP-3"
+depends="php7-common>7.2.0 php7-session>7.2.0"
+makedepends="php7-dev>7.2.0 autoconf"
+source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
+builddir="$srcdir/$_pkgreal-$pkgver"
+
+prepare() {
+    default_prepare || return 1
+}
+
+build() {
+    cd "$builddir"
+    phpize || return 1
+    ./configure --prefix=/usr \
+        --with-php-config=/usr/bin/php-config || return 1
+    make || return 1
+}
+
+check() {
+    cd "$builddir"
+
+    make test || return 1
+}
+
+package() {
+    replaces="php7.1-$_pkgreal"
+
+    mkdir -p "$pkgdir" || return 1
+    install -d $pkgdir/ || return 1
+    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
+    install -d "$pkgdir"/etc/php/conf.d || return 1
+    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/conf.d/20_$_pkgreal.ini || return 1
+}
+sha512sums="14b6321072f8ab41b8293b40ea8e1e2bdac1bb694c4566467ea4e6ced37c8fc41bf5712bd27cebf509f25fda0492765cd2c8d2fe61395bcb0b0d9cbbceebe684  redis-3.1.2.tgz"

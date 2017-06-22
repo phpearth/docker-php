@@ -34,18 +34,6 @@ To run a CLI PHP script:
 docker run -it --rm --name my-cli-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp phpearth/php php script.php
 ```
 
-### Debian Slim Nginx
-
-```Dockerfile
-FROM phpearth/php:7.1-nginx-deb
-```
-
-### Debian Slim OpenLiteSpeed
-
-```Dockerfile
-FROM phpearth/php:7.1-litespeed-deb
-```
-
 ### PHP 7.2
 
 To use PHP 7.2 images just prepend the tag name with `7.2`:
@@ -53,10 +41,8 @@ To use PHP 7.2 images just prepend the tag name with `7.2`:
 * `phpearth/php:7.2`
 * `phpearth/php:7.2-nginx`
 * `phpearth/php:7.2-litespeed`
-* `phpearth/php:7.2-nginx-deb`
-* `phpearth/php:7.2-litespeed-deb`
 * `phpearth/php:7.2-apache`
-* `phpearth/php:7.2-apache-deb`
+* `phpearth/php:7.2-cgi`
 
 ## Install PHP Extensions
 
@@ -67,7 +53,7 @@ PHP extension.
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
 
-RUN install-php-ext libsodium mcrypt soap
+RUN apk add --no-cache php7.1-libsodium php7.1-mcrypt php7.1-soap
 ```
 
 ## Services

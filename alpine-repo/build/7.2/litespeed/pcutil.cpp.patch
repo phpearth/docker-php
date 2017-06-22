@@ -1,0 +1,12 @@
+diff --git a/src/util/pcutil.cpp b/src/util/pcutil.cpp
+index a5d27c0..09660cd 100644
+--- a/src/util/pcutil.cpp
++++ b/src/util/pcutil.cpp
+@@ -21,6 +21,7 @@
+ #include <ctype.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <string.h>
+ 
+ #ifdef __linux
+ #include <sched.h>

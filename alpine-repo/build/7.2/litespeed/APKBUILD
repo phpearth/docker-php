@@ -1,0 +1,171 @@
+# Contributor: Peter Kokot <peterkokot@gmail.com>
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
+
+pkgname=litespeed
+pkgver=1.4.26
+pkgrel=0
+_pkgreal=open$pkgname
+_pkghome=var/lib/$pkgname
+pkgdesc="High-performance, lightweight, open source HTTP server"
+url="http://open.litespeedtech.com/"
+arch="all !aarch64 !ppc64le"
+license="GPL3"
+pkgusers=lsadm
+pkggroups=lsadm
+depends="php7-litespeed php7-bcmath php7-json php7-mcrypt php7-session"
+depends_dev=
+makedepends="linux-headers openssl-dev geoip-dev expat-dev pcre-dev zlib-dev"
+install="$pkgname.pre-install"
+subpackages="$pkgname-snmp::noarch"
+source="http://open.litespeedtech.com/packages/openlitespeed-$pkgver.tgz
+configure.patch
+functions.sh.patch
+index.html
+install.sh.patch
+jCryption.php.patch
+litespeed.initd
+ls_lock.c.patch
+ls_lock.h.patch
+lshttpdmain.cpp.patch
+pcutil.cpp.patch
+pthreadmutex.cpp.patch
+RealTimeStats.php.patch
+thread.h.patch
+"
+builddir="$srcdir/$_pkgreal-$pkgver"
+
+build() {
+  cd "$builddir"
+
+  ./configure \
+    --host=$CHOST \
+    --build=$CBUILD \
+    --prefix=/var/lib/$pkgname \
+    --with-user=$pkgusers \
+    --with-group=$pkggroups \
+    --enable-adminssl=no \
+    --disable-rpath \
+    --disable-static \
+    --with-openssl=/usr \
+    --with-expat \
+    --with-pcre \
+    --with-zlib \
+    || return 1
+
+  make || return 1
+}
+
+prepare() {
+  cd "$builddir"
+
+  default_prepare
+
+  ln -sf /usr/bin/lsphp "$builddir"/dist/fcgi-bin/lsphp || return 1
+  rm "$builddir"/dist/admin/misc/php.ini || return 1
+  rm "$builddir"/dist/admin/conf/php.ini || return 1
+}
+
+package() {
+  local file;
+
+  cd "$builddir"
+
+  # Create necessary users
+  sudo "$builddir"/../../litespeed.pre-install
+
+  make DESTDIR="$pkgdir" install || return 1
+
+  mkdir -p "$pkgdir"/usr/lib/$pkgname \
+    "$pkgdir"/usr/sbin \
+    "$pkgdir"/var/log || return 1
+
+  # Remove documentation from the package
+  rm -rf "$pkgdir"/$_pkghome/docs/* || return 1
+  install -Dm755 "$srcdir"/index.html \
+    "$pkgdir"/$_pkghome/docs/ || return 1
+
+  # Remove some not used files
+  #rm -rf "$pkgdir"/$_pkghome/php* \
+  #  "$pkgdir"/$_pkghome/lib \
+  #  "$pkgdir"/$_pkghome/GPL* \
+  #  "$pkgdir"/$_pkghome/gdata \
+  #  "$pkgdir"/$_pkghome/autoupdate \
+  #  "$pkgdir"/$_pkghome/fcgi-bin/* \
+  #  "$pkgdir"/$_pkghome/bin/lshttpd \
+  #  "$pkgdir"/$_pkghome/admin/misc/gdb-bt \
+  #  "$pkgdir"/$_pkghome/admin/misc/convertxml.* \
+  #  "$pkgdir"/$_pkghome/admin/misc/build_admin_php.sh \
+  #  || return 1
+
+  # fix permissions
+  chown -R $pkgusers:$pkggroups \
+    "$pkgdir"/$_pkghome/conf \
+    "$pkgdir"/$_pkghome/admin/conf
+
+  #chown -R $pkgusers:$pkggroups \
+  #  "$pkgdir"/$_pkghome/tmp \
+  #  "$pkgdir"/$_pkghome/conf \
+  #  "$pkgdir"/$_pkghome/logs \
+  #  "$pkgdir"/$_pkghome/backup \
+  #  "$pkgdir"/$_pkghome/cachedata \
+  #  "$pkgdir"/$_pkghome/admin/tmp \
+  #  "$pkgdir"/$_pkghome/admin/logs \
+  #  "$pkgdir"/$_pkghome/admin/conf \
+  #  "$pkgdir"/$_pkghome/Example/logs || return 1
+
+  # install configs
+  install -Dm755 "$srcdir"/$pkgname.initd \
+    "$pkgdir"/etc/init.d/$pkgname || return 1
+  mv "$pkgdir"/$_pkghome/conf \
+    "$pkgdir"/etc/$pkgname || return 1
+  mv "$pkgdir"/$_pkghome/admin/conf \
+    "$pkgdir"/etc/$pkgname/admin || return 1
+  ln -s /etc/$pkgname "$pkgdir"/$_pkghome/conf || return 1
+  ln -s /etc/$pkgname/admin "$pkgdir"/$_pkghome/admin/conf || return 1
+  find "$pkgdir"/etc/$pkgname -type f -print0 | xargs -0 chmod -x || return 1
+
+  # install binaries
+  mv "$pkgdir"/$_pkghome/bin/$_pkgreal \
+    "$pkgdir"/usr/sbin/lshttpd || return 1
+  ln -sf /usr/sbin/lshttpd \
+    "$pkgdir"/$_pkghome/bin/$pkgname || return 1
+  ln -sf /usr/bin/lsphp \
+    "$pkgdir"/$_pkghome/fcgi-bin/lsphp || return 1
+
+  # install modules
+  for file in $(find "$pkgdir"/$_pkghome/modules -name "*.so"); do
+    mv $file "$pkgdir"/usr/lib/$pkgname/${file##*/} || return 1
+    ln -s /usr/lib/$pkgname/${file##*/} $file || return 1
+  done
+
+  # install logs
+  mv "$pkgdir"/$_pkghome/logs "$pkgdir"/var/log/$pkgname || return 1
+  mv "$pkgdir"/$_pkghome/admin/logs "$pkgdir"/var/log/$pkgname/admin || return 1
+  mv "$pkgdir"/$_pkghome/Example/logs "$pkgdir"/var/log/$pkgname/Example || return 1
+  ln -s /var/log/$pkgname "$pkgdir"/$_pkghome/logs || return 1
+  ln -s /var/log/$pkgname/admin "$pkgdir"/$_pkghome/admin/logs || return 1
+  ln -s /var/log/$pkgname/Example "$pkgdir"/$_pkghome/Example/logs || return 1
+}
+
+snmp() {
+  pkgdesc="$pkgdesc (snmp monitoring add-on + cacti templates)"
+  depends="$pkgname net-snmp"
+
+  mkdir -p "$subpkgdir"/$_pkghome/add-ons || return 1
+  mv "$pkgdir"/$_pkghome/add-ons/snmp_monitoring \
+    "$subpkgdir"/$_pkghome/add-ons
+}
+sha512sums="8689edf830380d4c14716ca406531fff98ede88d2467eb67cddb5c30bf1271b190b15a087c4ae7ef1841ffe76464133bd74056f61b9eec56331e0d37f05b99cb  openlitespeed-1.4.26.tgz
+be3b09fcf0bb09562f963680b32f2f3c20ab45ac97db28909e53f320db62bbbcda03a1f68bbb841d80502a61954d07cf1bce9ad8a5b1526b252a3320532800f6  configure.patch
+32d1d1c6f01fecdace5112e2481c4a93f4d23df2a9c308ad1c00139d2c8db7dc76c9f3709b6356feac1c3c5bb1a5fa840b5ad37c9fc02af983e63711b71be68b  functions.sh.patch
+670a59fc442ff82f422f9f2b70b0cf8b334275d795ba319f842549f703348eba2cb8522d71f85ecf7701fb1996005c8ec6c0b713db0ed7dedee17a6e6ceee7db  index.html
+1fd729cb5959215f1cc5e7a7a7471af2f6f0f83f0f10d839da835f186bd19c82cb10e4adb0c0ce696e9dd2eb3774c149354b4beb7b4c85d5f1c8d8f20ec46f50  install.sh.patch
+4e45e421a79ccd59c6f3afb590397b661981ec5a055ec3548daf42ca7580cb3f99ffa2b5151787312998f6a38430ac8f7e9a07216d9a18e438460d8cc58ef29e  jCryption.php.patch
+0eb483c6a8b2e07f1849c09a29ac84a556949ad7420dd45be3ff22ef7fd28115b6296e5562775603a9b5a8b9ed7a06dcc5fc377ce304a8875b5f79d6239c70c7  litespeed.initd
+40abc5dd03839225ac7228eab0b7b04e411442d1da3d51c31ec5e77b8628f1a146fa6131050e4318149f0c572f2e08f2e2ec48d755128bfbb2ab80b3854502a3  ls_lock.c.patch
+48b083d0c8117747c29ee9884d935182268590e9174e4fae4de12524f2774099cab73519cd438ecb7318b9a03fa7dbebc8edfe81f82a342f6efb5534a7e9176a  ls_lock.h.patch
+6a38b58187d9c29b723e518946d67ff575452217fc6c15c9da23a5c780b6c7eab80ffa7ba1a8ed9737f5434a1dec6bd3fc6d87a030902b4a97efcc96de7b9f85  lshttpdmain.cpp.patch
+b12e63b9cf1dbc873d7fc7f1fc9e99764ad9b26f0bc15577e5a2a9e9214d65df82d286a13228534be49085e10c9402a6d1a895023f1377eb1caf5d4df5cd7fa6  pcutil.cpp.patch
+f06ac74ce6c45f3f7e141007daf6ebf5da23576a9fe28c0a1ed5bd78295a7e1320aa041eeeea949611e6fcff760b7264c052af89e1465acebcdbb3f11628ae20  pthreadmutex.cpp.patch
+e50d56b0ca507f07c9704002d1716b7fe6e644a4a3f3ba6d0d91cd25134fb75a8e1ff1270b11051b83978b6fe5d736ff35dbfd7ce65dde6512749d1c769a3ea2  RealTimeStats.php.patch
+a025d765f1c40caa1a67a91d68fbc727fae315a3511f74196c891326067992e8b1e5b2830863239fe80da465d79c5ab203752dfb692fa796f8958e1b11b5b2c5  thread.h.patch"

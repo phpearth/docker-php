@@ -12,120 +12,54 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.description="Docker For PHP Developers - Docker images with PHP, Nginx, OpenLiteSpeed, Apache, Alpine and Debian Slim" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
-# OpenLiteSpeed patches
-COPY tags/litespeed/patches /tmp/patches
-
-ENV LS_VER="1.4.26" \
+ENV \
     # When using Composer, disable the warning about running commands as root/super user
     COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
-    DEPS="libedit \
-        libxml2 \
-        libbz2 \
-        curl \
-        libressl2.5-libcrypto \
-        libressl2.5-libssl \
-        libssl1.0 \
+    DEPS="curl \
         ca-certificates \
         runit \
-        geoip \
-        expat \
-        pcre \
-        libstdc++ \
-        udns \
-        php7.1 \
-        php7.1-bcmath \
-        php7.1-calendar \
-        php7.1-mbstring \
-        php7.1-exif \
-        php7.1-ftp \
-        php7.1-openssl \
-        php7.1-zip \
-        php7.1-sysvsem \
-        php7.1-sysvshm \
-        php7.1-sysvmsg \
-        php7.1-shmop \
-        php7.1-sockets \
-        php7.1-zlib \
-        php7.1-bz2 \
-        php7.1-curl \
-        php7.1-simplexml \
-        php7.1-xml \
-        php7.1-opcache \
-        php7.1-dom \
-        php7.1-xmlreader \
-        php7.1-xmlwriter \
-        php7.1-tokenizer \
-        php7.1-ctype \
-        php7.1-session \
-        php7.1-fileinfo \
-        php7.1-iconv \
-        php7.1-json \
-        php7.1-posix \
-        php7.1-litespeed" \
-    # Build dependencies which get removed
-    BUILD_DEPS="autoconf \
-        file \
-        g++ \
-        gcc \
-        make \
-        automake \
-        libtool \
-        bison \
-        re2c \
-        pkgconf \
-        libc-dev \
-        libedit-dev \
-        curl-dev \
-        bzip2-dev \
-        krb5-dev \
-        pcre-dev \
-        zlib-dev \
-        libxml2-dev \
-        gnupg \
-        openssl-dev \
-        linux-headers \
-        geoip-dev \
-        expat-dev \
-        udns-dev"
+        php7 \
+        php7-bcmath \
+        php7-calendar \
+        php7-mbstring \
+        php7-exif \
+        php7-ftp \
+        php7-openssl \
+        php7-zip \
+        php7-sysvsem \
+        php7-sysvshm \
+        php7-sysvmsg \
+        php7-shmop \
+        php7-sockets \
+        php7-zlib \
+        php7-bz2 \
+        php7-curl \
+        php7-simplexml \
+        php7-xml \
+        php7-opcache \
+        php7-dom \
+        php7-xmlreader \
+        php7-xmlwriter \
+        php7-tokenizer \
+        php7-ctype \
+        php7-session \
+        php7-fileinfo \
+        php7-iconv \
+        php7-json \
+        php7-posix \
+        php7-litespeed \
+        litespeed"
 
 # This image include a custom Alpine repository for best possible developer
 # experience with latest versions
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
-    && echo "https://alpine.php.earth" >> /etc/apk/repositories \
-    && addgroup -g 82 -S lsadm \
-    && adduser -u 82 -D -S -G lsadm lsadm \
-    && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
+    && echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
-    # OpenLiteSpeed
-    && mkdir -p /usr/src \
-    && cd /usr/src \
-    && curl -OL http://open.litespeedtech.com/packages/openlitespeed-$LS_VER.tgz \
-    && tar -xf openlitespeed-$LS_VER.tgz && rm openlitespeed-$LS_VER.tgz \
-    && cd /usr/src/openlitespeed-$LS_VER \
-    && patch configure < /tmp/patches/configure.patch \
-    && patch dist/functions.sh < /tmp/patches/functions.sh.patch \
-    && patch dist/install.sh < /tmp/patches/install.sh.patch \
-    && patch dist/admin/html.open/lib/jCryption.php < /tmp/patches/jCryption.php.patch \
-    && patch src/lsr/ls_lock.c < /tmp/patches/ls_lock.c.patch \
-    && patch include/lsr/ls_lock.h < /tmp/patches/ls_lock.h.patch \
-    && patch src/main/lshttpdmain.cpp < /tmp/patches/lshttpdmain.cpp.patch \
-    && patch src/util/pcutil.cpp < /tmp/patches/pcutil.cpp.patch \
-    && patch src/thread/pthreadmutex.cpp < /tmp/patches/pthreadmutex.cpp.patch \
-    && patch dist/admin/html.open/lib/ows/RealTimeStats.php < /tmp/patches/RealTimeStats.php.patch \
-    && patch src/thread/thread.h < /tmp/patches/thread.h.patch \
-    && rm dist/admin/misc/php.ini \
-    && ./configure --with-openssl=/usr --disable-static --disable-rpath --enable-adminssl=no --with-pcre \
-    && make -j "$(getconf _NPROCESSORS_ONLN)" && make install \
-    && { find /usr/local/bin /usr/local/sbin /usr/local/lsws/bin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
-    && ln -sf /usr/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
-    && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
-    && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
-    # Remove dependencies
-    && rm -rf /usr/src/* /tmp/patches /usr/local/lsws/docs/* \
-    && apk del --no-cache --purge .build-deps
+    && ln -sf /dev/stdout /var/log/litespeed/access.log \
+    && ln -sf /dev/stderr /var/lib/litespeed/error.log
 
 COPY tags/litespeed /
 

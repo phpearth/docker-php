@@ -1,6 +1,6 @@
 FROM phpearth/php:7.1-nginx
 
-RUN install-php-ext memcached
+RUN apk add --no-cache php7-memcached
 
 COPY ./.docker/app/ /
 COPY ./ /var/www/html

@@ -18,36 +18,36 @@ ENV \
     # Persistent runtime dependencies
     DEPS="nginx \
         nginx-mod-http-headers-more \
-        php7.1 \
-        php7.1-bcmath \
-        php7.1-calendar \
-        php7.1-mbstring \
-        php7.1-exif \
-        php7.1-ftp \
-        php7.1-openssl \
-        php7.1-zip \
-        php7.1-sysvsem \
-        php7.1-sysvshm \
-        php7.1-sysvmsg \
-        php7.1-shmop \
-        php7.1-sockets \
-        php7.1-zlib \
-        php7.1-bz2 \
-        php7.1-curl \
-        php7.1-simplexml \
-        php7.1-xml \
-        php7.1-opcache \
-        php7.1-dom \
-        php7.1-xmlreader \
-        php7.1-xmlwriter \
-        php7.1-tokenizer \
-        php7.1-ctype \
-        php7.1-session \
-        php7.1-fileinfo \
-        php7.1-iconv \
-        php7.1-json \
-        php7.1-posix \
-        php7.1-fpm \
+        php7 \
+        php7-bcmath \
+        php7-calendar \
+        php7-mbstring \
+        php7-exif \
+        php7-ftp \
+        php7-openssl \
+        php7-zip \
+        php7-sysvsem \
+        php7-sysvshm \
+        php7-sysvmsg \
+        php7-shmop \
+        php7-sockets \
+        php7-zlib \
+        php7-bz2 \
+        php7-curl \
+        php7-simplexml \
+        php7-xml \
+        php7-opcache \
+        php7-dom \
+        php7-xmlreader \
+        php7-xmlwriter \
+        php7-tokenizer \
+        php7-ctype \
+        php7-session \
+        php7-fileinfo \
+        php7-iconv \
+        php7-json \
+        php7-posix \
+        php7-fpm \
         curl \
         ca-certificates \
         runit"
@@ -57,7 +57,7 @@ ENV \
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
-    && echo "https://alpine.php.earth" >> /etc/apk/repositories \
+    && echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories \
     && addgroup -g 82 -S www-data \
     && adduser -u 82 -D -S -G www-data www-data \
     && apk add --no-cache $DEPS \

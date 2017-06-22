@@ -2,7 +2,7 @@
 
 ---
 
-# PHP Extensions
+# PHP extensions
 
 There are multiple types of extensions for PHP. PHP extensions are the ones
 located in the [php-src](https://github.com/php/php-src) repository directly and
@@ -30,7 +30,7 @@ make -jN install
 
   External extensions require additional libraries for compiling.
 
-## Pecl Extensions
+## Pecl extensions
 
 Pecl extensions are either some of the PHP core extensions that got moved to pecl
 or the community contributed ones. They are located on pecl.php.net. Installation
@@ -53,7 +53,7 @@ phpize
 make && make install
 ```
 
-## Pre-installed Extensions
+## Pre-installed extensions
 
 By default these images come with some pre-installed PHP extensions that are
 required to run some every day PHP applications. These include the following:
@@ -89,30 +89,7 @@ required to run some every day PHP applications. These include the following:
 * [Zip](http://php.net/manual/en/book.zip.php)
 * [Zlib](http://php.net/manual/en/book.zlib.php)
 
-## Installing Extensions
-
-However many times you'll want to install some other PHP extension as well.
-
-Here's how to install them.
-
-These Docker images include a custom installation script for extensions
-`install-php-ext` which does some magic and installs any of the above explained
-extensions.
-
-```bash
-install-php-ext {extension-name}
-```
-
-To install create a `Dockerfile` for your application and use the script in the
-following way:
-
-```Dockerfile
-FROM phpearth/php
-
-RUN install-php-ext libsodium
-```
-
-## Supported Extensions
+## Supported extensions
 
 PHP extensions:
 
@@ -154,7 +131,53 @@ PECL extensions:
 * [swoole](https://pecl.php.net/package/swoole)
 * [xdebug](https://pecl.php.net/package/xdebug)
 
-## See Also
+## Installing extensions
+
+These Docker images include a PHP.earth Alpine repository that comes with many
+pecl extensions and all PHP extensions.
+
+```bash
+apk add --no-cache php7.1-{extension-name}
+```
+
+With `Dockerfile`, this can be used in the following way:
+
+```Dockerfile
+FROM phpearth/php
+
+RUN apk add --no-cache php7.1-libsodium
+```
+
+However many times you'll want to install some other pecl extension as well. For
+that you'll need to build it from source using the provided `php7-dev` package,
+which includes `phpize`, `php-config` and PHP header files required to build
+particular extension from source.
+
+Here's a more generic way how to install such PHP extension. Replace names in
+curly brackets with extension you're installing:
+
+```Dockerfile
+FROM phpearth/php
+
+RUN apk add --no-cache --virtual .build-deps php7-dev git gcc g++ linux-headers make \
+    && mkdir -p /usr/src \
+    && cd /usr/src \
+    # Download the extension source code from Git repository or pecl.php.net
+    && git clone git://github.com/{vendor}/{php-extension} \
+    && cd {php-extension} \
+    && phpize \
+    && ./configure \
+    # Build the extension with number of CPU cores
+    && make -j "$(getconf _NPROCESSORS_ONLN)" \
+    && make install \
+    # Enable the extension for PHP to load it as shared one
+    && echo "extension={php-extension}.so" | tee /etc/php/conf.d/{php-extension}.ini \
+    # Clean build dependencies and source code
+    && apk del --no-cache --purge .build-deps \
+    && rm -rf /usr/src/*
+```
+
+## See also
 
 * [PHP Extensions List/Categorization](http://php.net/manual/en/extensions.php)
 

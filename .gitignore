@@ -1,0 +1,8 @@
+/alpine-repo/repo/*
+!/alpine-repo/repo
+!/alpine-repo/repo/.gitkeep
+/alpine-repo/build/7.1/*/src
+/alpine-repo/build/7.1/*/pkg
+/alpine-repo/build/7.2/*/pkg
+/alpine-repo/build/7.2/*/src
+/alpine-repo/build/phpearth.rsa.priv

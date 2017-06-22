@@ -12,7 +12,7 @@ insert_final_newline = true
 [*.md]
 trim_trailing_whitespace = false
 
-[{docker/bin/download-php, docker/bin/install-composer, docker/bin/install-php-ext, docker/hooks/build}]
+[{docker/hooks/build, docker/hooks/post_push}]
 indent_style = space
 indent_size = 2
 
@@ -27,3 +27,7 @@ indent_size = 2
 [{Makefile}]
 indent_style = tab
 indent_size = 4
+
+[{APKBUILD}]
+indent_style = space
+indent_size = 2

@@ -3,4 +3,4 @@
 exec 2>&1
 source /env
 
-exec /usr/local/lsws/bin/lswsctrl start
+exec /var/lib/litespeed/bin/lswsctrl start
