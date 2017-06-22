@@ -46,14 +46,13 @@ To use PHP 7.2 images just prepend the tag name with `7.2`:
 
 ## Install PHP Extensions
 
-To install additional PHP extensions, you can use our `install-php-ext` script,
-which automatically also installs all system dependencies required to use particular
-PHP extension.
+To install additional PHP extensions, you can use our packages from the PHP.earth
+Alpine repository:
 
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
 
-RUN apk add --no-cache php7.1-libsodium php7.1-mcrypt php7.1-soap
+RUN apk add --no-cache php7-libsodium php7-mcrypt php7-soap
 ```
 
 ## Services

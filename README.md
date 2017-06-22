@@ -5,7 +5,7 @@
 Carefully crafted Docker images for PHP developers with latest PHP versions 7.1 and upcoming 7.2, [Nginx](https://nginx.org/), [OpenLiteSpeed](http://open.litespeedtech.com/) and [Apache HTTP Server](https://httpd.apache.org/).
 
 * Fast and simple PHP extensions installation
-* [Composer](https://getcomposer.org) installation script
+* Optional [Composer](https://getcomposer.org) installation
 * [runit](http://smarden.org/runit/) for running multiple services without overhead.
 * Alpine base image with PHP.earth Alpine PHP repositories
 * Optimized Docker image sizes
@@ -76,7 +76,7 @@ PHP extensions installation:
 ```Dockerfile
 FROM phpearth/php:7.1-litespeed
 
-RUN apk add --no-cache php7.1-libsodium php7.1-intl php7.1-pdo_mysql
+RUN apk add --no-cache php7-libsodium php7-intl php7-pdo_mysql
 ```
 
 ## Documentation

@@ -2,4 +2,4 @@ FROM alpine:3.6
 
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
-RUN echo "https://alpine.php.earth" >> /etc/apk/repositories
+RUN echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories
