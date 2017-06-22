@@ -4,7 +4,6 @@ pkgname=php7-xdebug
 _pkgreal=xdebug
 pkgver=2.5.5
 pkgrel=0
-_phpver=7
 pkgdesc="xDebug Profiler"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
@@ -20,6 +19,7 @@ prepare() {
 
 build() {
     cd "$builddir"
+
     phpize || return 1
     EXTENSION_DIR=/usr/lib/php/modules ./configure --prefix=/usr \
         --with-php-config=/usr/bin/php-config || return 1
@@ -29,7 +29,12 @@ build() {
 check() {
     cd "$builddir"
 
-    make test || return 1
+    local allow_fail='no'
+
+    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+        TZ= LANG= LC_ALL= \
+        make test || [ "$allow_fail" = yes ] || return 1
 }
 
 package() {

@@ -4,13 +4,12 @@ pkgname=php7-xdebug
 _pkgreal=xdebug
 pkgver=2.5.5
 pkgrel=0
-_phpver=7
 pkgdesc="xDebug Profiler"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="XDEBUG-1"
-depends="php7-common"
-makedepends="php7-dev autoconf"
+depends="php7-common>7.2.0"
+makedepends="php7-dev>7.2.0 autoconf"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 
@@ -20,6 +19,7 @@ prepare() {
 
 build() {
     cd "$builddir"
+
     phpize || return 1
     EXTENSION_DIR=/usr/lib/php/modules ./configure --prefix=/usr \
         --with-php-config=/usr/bin/php-config || return 1
@@ -29,16 +29,19 @@ build() {
 check() {
     cd "$builddir"
 
-    make test || return 1
+    local allow_fail='no'
+
+    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+        TZ= LANG= LC_ALL= \
+        make test || [ "$allow_fail" = yes ] || return 1
 }
 
 package() {
-    replaces="php7.1-$_pkgreal"
-
     mkdir -p "$pkgdir" || return 1
     install -d $pkgdir/ || return 1
     make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
     install -d "$pkgdir"/etc/php/conf.d || return 1
     echo "zend_extension=$_pkgreal.so" > "$pkgdir"/etc/php/conf.d/00_$_pkgreal.ini || return 1
 }
-sha512sums="58a8041a5cf834ff072c9b4c816acf6e9885f4bdb7b3a4f1906897b1ba1ffe7c5cc3f12c1ac780612aeaa59f1e76f49032522bfa9505720234e8033f9809d2cd  xdebug-2.5.4.tgz"
+sha512sums="9faab421bd90c03734c047d8c6dcc021c8bc665eb36781c692f194d04c7dca24fe1eb920ca8dc407e5bf4ae0912c4b917587f940f34b07171a8881d4cf8695d1  xdebug-2.5.5.tgz"
