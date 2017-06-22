@@ -9,7 +9,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vendor="PHP.earth" \
       org.label-schema.name="docker-php" \
-      org.label-schema.description="Docker For PHP Developers - Docker images with PHP, Nginx, OpenLiteSpeed, Apache, Alpine and Debian Slim" \
+      org.label-schema.description="Docker For PHP Developers - Docker image with PHP 7.2, OpenLiteSpeed, and Alpine" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
 ENV \
