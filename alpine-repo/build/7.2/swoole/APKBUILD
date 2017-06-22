@@ -2,7 +2,7 @@
 
 pkgname=php7-swoole
 _pkgreal=swoole
-pkgver=1.9.13
+pkgver=1.9.14
 pkgrel=0
 _phpver=7
 pkgdesc="Event-driven asynchronous and concurrent networking engine with high performance for PHP."
@@ -21,7 +21,7 @@ prepare() {
 build() {
     cd "$builddir"
     phpize || return 1
-    ./configure --prefix=/usr \
+    EXTENSION_DIR=/usr/lib/php/modules ./configure --prefix=/usr \
         --with-php-config=/usr/bin/php-config || return 1
     make || return 1
 }
@@ -41,4 +41,4 @@ package() {
     install -d "$pkgdir"/etc/php/conf.d || return 1
     echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/conf.d/00_$_pkgreal.ini || return 1
 }
-sha512sums="dcb89c206b25d16fc4262dd3e66cc0c48c8ef83a18c1208f304d745b55ee094fedf96e843161dae8e2ea660dc7408a71b721b4f6a4b420017c4c3ca9129b28f4  swoole-1.9.13.tgz"
+sha512sums="176e0424435bed598f24f24cd207520d2828642cb95f2ee9b9c01eee6a5f544fa45be403da9c2114a27ab93d2885f1e8aea8a8ed4a94cd3e44a510ed624e958e  swoole-1.9.14.tgz"

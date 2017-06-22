@@ -21,7 +21,7 @@ prepare() {
 build() {
     cd "$builddir"
     phpize || return 1
-    ./configure --prefix=/usr \
+    EXTENSION_DIR=/usr/lib/php/modules ./configure --prefix=/usr \
         --with-php-config=/usr/bin/php-config || return 1
     make || return 1
 }
