@@ -76,7 +76,7 @@ PHP extensions installation:
 ```Dockerfile
 FROM phpearth/php:7.1-litespeed
 
-RUN apk add --no-cache php7-libsodium php7-intl php7-pdo_mysql
+RUN apk add --no-cache php71-libsodium php71-intl php71-pdo_mysql
 ```
 
 ## Documentation

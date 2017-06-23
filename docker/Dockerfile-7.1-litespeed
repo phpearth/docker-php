@@ -19,36 +19,36 @@ ENV \
     DEPS="curl \
         ca-certificates \
         runit \
-        php7 \
-        php7-bcmath \
-        php7-calendar \
-        php7-mbstring \
-        php7-exif \
-        php7-ftp \
-        php7-openssl \
-        php7-zip \
-        php7-sysvsem \
-        php7-sysvshm \
-        php7-sysvmsg \
-        php7-shmop \
-        php7-sockets \
-        php7-zlib \
-        php7-bz2 \
-        php7-curl \
-        php7-simplexml \
-        php7-xml \
-        php7-opcache \
-        php7-dom \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-tokenizer \
-        php7-ctype \
-        php7-session \
-        php7-fileinfo \
-        php7-iconv \
-        php7-json \
-        php7-posix \
-        php7-litespeed \
+        php71 \
+        php71-bcmath \
+        php71-calendar \
+        php71-mbstring \
+        php71-exif \
+        php71-ftp \
+        php71-openssl \
+        php71-zip \
+        php71-sysvsem \
+        php71-sysvshm \
+        php71-sysvmsg \
+        php71-shmop \
+        php71-sockets \
+        php71-zlib \
+        php71-bz2 \
+        php71-curl \
+        php71-simplexml \
+        php71-xml \
+        php71-opcache \
+        php71-dom \
+        php71-xmlreader \
+        php71-xmlwriter \
+        php71-tokenizer \
+        php71-ctype \
+        php71-session \
+        php71-fileinfo \
+        php71-iconv \
+        php71-json \
+        php71-posix \
+        php71-litespeed \
         litespeed"
 
 # This image include a custom Alpine repository for best possible developer

@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-imagick
+pkgname=php71-imagick
 _pkgreal=imagick
 pkgver=3.4.3
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="ImageMagick extension for PHP"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
-depends="php7-common>7.1.0"
-makedepends="php7-dev>7.1.0 autoconf imagemagick-dev libtool"
+depends="php71-common>7.1.0"
+makedepends="php71-dev>7.1.0 autoconf imagemagick-dev libtool"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

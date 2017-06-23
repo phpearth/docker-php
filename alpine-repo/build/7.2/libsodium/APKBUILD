@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-libsodium
+pkgname=php72-libsodium
 _pkgreal=libsodium
 pkgver=1.0.6
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="Wrapper for the Sodium cryptographic library"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="BSD-2"
-depends="php7-common>7.2.0 libsodium"
-makedepends="php7-dev>7.2.0 autoconf libsodium-dev"
+depends="php72-common>7.2.0 libsodium"
+makedepends="php72-dev>7.2.0 autoconf libsodium-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

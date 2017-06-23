@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-redis
+pkgname=php72-redis
 _pkgreal=redis
 pkgver=3.1.2
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="PHP extension for interfacing with redis"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
-depends="php7-common>7.2.0 php7-session>7.2.0"
-makedepends="php7-dev>7.2.0 autoconf"
+depends="php72-common>7.2.0 php72-session>7.2.0"
+makedepends="php72-dev>7.2.0 autoconf"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

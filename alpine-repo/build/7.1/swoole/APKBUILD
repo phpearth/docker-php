@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-swoole
+pkgname=php71-swoole
 _pkgreal=swoole
 pkgver=1.9.14
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="Event-driven asynchronous and concurrent networking engine with high pe
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="Apache2.0"
-depends="php7-common>7.1.0"
-makedepends="php7-dev>7.1.0 autoconf linux-headers"
+depends="php71-common>7.1.0"
+makedepends="php71-dev>7.1.0 autoconf linux-headers"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

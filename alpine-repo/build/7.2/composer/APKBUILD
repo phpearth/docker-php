@@ -9,7 +9,7 @@ pkgdesc="Dependency manager for PHP"
 url="https://getcomposer.org/"
 arch="noarch"
 license="MIT"
-depends="php7 php7-phar php7-json php7-mbstring"
+depends="php72 php72-phar php72-json php72-mbstring"
 makedepends=""
 source="composer-$_pkgver.phar::https://getcomposer.org/download/$_pkgver/composer.phar"
 

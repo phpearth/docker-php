@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-apcu
+pkgname=php72-apcu
 _pkgreal=apcu
 pkgver=5.1.8
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="APCu - APC User Cache extension for PHP"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
-depends="php7-common>7.2.0"
-makedepends="php7-dev>7.2.0 autoconf"
+depends="php72-common>7.2.0"
+makedepends="php72-dev>7.2.0 autoconf"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

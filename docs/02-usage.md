@@ -52,7 +52,7 @@ Alpine repository:
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
 
-RUN apk add --no-cache php7-libsodium php7-mcrypt php7-soap
+RUN apk add --no-cache php71-libsodium php71-mcrypt php71-soap
 ```
 
 ## Services

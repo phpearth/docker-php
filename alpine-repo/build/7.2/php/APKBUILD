@@ -1,16 +1,13 @@
 # Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7
+pkgname=php72
 _pkgreal=php
 pkgver=7.2.0
 _pkgrealver=7.2.0alpha2
 pkgrel=0
 _apiver=20160731
-_suffix=${pkgname#php}
-# Is this package the default (latest) PHP version?
-_default_php="yes"
-pkgdesc="The PHP$_suffix language runtime engine"
+pkgdesc="The PHP language runtime engine"
 url="http://www.php.net/"
 arch="all"
 license="PHP-3 BSD LGPL2 MIT Zend"
@@ -376,7 +373,7 @@ doc() {
 }
 
 apache2() {
-    pkgdesc="PHP$_suffix Module for Apache2"
+    pkgdesc="PHP Module for Apache2"
     depends="$depends apache2"
 
     install -D -m 755 "$builddir"/sapi/apache2handler/mod_php.so \
@@ -387,14 +384,14 @@ apache2() {
 }
 
 phpdbg() {
-    pkgdesc="Interactive PHP$_suffix debugger"
+    pkgdesc="Interactive PHP debugger"
 
     install -Dm755 "$builddir"/sapi/phpdbg/phpdbg \
         "$subpkgdir"/usr/bin/phpdbg
 }
 
 embed() {
-    pkgdesc="PHP$_suffix Embedded Library"
+    pkgdesc="PHP Embedded Library"
 
     mkdir "$subpkgdir"
 
@@ -402,20 +399,20 @@ embed() {
 }
 
 litespeed() {
-    pkgdesc="PHP$_suffix LiteSpeed SAPI"
+    pkgdesc="PHP LiteSpeed SAPI"
 
     mkdir -p "$subpkgdir"/usr/bin
     mv "$pkgdir"/usr/bin/lsphp "$subpkgdir"/usr/bin/lsphp
 }
 
 cgi() {
-    pkgdesc="PHP$_suffix Common Gateway Interface"
+    pkgdesc="PHP Common Gateway Interface"
 
     _mv "$pkgdir"/usr/bin/php-cgi "$subpkgdir"/usr/bin/
 }
 
 fpm() {
-    pkgdesc="PHP$_suffix FastCGI Process Manager"
+    pkgdesc="PHP FastCGI Process Manager"
 
     cd "$pkgdir"
 
@@ -455,22 +452,17 @@ phar() {
     cd "$pkgdir"
 
     mkdir -p "$subpkgdir"/usr/bin
-    mv usr/bin/phar.phar "$subpkgdir"/usr/bin/phar.phar$_suffix
+    mv usr/bin/phar.phar "$subpkgdir"/usr/bin/phar.phar
 
     rm usr/bin/phar
-    ln -s phar.phar$_suffix "$subpkgdir"/usr/bin/phar$_suffix
-
-    if [ "$_default_php" = yes ]; then
-        ln -s phar.phar$_suffix "$subpkgdir"/usr/bin/phar.phar
-        ln -s phar.phar$_suffix "$subpkgdir"/usr/bin/phar
-    fi
+    ln -s phar.phar "$subpkgdir"/usr/bin/phar
 }
 
 _extension() {
     local extname="${subpkgname#$pkgname-}"
     local extdepends="$(eval "echo \$_depends_$extname")"
     local extdesc="$(head -n1 "$builddir"/ext/$extname/CREDITS 2>/dev/null ||:)"
-    pkgdesc="PHP$_suffix extension: ${extdesc:-$extname}"
+    pkgdesc="PHP extension: ${extdesc:-$extname}"
 
     : ${extdepends:=$(_resolve_extension_deps "$extname")}
     depends="$depends $extdepends"

@@ -65,13 +65,13 @@ FROM alpine:3.6
 
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 RUN echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories \
-    && apk add --no-cache php7
+    && apk add --no-cache php71
 ```
 
-PHP packages are prefixed with `php`.
+PHP packages in PHP.earth repository are prefixed with `php71` and `php72`.
 
 ```bash
-apk search php*
+apk search --no-cache php71
 ```
 
 ### PHP 7.2
@@ -83,7 +83,7 @@ FROM alpine:3.6
 
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 RUN echo "https://alpine.php.earth/7.2" >> /etc/apk/repositories \
-    && apk add --no-cache php7
+    && apk add --no-cache php72
 ```
 
 For more information on what is included in the PHP.earth Alpine repository,

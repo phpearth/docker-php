@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-mongodb
+pkgname=php71-mongodb
 _pkgreal=mongodb
 pkgver=1.2.9
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="MongoDB extension for PHP"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="Apache"
-depends="php7-common>7.1.0 php7-json>7.1.0"
-makedepends="php7-dev>7.1.0 autoconf libressl-dev"
+depends="php71-common>7.1.0 php71-json>7.1.0"
+makedepends="php71-dev>7.1.0 autoconf libressl-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 
@@ -44,5 +44,4 @@ package() {
     install -d "$pkgdir"/etc/php/conf.d || return 1
     echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/conf.d/00_$_pkgreal.ini || return 1
 }
-
 sha512sums="7eff5cfce08f3d69bc7acdb9ab5f8f55d02dab67593e5d03402c8bb6b6611fd703e8dfda89b99e8d3de387ed58cb9eea096fe68e0c9657ec3f8b1b7f622cfe58  mongodb-1.2.9.tgz"

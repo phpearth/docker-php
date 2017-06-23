@@ -18,36 +18,36 @@ ENV \
     # Persistent runtime dependencies
     DEPS="nginx \
         nginx-mod-http-headers-more \
-        php7 \
-        php7-bcmath \
-        php7-calendar \
-        php7-mbstring \
-        php7-exif \
-        php7-ftp \
-        php7-openssl \
-        php7-zip \
-        php7-sysvsem \
-        php7-sysvshm \
-        php7-sysvmsg \
-        php7-shmop \
-        php7-sockets \
-        php7-zlib \
-        php7-bz2 \
-        php7-curl \
-        php7-simplexml \
-        php7-xml \
-        php7-opcache \
-        php7-dom \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-tokenizer \
-        php7-ctype \
-        php7-session \
-        php7-fileinfo \
-        php7-iconv \
-        php7-json \
-        php7-posix \
-        php7-fpm \
+        php72 \
+        php72-bcmath \
+        php72-calendar \
+        php72-mbstring \
+        php72-exif \
+        php72-ftp \
+        php72-openssl \
+        php72-zip \
+        php72-sysvsem \
+        php72-sysvshm \
+        php72-sysvmsg \
+        php72-shmop \
+        php72-sockets \
+        php72-zlib \
+        php72-bz2 \
+        php72-curl \
+        php72-simplexml \
+        php72-xml \
+        php72-opcache \
+        php72-dom \
+        php72-xmlreader \
+        php72-xmlwriter \
+        php72-tokenizer \
+        php72-ctype \
+        php72-session \
+        php72-fileinfo \
+        php72-iconv \
+        php72-json \
+        php72-posix \
+        php72-fpm \
         curl \
         ca-certificates \
         runit"

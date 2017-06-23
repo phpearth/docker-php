@@ -1,6 +1,6 @@
 # Maintainer: "Peter Kokot <peterkokot@gmail.com>"
 
-pkgname=php7-memcached
+pkgname=php71-memcached
 _pkgreal=memcached
 pkgver=3.0.3
 pkgrel=0
@@ -9,8 +9,8 @@ pkgdesc="Memcached extension for PHP"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
-depends="php7-common>7.1.0 php7-session>7.1.0"
-makedepends="php7-dev>7.1.0 autoconf zlib-dev libmemcached-dev cyrus-sasl-dev"
+depends="php71-common>7.1.0 php71-session>7.1.0"
+makedepends="php71-dev>7.1.0 autoconf zlib-dev libmemcached-dev cyrus-sasl-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

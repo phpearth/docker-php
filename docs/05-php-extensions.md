@@ -137,7 +137,7 @@ These Docker images include a PHP.earth Alpine repository that comes with many
 pecl extensions and all PHP extensions.
 
 ```bash
-apk add --no-cache php7-{extension-name}
+apk add --no-cache php71-{extension-name}
 ```
 
 With `Dockerfile`, this can be used in the following way:
@@ -145,11 +145,11 @@ With `Dockerfile`, this can be used in the following way:
 ```Dockerfile
 FROM phpearth/php
 
-RUN apk add --no-cache php7-libsodium
+RUN apk add --no-cache php71-libsodium
 ```
 
 However many times you'll want to install some other pecl extension as well. For
-that you'll need to build it from source using the provided `php7-dev` package,
+that you'll need to build it from source using the provided `php71-dev` package,
 which includes `phpize`, `php-config` and PHP header files required to build
 particular extension from source.
 
