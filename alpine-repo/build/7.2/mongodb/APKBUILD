@@ -10,7 +10,7 @@ url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="Apache"
 depends="php72-common>7.2.0 php72-json>7.2.0"
-makedepends="php72-dev>7.2.0 autoconf libressl-dev"
+makedepends="php72-dev>7.2.0 autoconf openssl-dev pcre-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 
