@@ -1,0 +1,18 @@
+# Contributor: Peter Kokot <peterkokot@gmail.com>
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
+
+pkgname=phpunit
+pkgver=6.2.2
+pkgrel=0
+pkgdesc="The PHP Unit Testing framework"
+url="https://phpunit.de/"
+arch="noarch"
+license="	BSD 3 Clause"
+depends="php72 php72-phar php72-json php72-mbstring php72-dom php72-xml php72-openssl"
+makedepends=""
+source="$pkgname-$pkgver.phar::https://phar.phpunit.de/$pkgname-$pkgver.phar"
+
+package() {
+    install -m 0755 -D "$srcdir"/$pkgname-$pkgver.phar "$pkgdir"/usr/bin/$pkgname
+}
+sha512sums="bc5e005b53c0bb5705cef86afbd7dede5e0e8f604de9f27b4c28e020d4fa74c51a8cbf1f289720936f68253845613861e0f934980e61c9f59101f33648b575bc  phpunit-6.2.2.phar"

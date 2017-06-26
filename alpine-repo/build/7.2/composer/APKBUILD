@@ -4,12 +4,12 @@
 pkgname=composer
 pkgver=1.4.2
 _pkgver=$pkgver
-pkgrel=0
+pkgrel=1
 pkgdesc="Dependency manager for PHP"
 url="https://getcomposer.org/"
 arch="noarch"
 license="MIT"
-depends="php72 php72-phar php72-json php72-mbstring"
+depends="php72 php72-phar php72-json php72-mbstring php72-openssl php72-zip php72-zlib"
 makedepends=""
 source="composer-$_pkgver.phar::https://getcomposer.org/download/$_pkgver/composer.phar"
 
