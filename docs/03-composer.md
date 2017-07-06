@@ -85,7 +85,7 @@ FROM phpearth/php:7.1-nginx
 ARG APP_ENV=prod
 
 RUN if [ ${APP_ENV} = "dev" ]; then \
-        apk add --no-cache git openssh composer; \
+        apk add --no-cache git openssh php7.1-composer; \
     fi
 ```
 
@@ -116,7 +116,7 @@ FROM phpearth/php:7.1-nginx
 ARG APP_ENV=prod
 
 RUN if [ ${APP_ENV} = "dev" ]; then \
-        apk add --no-cache git openssh composer \
+        apk add --no-cache git openssh php7.1-composer \
         && composer global require hirak/prestissimo; \
     fi
 ```

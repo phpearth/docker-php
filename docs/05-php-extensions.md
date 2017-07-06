@@ -145,7 +145,7 @@ With `Dockerfile`, this can be used in the following way:
 ```Dockerfile
 FROM phpearth/php
 
-RUN apk add --no-cache php71-libsodium
+RUN apk add --no-cache php7.1-libsodium
 ```
 
 However many times you'll want to install some other pecl extension as well. For
@@ -159,7 +159,7 @@ curly brackets with extension you're installing:
 ```Dockerfile
 FROM phpearth/php
 
-RUN apk add --no-cache --virtual .build-deps php7-dev git gcc g++ linux-headers make \
+RUN apk add --no-cache --virtual .build-deps php7.1-dev git gcc g++ linux-headers make \
     && mkdir -p /usr/src \
     && cd /usr/src \
     # Download the extension source code from Git repository or pecl.php.net

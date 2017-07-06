@@ -5,7 +5,7 @@ In this example we'll run OpenLiteSpeed webserver with PHP 7.1.
 Create a `Dockerfile`:
 
 ```Dockerfile
-FROM phpearth/php:litespeed
+FROM phpearth/php:7.1-litespeed
 ```
 
 The `docker-compose.yml` file:
@@ -22,10 +22,10 @@ services:
       - 80:8088
       - 7080:7080
     volumes:
-      - ./usr/local/lsws/app:/usr/local/lsws/app
+      - ./var/lib/openlitespeed/app:/var/lib/openlitespeed/app
 ```
 
-We've also created an example `index.php` file and mount the directory to `/usr/local/lsws/app`
+We've also created an example `index.php` file and mount the directory to `/var/lib/openlitespeed/app`
 folder for webserver to read from it.
 
 Finally we run:

@@ -9,4 +9,4 @@ services:
       - 80:8088
       - 7080:7080
     volumes:
-      - ./usr/local/lsws/app:/usr/local/lsws/app
+      - ./var/lib/openlitespeed/app:/var/lib/openlitespeed/app

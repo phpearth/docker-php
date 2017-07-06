@@ -4,7 +4,7 @@
 pkgname=php7.1
 _pkgreal=php
 _phpver=7.1
-pkgver=7.1.6
+pkgver=7.1.7
 pkgrel=0
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
@@ -431,6 +431,7 @@ cgi() {
 fpm() {
     pkgdesc="PHP $_phpver FastCGI Process Manager"
     replaces="php7-fpm"
+    install="$pkgname-fpm.post-install"
 
     cd "$pkgdir"
 
@@ -575,7 +576,7 @@ _mv() {
     mkdir -p "$dest"
     mv $@
 }
-sha512sums="b447435e8f2a28c34ca7c65e1f52147da7609f655301d7c49158052c58696a8159104c2b404d778ad4713b25df659dbc5bf186d3d1a8d51b33a03d6711e7ab65  php-7.1.6.tar.xz
+sha512sums="aaf846feccc8ab1cc4ab68ec166596d1a610334ed461e1203208c40b7a7db4bbaee7a79d6e47be1cba07e59087846ea6d2f8fbbd17deae6cc724e08fa9813cd0  php-7.1.7.tar.xz
 f8ecae241a90cbc3e98aa4deb3d5d35ef555f51380e29f4e182a8060dffeb84be74f030a14c6b452668471030d78964f52795ca74275db05543ccad20ef1f2cc  allow-build-recode-and-imap-together.patch
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad338142de78e4844aed885b1ad1865282072999fb045c8ad7  fix-asm-constraints-in-aarch64-multiply-macro.patch

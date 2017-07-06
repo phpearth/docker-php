@@ -53,7 +53,7 @@ The PHP.earth Alpine repository can be used in the following way:
   repository link in `/etc/apk/repositories`:
 
   ```bash
-  echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories
+  echo "https://alpine.php.earth" >> /etc/apk/repositories
   ```
 
 ### PHP.earth repository usage
@@ -64,14 +64,14 @@ To use this repository with Docker, you can create a `Dockerfile`:
 FROM alpine:3.6
 
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
-RUN echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories \
-    && apk add --no-cache php71
+RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
+    && apk add --no-cache php7.1
 ```
 
-PHP packages in PHP.earth repository are prefixed with `php71` and `php72`.
+PHP packages in PHP.earth repository are prefixed with `php7.1` and `php7.2`.
 
 ```bash
-apk search --no-cache php71
+apk search --no-cache php7.1
 ```
 
 ### PHP 7.2
@@ -82,8 +82,8 @@ Repository also includes upcoming PHP 7.2:
 FROM alpine:3.6
 
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
-RUN echo "https://alpine.php.earth/7.2" >> /etc/apk/repositories \
-    && apk add --no-cache php72
+RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
+    && apk add --no-cache php7.2
 ```
 
 For more information on what is included in the PHP.earth Alpine repository,
