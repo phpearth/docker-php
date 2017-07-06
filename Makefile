@@ -1,4 +1,4 @@
-.PHONY: test build build-package build-extensions generate-index
+.PHONY: test build build-package build-all generate-index abuild-generate-private-key abuild-generate-public-key
 .DEFAULT_GOAL := help
 
 help: ## Output usage documentation
@@ -12,11 +12,17 @@ test: ## Run all tests
 build: ## Build necessary image for building packages
 	docker-compose -f alpine-repo/.docker/docker-compose.yml build abuild
 
-build-package: ## Usage: make build-package v=7.1|7.2 p=package-name
-	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-package $(v) $(p)
+build-package: ## Usage: make build-package r=[main] p=package-name
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-package $(r) $(p)
 
-build-extensions: ## Usage: make build-extensions [v=7.1|7.2]
-	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-extensions $(v)
+build-all: ## Usage: make build-all [v=7.1|7.2]
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-all $(v)
 
-generate-index: ## Generate index file APKINDEX.tar.gz usage: make generate-index [v=7.1|7.2]
-	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild generate-index $(v)
+generate-index: ## Generate index file APKINDEX.tar.gz usage: make generate-index
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild generate-index
+
+abuild-generate-private-key: ## Generate new private key
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run abuild openssl genrsa -out phpearth.rsa.priv 4096 --build --force-recreate
+
+abuild-generate-public-key: ## Generate new public key
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run abuild openssl rsa -in phpearth.rsa.priv -pubout -out /repo/phpearth.rsa.pub

@@ -1,0 +1,47 @@
+# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+
+pkgname=php7.1-swoole
+_pkgreal=swoole
+pkgver=1.9.15
+pkgrel=0
+_phpver=7.1
+pkgdesc="Event-driven asynchronous and concurrent networking engine with high performance for PHP $_phpver."
+url="http://pecl.php.net/package/$_pkgreal"
+arch="all"
+license="Apache2.0"
+depends="php7.1-common>7.1.0"
+makedepends="php7.1-dev>7.1.0 autoconf linux-headers"
+source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
+builddir="$srcdir/$_pkgreal-$pkgver"
+
+prepare() {
+    default_prepare || return 1
+}
+
+build() {
+    cd "$builddir"
+    phpize || return 1
+    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+        --with-php-config=/usr/bin/php-config || return 1
+    make || return 1
+}
+
+check() {
+    cd "$builddir"
+
+    local allow_fail='yes'
+
+    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+        TZ= LANG= LC_ALL= \
+        make test || [ "$allow_fail" = yes ] || return 1
+}
+
+package() {
+    mkdir -p "$pkgdir" || return 1
+    install -d $pkgdir/ || return 1
+    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
+    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
+    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+}
+sha512sums="ce90473f96cabd2958a8b71d55ddbbe87c041980ceb7cb1b759ad0f30cee1565596cdaf09b7c3c284beeb3b23cad158cecf8182f9b366647a9a7372445a3d8b9  swoole-1.9.15.tgz"

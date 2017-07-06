@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Script for building and packaging all given extensions
+# Usage build-all [7.1|7.2]
+
+PHP_VER="${1:-all}"
+
+extensions_71="
+php7.1-apcu
+php7.1-composer
+php7.1-imagick
+php7.1-libsodium
+php7.1-memcached
+php7.1-mongodb
+php7.1-openlitespeed
+php7.1-phpunit
+php7.1-redis
+php7.1-swoole
+php7.1-xdebug
+"
+
+extensions_72="
+php7.2-apcu
+php7.2-composer
+php7.2-imagick
+php7.2-libsodium
+php7.2-mcrypt
+php7.2-memcached
+php7.2-mongodb
+php7.2-openlitespeed
+php7.2-phpunit
+php7.2-redis
+php7.2-swoole
+"
+
+if [ "$PHP_VER" = "7.1" ]; then
+  extensions=$extensions_71
+elif [ "$PHP_VER" = "7.2" ]; then
+  extensions=$extensions_72
+else
+  extensions="$extensions_71$extensions_72"
+fi
+
+# We'll need some deps from the PHP.earth Alpine repository
+# Make the PHP.earth Alpine repository trusted
+sudo wget -O /etc/apk/keys/phpearth.rsa.pub https://alpine.php.earth/phpearth.rsa.pub
+# Get the url of the repository
+sudo echo "https://alpine.php.earth" | sudo tee -a /etc/apk/repositories
+sudo apk update
+
+for ext in $extensions; do
+  cd /build/main/$ext
+
+  abuild checksum
+  abuild -r
+
+  # Generate index with trusted signature
+  generate-index main
+done

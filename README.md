@@ -66,7 +66,7 @@ To install Composer:
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
 
-RUN apk add --no-cache composer
+RUN apk add --no-cache php7.1-composer
 ```
 
 ### PHP Extensions
@@ -76,7 +76,7 @@ PHP extensions installation:
 ```Dockerfile
 FROM phpearth/php:7.1-litespeed
 
-RUN apk add --no-cache php71-libsodium php71-intl php71-pdo_mysql
+RUN apk add --no-cache php7.1-libsodium php7.1-intl php7.1-pdo_mysql
 ```
 
 ## Documentation

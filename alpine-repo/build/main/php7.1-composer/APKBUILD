@@ -1,0 +1,21 @@
+# Contributor: Peter Kokot <peterkokot@gmail.com>
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
+
+pkgname=php7.1-composer
+_pkgreal=composer
+pkgver=1.4.2
+_pkgver=$pkgver
+pkgrel=1
+pkgdesc="Dependency manager for PHP"
+url="https://getcomposer.org/"
+arch="noarch"
+license="MIT"
+depends="php7.1 php7.1-phar php7.1-json php7.1-mbstring php7.1-openssl php7.1-zip php7.1-zlib"
+makedepends=""
+source="$_pkgreal-$_pkgver.phar::https://getcomposer.org/download/$_pkgver/$_pkgreal.phar"
+
+package() {
+    replaces="composer"
+    install -m 0755 -D "$srcdir"/$_pkgreal-$_pkgver.phar "$pkgdir"/usr/bin/$_pkgreal
+}
+sha512sums="38bb2a696df65a47f6dfa22907e76c3210731530f51dc70f8e104d8b64e9ff2a40b18ea01f3948664fb7595d0e0c92c18dce1efaed6d1d57f05c28fa76f9966f  composer-1.4.2.phar"

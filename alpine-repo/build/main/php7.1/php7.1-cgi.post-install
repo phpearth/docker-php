@@ -1,0 +1,9 @@
+#!/bin/sh
+
+_suffix="7.1"
+
+link=$(readlink /usr/bin/php-cgi)
+
+if [[ "$link" != "/usr/bin/php-cgi7.2" || ! -f "$link" ]]; then
+  ln -sf /usr/bin/php-cgi$_suffix /usr/bin/php-cgi
+fi

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+_suffix="7.2"
+
+ln -sf /usr/bin/phpize$_suffix /usr/bin/phpize
+ln -sf /usr/bin/php-config$_suffix /usr/bin/php-config

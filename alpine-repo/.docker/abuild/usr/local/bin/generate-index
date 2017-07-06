@@ -1,12 +1,11 @@
 #!/bin/sh
 
 # Generate index file APKINDEX.tar.gz
-# Usage generate-index [7.1|7.2]
+# Usage generate-index [repository]
 
-# Default PHP version is 7.1
-PHP_VER="${1:-7.1}"
+REPO="${1:-main}"
 
-cd /repo/$PHP_VER/x86_64
+cd /repo/$REPO/x86_64
 apk index -o APKINDEX.unsigned.tar.gz *.apk --rewrite-arch x86_64
 openssl dgst -sha1 -sign /build/phpearth.rsa.priv -out .SIGN.RSA.phpearth.rsa.pub APKINDEX.unsigned.tar.gz
 tar -c .SIGN.RSA.phpearth.rsa.pub | abuild-tar --cut | gzip -9 > signature.tar.gz

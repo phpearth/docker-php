@@ -1,0 +1,21 @@
+#!/bin/sh
+
+_suffix="7.1"
+
+link=$(readlink /usr/bin/pecl)
+
+if [[ "$link" != "/usr/bin/pecl7.2" || ! -f "$link" ]]; then
+  ln -sf /usr/bin/pecl$_suffix /usr/bin/pecl
+fi
+
+link=$(readlink /usr/bin/pear)
+
+if [[ "$link" != "/usr/bin/pear7.2" || ! -f "$link" ]]; then
+  ln -sf /usr/bin/pear$_suffix /usr/bin/pear
+fi
+
+link=$(readlink /usr/bin/pear)
+
+if [[ "$link" != "/usr/bin/peardev7.2" || ! -f "$link" ]]; then
+  ln -sf /usr/bin/peardev$_suffix /usr/bin/peardev
+fi

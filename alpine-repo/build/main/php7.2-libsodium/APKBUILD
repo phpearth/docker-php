@@ -1,0 +1,47 @@
+# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+
+pkgname=php7.2-libsodium
+_pkgreal=libsodium
+pkgver=1.0.6
+pkgrel=0
+_phpver=7.2
+pkgdesc="Wrapper for the Sodium cryptographic library for PHP $_phpver"
+url="http://pecl.php.net/package/$_pkgreal"
+arch="all"
+license="BSD-2"
+depends="php7.2-common>7.2.0 libsodium"
+makedepends="php7.2-dev>7.2.0 autoconf libsodium-dev"
+source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
+builddir="$srcdir/$_pkgreal-$pkgver"
+
+prepare() {
+    default_prepare || return 1
+}
+
+build() {
+    cd "$builddir"
+    phpize || return 1
+    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+        --with-php-config=/usr/bin/php-config || return 1
+    make || return 1
+}
+
+check() {
+    cd "$builddir"
+
+    local allow_fail='no'
+
+    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+        TZ= LANG= LC_ALL= \
+        make test || [ "$allow_fail" = yes ] || return 1
+}
+
+package() {
+    mkdir -p "$pkgdir" || return 1
+    install -d $pkgdir/ || return 1
+    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
+    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
+    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+}
+sha512sums="ef0039a97f6e87eef368d2fb6b4d1824e54c37f30a159a1a77d2360f3f54aa208e76efc7708f89ed4cbfef0731ce1a3079f14adb58ca8f5321b455c5c88e75da  libsodium-1.0.6.tgz"

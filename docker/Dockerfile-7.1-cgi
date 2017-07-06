@@ -16,36 +16,36 @@ ENV \
     # When using Composer, disable the warning about running commands as root/super user
     COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
-    DEPS="php71 \
-        php71-bcmath \
-        php71-calendar \
-        php71-mbstring \
-        php71-exif \
-        php71-ftp \
-        php71-openssl \
-        php71-zip \
-        php71-sysvsem \
-        php71-sysvshm \
-        php71-sysvmsg \
-        php71-shmop \
-        php71-sockets \
-        php71-zlib \
-        php71-bz2 \
-        php71-curl \
-        php71-simplexml \
-        php71-xml \
-        php71-opcache \
-        php71-dom \
-        php71-xmlreader \
-        php71-xmlwriter \
-        php71-tokenizer \
-        php71-ctype \
-        php71-session \
-        php71-fileinfo \
-        php71-iconv \
-        php71-json \
-        php71-posix \
-        php71-cgi \
+    DEPS="php7.1 \
+        php7.1-bcmath \
+        php7.1-calendar \
+        php7.1-mbstring \
+        php7.1-exif \
+        php7.1-ftp \
+        php7.1-openssl \
+        php7.1-zip \
+        php7.1-sysvsem \
+        php7.1-sysvshm \
+        php7.1-sysvmsg \
+        php7.1-shmop \
+        php7.1-sockets \
+        php7.1-zlib \
+        php7.1-bz2 \
+        php7.1-curl \
+        php7.1-simplexml \
+        php7.1-xml \
+        php7.1-opcache \
+        php7.1-dom \
+        php7.1-xmlreader \
+        php7.1-xmlwriter \
+        php7.1-tokenizer \
+        php7.1-ctype \
+        php7.1-session \
+        php7.1-fileinfo \
+        php7.1-iconv \
+        php7.1-json \
+        php7.1-posix \
+        php7.1-cgi \
         curl \
         ca-certificates \
         runit"
@@ -55,7 +55,7 @@ ENV \
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
-    && echo "https://alpine.php.earth/7.1" >> /etc/apk/repositories \
+    && echo "https://alpine.php.earth" >> /etc/apk/repositories \
     && addgroup -g 82 -S www-data \
     && adduser -u 82 -D -S -G www-data www-data \
     && apk add --no-cache $DEPS

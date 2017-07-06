@@ -1,22 +1,22 @@
 #!/bin/sh
 
 # Script for building and packaging Alpine packages
-# Usage build-package [7.1|7.2] [package-name]
+# Usage build-package [package-name]
 
-PHP_VER="${1:-7.1}"
-PACKAGE="${2:-litespeed}"
+REPO="${1:-main}"
+PACKAGE="${2:-php7.1-composer}"
 
 # We'll need some deps from the PHP.earth Alpine repository
 # Make the PHP.earth Alpine repository trusted
 sudo wget -O /etc/apk/keys/phpearth.rsa.pub https://alpine.php.earth/phpearth.rsa.pub
 # Get the url of the repository
-sudo echo "https://alpine.php.earth/$PHP_VER" | sudo tee -a /etc/apk/repositories
+sudo echo "https://alpine.php.earth" | sudo tee -a /etc/apk/repositories
 sudo apk update
 
-cd /build/$PHP_VER/$PACKAGE
+cd /build/$REPO/$PACKAGE
 
 abuild checksum
 abuild -r
 
 # Generate index with trusted signature
-generate-index $PHP_VER
+generate-index $REPO

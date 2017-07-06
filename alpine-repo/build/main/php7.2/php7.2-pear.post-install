@@ -1,0 +1,7 @@
+#!/bin/sh
+
+_suffix="7.2"
+
+ln -sf /usr/bin/pecl$_suffix /usr/bin/pecl
+ln -sf /usr/bin/pear$_suffix /usr/bin/pear
+ln -sf /usr/bin/peardev$_suffix /usr/bin/peardev

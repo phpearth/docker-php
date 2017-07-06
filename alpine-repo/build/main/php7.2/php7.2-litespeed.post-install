@@ -1,0 +1,5 @@
+#!/bin/sh
+
+_suffix="7.2"
+
+ln -sf /usr/bin/lsphp$_suffix /usr/bin/lsphp
