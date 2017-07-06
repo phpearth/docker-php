@@ -6,9 +6,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* ...
+
+## [1.1.0] 2017-07-06
+
 * Debian based images removed in favor of Alpine for smallest possible sizes
 * Introducing PHP.earth Alpine repository
-* ...
 
 ## [1.0.5] 2017-06-20
 
