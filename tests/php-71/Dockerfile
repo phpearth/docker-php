@@ -1,11 +1,11 @@
 FROM phpearth/php:7.1
 
 RUN apk add --no-cache \
-    php71-apcu \
-    php71-imagick \
-    php71-libsodium \
-    php71-memcached \
-    php71-mongodb \
-    php71-redis \
-    php71-swoole \
-    php71-xdebug
+    php7.1-apcu \
+    php7.1-imagick \
+    php7.1-libsodium \
+    php7.1-memcached \
+    php7.1-mongodb \
+    php7.1-redis \
+    php7.1-swoole \
+    php7.1-xdebug

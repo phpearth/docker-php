@@ -65,6 +65,6 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY tags/nginx /
+COPY tags/7.2-nginx /
 
 CMD ["/sbin/runit-wrapper"]
