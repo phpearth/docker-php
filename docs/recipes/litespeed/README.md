@@ -11,7 +11,7 @@ FROM phpearth/php:7.1-litespeed
 The `docker-compose.yml` file:
 
 ```yml
-version: '3.2'
+version: '3.3'
 
 services:
   app:

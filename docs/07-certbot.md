@@ -33,7 +33,7 @@ certificate files for further usage.
 Add the Certbot image to `docker-compose.yml`:
 
 ```yaml
-version: '3.2'
+version: '3.3'
 services:
   certbot:
     container_name: certbot
@@ -61,7 +61,7 @@ docker compose files:
 `docker-compose.yml`:
 
 ```yaml
-version: '3.2'
+version: '3.3'
 services:
   app:
     # ...
@@ -75,7 +75,7 @@ volumes:
 `docker-compose.certbot.yml`:
 
 ```yaml
-version: '3.2'
+version: '3.3'
 services:
   certbot:
     container_name: certbot

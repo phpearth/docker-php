@@ -92,7 +92,7 @@ RUN if [ ${APP_ENV} = "dev" ]; then \
 You can set the build arguments in the Docker Compose files. For example:
 
 ```yaml
-version: '3.2'
+version: '3.3'
 
 services:
   app:

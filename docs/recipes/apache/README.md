@@ -9,7 +9,7 @@ FROM phpearth/php:7.1-apache
 Docker Compose file:
 
 ```yaml
-version: '3.2'
+version: '3.3'
 
 services:
   app:
