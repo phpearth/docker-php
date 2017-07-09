@@ -68,6 +68,16 @@ RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
     && apk add --no-cache php7.1
 ```
 
+### Packages
+
+Repository includes the following packages:
+
+* OpenLiteSpeed
+* Composer
+* PHPUnit
+* PHP
+* Pecl extensions
+
 PHP packages in PHP.earth repository are prefixed with `php7.1` and `php7.2`.
 
 ```bash

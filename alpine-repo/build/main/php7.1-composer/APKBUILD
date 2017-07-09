@@ -13,6 +13,7 @@ license="MIT"
 depends="php7.1 php7.1-phar php7.1-json php7.1-mbstring php7.1-openssl php7.1-zip php7.1-zlib"
 makedepends=""
 source="$_pkgreal-$_pkgver.phar::https://getcomposer.org/download/$_pkgver/$_pkgreal.phar"
+options="!check"
 
 package() {
     replaces="composer"

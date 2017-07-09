@@ -48,14 +48,11 @@ ENV \
           curl \
           ca-certificates"
 
-# This image include a custom Alpine repository for best possible developer
-# experience with latest versions
+# PHP.earth Alpine repository for better developer experience
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
     && echo "https://alpine.php.earth" >> /etc/apk/repositories \
-    && addgroup -g 82 -S www-data \
-    && adduser -u 82 -D -S -G www-data www-data \
     && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && apk add --no-cache $DEPS
 

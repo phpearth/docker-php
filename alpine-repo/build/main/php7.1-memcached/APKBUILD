@@ -10,7 +10,7 @@ url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
 depends="php7.1-common>7.1.0 php7.1-session>7.1.0"
-makedepends="php7.1-dev>7.1.0 autoconf zlib-dev libmemcached-dev cyrus-sasl-dev"
+makedepends="php7.1-dev>7.1.0 zlib-dev libmemcached-dev cyrus-sasl-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

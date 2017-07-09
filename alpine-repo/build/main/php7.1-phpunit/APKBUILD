@@ -9,9 +9,10 @@ pkgdesc="The PHP Unit Testing framework"
 url="https://phpunit.de/"
 arch="noarch"
 license="	BSD 3 Clause"
-depends="php7.1 php7.1-phar php7.1-json php7.1-mbstring php7.1-dom php7.1-xml php7.1-openssl"
+depends="php7.1 php7.1-phar php7.1-json php7.1-mbstring php7.1-openssl php7.1-dom php7.1-xml"
 makedepends=""
 source="$_pkgreal-$pkgver.phar::https://phar.phpunit.de/$_pkgreal-$pkgver.phar"
+options="!check"
 
 package() {
     install -m 0755 -D "$srcdir"/$_pkgreal-$pkgver.phar "$pkgdir"/usr/bin/$_pkgreal

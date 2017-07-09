@@ -9,6 +9,4 @@ services:
     volumes:
       - ../repo:/repo
       - ../build:/build
-      - ../repo/phpearth.rsa.pub:/home/packager/.abuild/phpearth.rsa.pub
-      - ../build/phpearth.rsa.priv:/home/packager/.abuild/phpearth.rsa.priv
     working_dir: /build

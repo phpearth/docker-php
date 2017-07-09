@@ -10,7 +10,7 @@ url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP"
 depends="php7.2-common>7.2.0 libmcrypt"
-makedepends="php7.2-dev>7.2.0 autoconf libmcrypt-dev"
+makedepends="php7.2-dev>7.2.0 libmcrypt-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

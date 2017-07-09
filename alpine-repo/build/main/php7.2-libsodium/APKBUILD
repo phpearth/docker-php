@@ -10,7 +10,7 @@ url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="BSD-2"
 depends="php7.2-common>7.2.0 libsodium"
-makedepends="php7.2-dev>7.2.0 autoconf libsodium-dev"
+makedepends="php7.2-dev>7.2.0 libsodium-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

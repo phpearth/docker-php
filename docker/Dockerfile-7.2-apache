@@ -51,8 +51,7 @@ ENV \
         runit \
         apache2"
 
-# This image include a custom Alpine repository for best possible developer
-# experience with latest versions
+# PHP.earth Alpine repository for better developer experience
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \

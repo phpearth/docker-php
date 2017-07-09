@@ -1,7 +1,16 @@
 diff --git a/dist/admin/html.open/lib/jCryption.php b/dist/admin/html.open/lib/jCryption.php
-index 449ad90..a30ddde 100644
+index 449ad90..04effbf 100644
 --- a/dist/admin/html.open/lib/jCryption.php
 +++ b/dist/admin/html.open/lib/jCryption.php
+@@ -32,7 +32,7 @@
+ 		*
+ 		* @access public
+ 		*/
+-		function jCryption($e = "\x01\x00\x01") {
++		public function __construct($e = "\x01\x00\x01") {
+ 			$this->_e = $e;
+ 		}
+ 
 @@ -380,7 +380,7 @@
  		* @access private
  		*/

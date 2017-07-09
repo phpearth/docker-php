@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# Script for building and packaging
+# Usage build-packages [7.1|7.2|all|{package-name}]
+
+BUILD_PACKAGES="${1:-all}"
+
+packages_71="
+php7.1-apcu
+php7.1-composer
+php7.1-imagick
+php7.1-libsodium
+php7.1-memcached
+php7.1-mongodb
+php7.1-phpunit
+php7.1-redis
+php7.1-swoole
+php7.1-xdebug
+"
+
+packages_72="
+php7.2-apcu
+php7.2-composer
+php7.2-imagick
+php7.2-libsodium
+php7.2-mcrypt
+php7.2-memcached
+php7.2-mongodb
+php7.2-phpunit
+php7.2-redis
+php7.2-swoole
+"
+
+if [ "$BUILD_PACKAGES" = "7.1" ]; then
+  packages=$packages_71
+elif [ "$BUILD_PACKAGES" = "7.2" ]; then
+  packages=$packages_72
+elif [ "$BUILD_PACKAGES" = "all" ]; then
+  packages="openlitespeed $packages_71$packages_72"
+else
+  packages="$BUILD_PACKAGES"
+fi
+
+for package in $packages; do
+  cd /build/main/$package
+
+  abuild checksum
+  abuild -r
+
+  # Generate index with trusted signature
+  generate-index main
+done

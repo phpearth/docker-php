@@ -52,14 +52,13 @@ ENV \
         ca-certificates \
         runit"
 
-# This image include a custom Alpine repository for best possible developer
-# experience with latest versions
+# PHP.earth Alpine repository for better developer experience
 ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
     && echo "https://alpine.php.earth" >> /etc/apk/repositories \
     && addgroup -g 82 -S www-data \
-    && adduser -u 82 -D -S -G www-data www-data \
+    && adduser -u 82 -S -D -H -h /var/lib/nginx -s /sbin/nologin -G www-data -g www-data www-data \
     && apk add --no-cache $DEPS \
     && mkdir /run/php && mkdir /run/nginx \
     && ln -sf /dev/stdout /var/log/nginx/access.log \

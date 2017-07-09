@@ -1,7 +1,7 @@
 # Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.1-openlitespeed
+pkgname=openlitespeed
 pkgver=1.4.26
 pkgrel=0
 _pkgreal=openlitespeed
@@ -12,15 +12,16 @@ arch="all !aarch64 !ppc64le"
 license="GPL3"
 pkgusers=lsadm
 pkggroups=lsadm
-depends="php7.1-litespeed php7.1-bcmath php7.1-json php7.1-mcrypt php7.1-session"
+depends=
 depends_dev=
-makedepends="linux-headers openssl-dev geoip-dev expat-dev pcre-dev zlib-dev"
+makedepends="php7.1-litespeed linux-headers openssl-dev geoip-dev expat-dev pcre-dev zlib-dev"
 install="$pkgname.pre-install"
-subpackages="$pkgname-snmp::noarch"
+subpackages="$pkgname-doc $pkgname-snmp::noarch"
 source="http://open.litespeedtech.com/packages/openlitespeed-$pkgver.tgz
 configure.patch
+DAttrBase.php.patch
 functions.sh.patch
-index.html
+httpd_config.conf.in.patch
 install.sh.patch
 jCryption.php.patch
 openlitespeed.initd
@@ -65,9 +66,17 @@ prepare() {
   rm "$builddir"/dist/admin/conf/php.ini || return 1
 }
 
+check() {
+  cd "$builddir"
+
+  local allow_fail='yes'
+
+  make test || [ "$allow_fail" = yes ] || return 1
+}
+
 package() {
   local file;
-  replaces="litespeed php7.2-openlitespeed"
+  replaces="litespeed"
 
   cd "$builddir"
 
@@ -79,11 +88,6 @@ package() {
   mkdir -p "$pkgdir"/usr/lib/$_pkgreal \
     "$pkgdir"/usr/sbin \
     "$pkgdir"/var/log || return 1
-
-  # Remove documentation from the package
-  rm -rf "$pkgdir"/$_pkghome/docs/* || return 1
-  install -Dm755 "$srcdir"/index.html \
-    "$pkgdir"/$_pkghome/docs/ || return 1
 
   # Remove some not used files
   #rm -rf "$pkgdir"/$_pkghome/php* \
@@ -114,7 +118,7 @@ package() {
   #  "$pkgdir"/$_pkghome/admin/conf \
   #  "$pkgdir"/$_pkghome/Example/logs || return 1
 
-  # install configs
+  # Install configs
   install -Dm755 "$srcdir"/$_pkgreal.initd \
     "$pkgdir"/etc/init.d/$_pkgreal || return 1
   mv "$pkgdir"/$_pkghome/conf \
@@ -125,7 +129,7 @@ package() {
   ln -s /etc/$_pkgreal/admin "$pkgdir"/$_pkghome/admin/conf || return 1
   find "$pkgdir"/etc/$_pkgreal -type f -print0 | xargs -0 chmod -x || return 1
 
-  # install binaries
+  # Install binaries
   mv "$pkgdir"/$_pkghome/bin/$_pkgreal \
     "$pkgdir"/usr/sbin/lshttpd || return 1
   ln -sf /usr/sbin/lshttpd \
@@ -133,19 +137,27 @@ package() {
   ln -sf /usr/bin/lsphp \
     "$pkgdir"/$_pkghome/fcgi-bin/lsphp || return 1
 
-  # install modules
+  # Install modules
   for file in $(find "$pkgdir"/$_pkghome/modules -name "*.so"); do
     mv $file "$pkgdir"/usr/lib/$_pkgreal/${file##*/} || return 1
     ln -s /usr/lib/$_pkgreal/${file##*/} $file || return 1
   done
 
-  # install logs
+  # Install logs
   mv "$pkgdir"/$_pkghome/logs "$pkgdir"/var/log/$_pkgreal || return 1
   mv "$pkgdir"/$_pkghome/admin/logs "$pkgdir"/var/log/$_pkgreal/admin || return 1
   mv "$pkgdir"/$_pkghome/Example/logs "$pkgdir"/var/log/$_pkgreal/Example || return 1
   ln -s /var/log/$_pkgreal "$pkgdir"/$_pkghome/logs || return 1
   ln -s /var/log/$_pkgreal/admin "$pkgdir"/$_pkghome/admin/logs || return 1
   ln -s /var/log/$_pkgreal/Example "$pkgdir"/$_pkghome/Example/logs || return 1
+}
+
+doc() {
+  default_doc
+
+  mkdir -p "$subpkgdir"/var/lib/$_pkgreal/docs || return 1
+  mv "$pkgdir"/$_pkghome/docs/* \
+    "$subpkgdir"/$_pkghome/docs
 }
 
 snmp() {
@@ -158,10 +170,11 @@ snmp() {
 }
 sha512sums="8689edf830380d4c14716ca406531fff98ede88d2467eb67cddb5c30bf1271b190b15a087c4ae7ef1841ffe76464133bd74056f61b9eec56331e0d37f05b99cb  openlitespeed-1.4.26.tgz
 be3b09fcf0bb09562f963680b32f2f3c20ab45ac97db28909e53f320db62bbbcda03a1f68bbb841d80502a61954d07cf1bce9ad8a5b1526b252a3320532800f6  configure.patch
+cd4e35be9a1d95c0909ae8453a502a212909c914602d79508d1cb7815fcc5919e45db1cd357e369512640178501327960b82a4943a405758dd44438356a23f2b  DAttrBase.php.patch
 32d1d1c6f01fecdace5112e2481c4a93f4d23df2a9c308ad1c00139d2c8db7dc76c9f3709b6356feac1c3c5bb1a5fa840b5ad37c9fc02af983e63711b71be68b  functions.sh.patch
-670a59fc442ff82f422f9f2b70b0cf8b334275d795ba319f842549f703348eba2cb8522d71f85ecf7701fb1996005c8ec6c0b713db0ed7dedee17a6e6ceee7db  index.html
+aa492ae54a6796286fe259beca9d643aba3d0fe5681278367a0ddb3b53525581faee9b7cbead030d5964ce895e88dd4814e4ead10d3f1b7cce4eececf7aa40d1  httpd_config.conf.in.patch
 1fd729cb5959215f1cc5e7a7a7471af2f6f0f83f0f10d839da835f186bd19c82cb10e4adb0c0ce696e9dd2eb3774c149354b4beb7b4c85d5f1c8d8f20ec46f50  install.sh.patch
-4e45e421a79ccd59c6f3afb590397b661981ec5a055ec3548daf42ca7580cb3f99ffa2b5151787312998f6a38430ac8f7e9a07216d9a18e438460d8cc58ef29e  jCryption.php.patch
+5ad509e1b3196360adc8680e1ffc34e10b3358e1c665f54156efe224c8b900b755de9046202e0ccb8c5f7df0fcef5a8b35f58914c59b4553858fb84df17da73c  jCryption.php.patch
 98db2641e62c509485f0996f2dec7304e0b2bf38878ace60438719e56588d903f29a0ce3a8399ff94770ab4e079e55e218fd8357d98c269d2c03e13363a49145  openlitespeed.initd
 40abc5dd03839225ac7228eab0b7b04e411442d1da3d51c31ec5e77b8628f1a146fa6131050e4318149f0c572f2e08f2e2ec48d755128bfbb2ab80b3854502a3  ls_lock.c.patch
 48b083d0c8117747c29ee9884d935182268590e9174e4fae4de12524f2774099cab73519cd438ecb7318b9a03fa7dbebc8edfe81f82a342f6efb5534a7e9176a  ls_lock.h.patch

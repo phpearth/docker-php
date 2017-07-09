@@ -3,4 +3,4 @@
 !/alpine-repo/repo/.gitkeep
 /alpine-repo/build/main/*/src
 /alpine-repo/build/main/*/pkg
-/alpine-repo/build/phpearth.rsa.priv
+/alpine-repo/.docker/abuild/home/packager/.abuild/phpearth.rsa.priv

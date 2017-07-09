@@ -7,7 +7,7 @@ REPO="${1:-main}"
 
 cd /repo/$REPO/x86_64
 apk index -o APKINDEX.unsigned.tar.gz *.apk --rewrite-arch x86_64
-openssl dgst -sha1 -sign /build/phpearth.rsa.priv -out .SIGN.RSA.phpearth.rsa.pub APKINDEX.unsigned.tar.gz
+openssl dgst -sha1 -sign /home/packager/.abuild/phpearth.rsa.priv -out .SIGN.RSA.phpearth.rsa.pub APKINDEX.unsigned.tar.gz
 tar -c .SIGN.RSA.phpearth.rsa.pub | abuild-tar --cut | gzip -9 > signature.tar.gz
 cat signature.tar.gz APKINDEX.unsigned.tar.gz > APKINDEX.tar.gz
 rm APKINDEX.unsigned.tar.gz signature.tar.gz .SIGN.RSA.phpearth.rsa.pub

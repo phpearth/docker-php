@@ -5,14 +5,14 @@ pkgname=php7.1
 _pkgreal=php
 _phpver=7.1
 pkgver=7.1.7
-pkgrel=0
+pkgrel=2
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
 arch="all"
 license="PHP-3 BSD LGPL2 MIT Zend"
 depends="$pkgname-common"
-depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev"
+depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev re2c"
 # Most dependencies between extensions is auto-discovered (see _extension()).
 _depends_mysqlnd="$pkgname-openssl"
 _depends_pdo_mysql="$pkgname-pdo $pkgname-mysqlnd"
@@ -415,6 +415,8 @@ litespeed() {
     pkgdesc="PHP $_phpver LiteSpeed SAPI"
     replaces="php7-litespeed"
     install="$pkgname-litespeed.post-install"
+    # OpenLiteSpeed requires some additional PHP extensions for admin panel
+    depends="$pkgname-bcmath $pkgname-json $pkgname-session"
 
     mkdir -p "$subpkgdir"/usr/bin
     mv "$pkgdir"/usr/bin/lsphp "$subpkgdir"/usr/bin/lsphp$_phpver

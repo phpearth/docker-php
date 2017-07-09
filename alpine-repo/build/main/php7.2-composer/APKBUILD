@@ -14,6 +14,7 @@ license="MIT"
 depends="php7.2 php7.2-phar php7.2-json php7.2-mbstring php7.2-openssl php7.2-zip php7.2-zlib"
 makedepends=""
 source="$_pkgreal-$_pkgver.phar::https://getcomposer.org/download/$_pkgver/$_pkgreal.phar"
+options="!check"
 
 package() {
     replaces="composer php7.1-composer"

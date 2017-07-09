@@ -12,13 +12,12 @@ test: ## Run all tests
 build: ## Build necessary image for building packages
 	docker-compose -f alpine-repo/.docker/docker-compose.yml build abuild
 
-build-package: ## Usage: make build-package r=[main] p=package-name
-	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-package $(r) $(p)
-
-build-all: ## Usage: make build-all [v=7.1|7.2]
-	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-all $(v)
+build-packages: ## Usage: make build-package p=[7.1|7.2|all|{package-name1 package-name2}]
+	make build
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-packages "$(p)"
 
 generate-index: ## Generate index file APKINDEX.tar.gz usage: make generate-index
+	make build
 	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild generate-index
 
 abuild-generate-private-key: ## Generate new private key
