@@ -1,0 +1,19 @@
+diff --git a/src/edio/multiplexer.cpp b/src/edio/multiplexer.cpp
+index cc45312..b0a8182 100644
+--- a/src/edio/multiplexer.cpp
++++ b/src/edio/multiplexer.cpp
+@@ -17,7 +17,7 @@
+ *****************************************************************************/
+ #include <edio/multiplexer.h>
+ #include <fcntl.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ 
+ Multiplexer::Multiplexer()
+     : m_iFLTag(O_NONBLOCK | O_RDWR)
+@@ -49,5 +49,3 @@ void Multiplexer::modEvent(EventReactor *pHandler, short mask,
+     else
+         pHandler->andMask2(~mask);
+ }
+-
+-

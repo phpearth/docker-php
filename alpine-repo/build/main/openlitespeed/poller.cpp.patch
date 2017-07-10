@@ -1,0 +1,19 @@
+diff --git a/src/edio/poller.cpp b/src/edio/poller.cpp
+index d216a8a..94e3753 100644
+--- a/src/edio/poller.cpp
++++ b/src/edio/poller.cpp
+@@ -24,7 +24,7 @@
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ 
+ 
+ Poller::Poller()
+@@ -85,5 +85,3 @@ void Poller::timerExecute()
+ {
+     m_pfdReactors.timerExecute();
+ }
+-
+-

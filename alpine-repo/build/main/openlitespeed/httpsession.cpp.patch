@@ -1,0 +1,135 @@
+diff --git a/src/http/httpsession.cpp b/src/http/httpsession.cpp
+index 58669e3..bbf9abf 100644
+--- a/src/http/httpsession.cpp
++++ b/src/http/httpsession.cpp
+@@ -74,7 +74,7 @@
+ #include <netinet/in_systm.h>
+ #include <netinet/tcp.h>
+ #include <stdio.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+@@ -638,7 +638,7 @@ int HttpSession::readReqBody()
+             {
+                 if (!m_pReqParser->isParseUploadByFilePath())
+                     m_request.getBodyBuf()->writeUsed(ret);
+-                
++
+                 //Update buf
+                 ret = m_pReqParser->parseUpdate(pBuf, ret);
+                 if (ret != 0)
+@@ -1034,7 +1034,7 @@ int HttpSession::processNewReqInit()
+                                HttpHeader::H_X_FORWARDED_FOR);
+             len = m_request.getHeaderLen(HttpHeader::H_X_FORWARDED_FOR);
+         }
+-        
++
+         LS_DBG_L(getLogSession(), "HttpSession::processNewReqInit pProxyHeader %s pName %s len %d.",
+                  pProxyHeader, pName, len);
+         if (*pProxyHeader)
+@@ -1047,7 +1047,7 @@ int HttpSession::processNewReqInit()
+ 
+     if (m_request.isHttps())
+         m_request.addEnv("HTTPS", 5, "on", 2);
+-    
++
+     m_lReqTime = DateTime::s_curTime;
+     m_iReqTimeUs = DateTime::s_curTimeUs;
+ 
+@@ -1136,7 +1136,7 @@ int HttpSession::parseReqArgs(int doPostBody, int uploadPassByPath,
+     if (!m_pReqParser)
+     {
+         m_pReqParser = new ReqParser();
+-        
++
+         //If not exist, create it
+         struct stat stBuf;
+         int st = stat(uploadTmpDir, &stBuf);
+@@ -2569,7 +2569,7 @@ int HttpSession::setupRespCache()
+                 m_response.getContentLen()))
+         {
+             LS_ERROR(getLogSession(), "Failed to initialize VMemBuf, "
+-                     "response body len: %lld.", 
++                     "response body len: %lld.",
+                      (long long)m_response.getContentLen());
+             return LS_FAIL;
+         }
+@@ -3258,7 +3258,7 @@ int HttpSession::pushToClient(const char *pUri, int uriLen)
+ //             p++;
+ //         }
+ //     }
+-    
++
+     p->val.len = m_request.getHeaderLen(HttpHeader::H_ACC_ENCODING);
+     if (p->val.len > 0)
+     {
+@@ -3270,7 +3270,7 @@ int HttpSession::pushToClient(const char *pUri, int uriLen)
+     }
+     memset(p, 0, sizeof(*p));
+     p = extraHeaders;
+-    
++
+     return getStream()->push(&uri, &host, extraHeaders);
+ }
+ 
+@@ -3316,7 +3316,7 @@ int HttpSession::processOneLink(const char *p, const char *pEnd)
+     return pushToClient(pUrlBegin, pUrlEnd - pUrlBegin);
+ }
+ 
+-//Example: 
++//Example:
+ // Link: </css/style.css>; rel=preload;
+ // Link: </dont/want/to/push/this.css>; rel=preload; as=stylesheet; nopush
+ // Link: </css>; as=style; rel=preload, </js>; as=script; rel=preload;
+@@ -3327,19 +3327,19 @@ void HttpSession::processLinkHeader(const char* pValue, int valLen)
+ 
+     const char *p = pValue;
+     const char *pLineEnd = p + valLen;
+-    const char *pEnd; 
++    const char *pEnd;
+     while(p < pLineEnd)
+     {
+-        pEnd = (const char *)memchr(p, ',', pLineEnd - p); 
++        pEnd = (const char *)memchr(p, ',', pLineEnd - p);
+         if (!pEnd)
+             pEnd = pLineEnd;
+-        
+-        processOneLink(p, pEnd);    
+-    
++
++        processOneLink(p, pEnd);
++
+         p = pEnd + 1;
+     }
+-    
+-    
++
++
+ }
+ 
+ 
+@@ -3607,7 +3607,7 @@ int HttpSession::initSendFileInfo(const char *pPath, int pathLen)
+     int ret;
+     struct stat st;
+     StaticFileCacheData *pData = m_sendFileInfo.getFileData();
+-    
++
+     if ((pData) && (!pData->isSamePath(pPath, pathLen)))
+     {
+         m_sendFileInfo.release();
+@@ -4161,7 +4161,7 @@ void HttpSession::setBackRefPtr(evtcbhead_t ** v)
+ {
+     LS_DBG_M(getLogSession(),
+                  "setBackRefPtr() called, set to %p.", *v);
+-    evtcbhead_t::back_ref_ptr = v; 
++    evtcbhead_t::back_ref_ptr = v;
+ }
+ 
+ 
+@@ -4436,4 +4436,3 @@ void HttpSession::runAllCallbacks()
+ 
+     EvtcbQue::getInstance().run(this);
+ }
+-

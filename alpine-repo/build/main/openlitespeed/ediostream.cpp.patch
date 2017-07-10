@@ -1,0 +1,19 @@
+diff --git a/src/edio/ediostream.cpp b/src/edio/ediostream.cpp
+index 7b61312..0abeaad 100644
+--- a/src/edio/ediostream.cpp
++++ b/src/edio/ediostream.cpp
+@@ -25,7 +25,7 @@
+ #include <assert.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include <sys/poll.h>
++#include <poll.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+@@ -218,5 +218,3 @@ int EdStream::write(LoopBuf *pBuf)
+         pBuf->pop_front(ret);
+     return ret;
+ }
+-
+-
