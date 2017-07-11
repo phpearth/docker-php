@@ -5,14 +5,15 @@ pkgname=php7.1
 _pkgreal=php
 _phpver=7.1
 pkgver=7.1.7
-pkgrel=2
+# Package release number is started at 100 so it overwrites the default package
+pkgrel=100
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
 arch="all"
 license="PHP-3 BSD LGPL2 MIT Zend"
 depends="$pkgname-common"
-depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev re2c"
+depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev re2c file"
 # Most dependencies between extensions is auto-discovered (see _extension()).
 _depends_mysqlnd="$pkgname-openssl"
 _depends_pdo_mysql="$pkgname-pdo $pkgname-mysqlnd"
@@ -29,6 +30,7 @@ makedepends="
     curl-dev
     db-dev
     enchant-dev
+    file
     freetds-dev
     freetype-dev
     gdbm-dev
@@ -69,6 +71,7 @@ install-pear.patch
 php-fpm.initd
 php-fpm.logrotate
 php-module.conf
+snmp.c.patch
 "
 
 builddir="$srcdir/$_pkgreal-$pkgver"
@@ -220,7 +223,6 @@ _build() {
         --with-gd=shared \
             --with-freetype-dir=/usr \
             --disable-gd-jis-conv \
-            --enable-gd-native-ttf \
             --with-jpeg-dir=/usr \
             --with-png-dir=/usr \
             --with-webp-dir=/usr \
@@ -344,6 +346,7 @@ check() {
 
 package() {
     install="$pkgname.post-install"
+    provides="php=$pkgver-r$pkgrel php7=$pkgver-r$pkgrel"
     replaces="php php7"
 
     cd "$builddir"
@@ -358,6 +361,7 @@ package() {
 
 dev() {
     default_dev
+    provides="php-dev=$pkgver-r$pkgrel php7-dev=$pkgver-r$pkgrel"
     replaces="php-dev php7-dev"
     install="$pkgname-dev.post-install"
 
@@ -372,6 +376,7 @@ dev() {
 
 doc() {
     default_doc
+    provides="php-doc=$pkgver-r$pkgrel php7-doc=$pkgver-r$pkgrel"
     replaces="php-doc php7-doc"
 
     cd "$builddir"
@@ -384,7 +389,8 @@ doc() {
 apache2() {
     pkgdesc="PHP Module for Apache2"
     depends="$depends apache2"
-    replaces="php7-apache2"
+    provides="php-apache2=$pkgver-r$pkgrel php7-apache2=$pkgver-r$pkgrel"
+    replaces="php-apache2 php7-apache2"
 
     install -D -m 755 "$builddir"/sapi/apache2handler/mod_php.so \
         "$subpkgdir"/usr/lib/apache2/mod_php.so
@@ -395,7 +401,8 @@ apache2() {
 
 phpdbg() {
     pkgdesc="Interactive PHP debugger"
-    replaces="php7-phpdbg"
+    provides="php-phpdbg=$pkgver-r$pkgrel php7-phpdbg=$pkgver-r$pkgrel"
+    replaces="php-phpdbg php7-phpdbg"
     install="$pkgname-phpdbg.post-install"
 
     install -Dm755 "$builddir"/sapi/phpdbg/phpdbg \
@@ -404,7 +411,8 @@ phpdbg() {
 
 embed() {
     pkgdesc="PHP Embedded Library"
-    replaces="php7-embed"
+    provides="php-embed=$pkgver-r$pkgrel php7-embed=$pkgver-r$pkgrel"
+    replaces="php-embed php7-embed"
 
     mkdir "$subpkgdir"
 
@@ -413,7 +421,8 @@ embed() {
 
 litespeed() {
     pkgdesc="PHP $_phpver LiteSpeed SAPI"
-    replaces="php7-litespeed"
+    provides="php-litespeed=$pkgver-r$pkgrel php7-litespeed=$pkgver-r$pkgrel"
+    replaces="php-litespeed php7-litespeed"
     install="$pkgname-litespeed.post-install"
     # OpenLiteSpeed requires some additional PHP extensions for admin panel
     depends="$pkgname-bcmath $pkgname-json $pkgname-session"
@@ -424,7 +433,8 @@ litespeed() {
 
 cgi() {
     pkgdesc="PHP $_phpver Common Gateway Interface"
-    replaces="php7-cgi"
+    provides="php-cgi=$pkgver-r$pkgrel php7-cgi=$pkgver-r$pkgrel"
+    replaces="php-cgi php7-cgi"
     install="$pkgname-cgi.post-install"
 
     _mv "$pkgdir"/usr/bin/php-cgi$_phpver "$subpkgdir"/usr/bin/
@@ -432,7 +442,8 @@ cgi() {
 
 fpm() {
     pkgdesc="PHP $_phpver FastCGI Process Manager"
-    replaces="php7-fpm"
+    provides="php-fpm=$pkgver-r$pkgrel php7-fpm=$pkgver-r$pkgrel"
+    replaces="php-fpm php7-fpm"
     install="$pkgname-fpm.post-install"
 
     cd "$pkgdir"
@@ -459,7 +470,8 @@ fpm() {
 pear() {
     pkgdesc="PHP Extension and Application Repository"
     depends="$pkgname $pkgname-xml"
-    replaces="php7-pear"
+    provides="php-pear=$pkgver-r$pkgrel php7-pear=$pkgver-r$pkgrel"
+    replaces="php-pear php7-pear"
     install="$pkgname-pear.post-install"
 
     cd "$pkgdir"
@@ -480,7 +492,8 @@ pear() {
 common() {
     pkgdesc="$pkgdesc (common config)"
     depends=""
-    replaces="php7-common"
+    provides="php-common=$pkgver-r$pkgrel php7-common=$pkgver-r$pkgrel"
+    replaces="php-common php7-common"
 
     cd "$pkgdir"
 
@@ -491,7 +504,8 @@ common() {
 
 phar() {
     _extension
-    replaces="php7-phar"
+    provides="php-phar=$pkgver-r$pkgrel php7-phar=$pkgver-r$pkgrel"
+    replaces="php-phar php7-phar"
     install="$pkgname-phar.post-install"
 
     cd "$pkgdir"
@@ -508,6 +522,7 @@ _extension() {
     local extdepends="$(eval "echo \$_depends_$extname")"
     local extdesc="$(head -n1 "$builddir"/ext/$extname/CREDITS 2>/dev/null ||:)"
     pkgdesc="PHP extension: ${extdesc:-$extname}"
+    provides="php-$extname=$pkgver-r$pkgrel php7-$extname=$pkgver-r$pkgrel"
     replaces="php-$extname php7-$extname"
 
     : ${extdepends:=$(_resolve_extension_deps "$extname")}
@@ -586,4 +601,5 @@ d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
 554e7574c2ba7b5abea08889d502c5006a1914e15efb96bbf1b3ed91c1f4d598be0f03e8b7e947f029738d630ff852a2dd850e55c4a7436721308b21a0c8c83c  php-fpm.initd
 1f6fc65f4cc7873d740e3741f9b1c4b401b41d1fb3558bbc09037bb3d393e1145992302914ddee2b87f0e1f2c95d89f21c3760e082108e3445c21266a2a7ca67  php-fpm.logrotate
-6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf"
+6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf
+df95039139a6726487a7a01202c027c097f1fd226ac0c800c1f42a635560505436eeac544f0bdbe1867c0c9ad5cfc49706aba2edb94d72e47120234a5782eeb5  snmp.c.patch"

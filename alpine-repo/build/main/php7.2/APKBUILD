@@ -13,7 +13,7 @@ url="http://www.php.net/"
 arch="all"
 license="PHP-3 BSD LGPL2 MIT Zend"
 depends="$pkgname-common"
-depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev re2c"
+depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev re2c file"
 # Most dependencies between extensions is auto-discovered (see _extension()).
 _depends_mysqlnd="$pkgname-openssl"
 _depends_pdo_mysql="$pkgname-pdo $pkgname-mysqlnd"
@@ -30,6 +30,7 @@ makedepends="
     curl-dev
     db-dev
     enchant-dev
+    file
     freetds-dev
     freetype-dev
     gdbm-dev
@@ -68,6 +69,7 @@ install-pear.patch
 php-fpm.initd
 php-fpm.logrotate
 php-module.conf
+snmp.c.patch
 "
 
 builddir="$srcdir/$_pkgreal-$_pkgrealver"
@@ -218,7 +220,6 @@ _build() {
         --with-gd=shared \
             --with-freetype-dir=/usr \
             --disable-gd-jis-conv \
-            --enable-gd-native-ttf \
             --with-jpeg-dir=/usr \
             --with-png-dir=/usr \
             --with-webp-dir=/usr \
@@ -582,4 +583,5 @@ cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
 554e7574c2ba7b5abea08889d502c5006a1914e15efb96bbf1b3ed91c1f4d598be0f03e8b7e947f029738d630ff852a2dd850e55c4a7436721308b21a0c8c83c  php-fpm.initd
 1f6fc65f4cc7873d740e3741f9b1c4b401b41d1fb3558bbc09037bb3d393e1145992302914ddee2b87f0e1f2c95d89f21c3760e082108e3445c21266a2a7ca67  php-fpm.logrotate
-6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf"
+6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf
+df95039139a6726487a7a01202c027c097f1fd226ac0c800c1f42a635560505436eeac544f0bdbe1867c0c9ad5cfc49706aba2edb94d72e47120234a5782eeb5  snmp.c.patch"

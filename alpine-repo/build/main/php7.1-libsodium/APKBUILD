@@ -3,7 +3,8 @@
 pkgname=php7.1-libsodium
 _pkgreal=libsodium
 pkgver=1.0.6
-pkgrel=0
+# Package release number is started at 100 so it overwrites the default package
+pkgrel=100
 _phpver=7.1
 pkgdesc="Wrapper for the Sodium cryptographic library"
 url="http://pecl.php.net/package/$_pkgreal"
@@ -13,6 +14,8 @@ depends="php7.1-common>7.1.0 libsodium"
 makedepends="php7.1-dev>7.1.0 libsodium-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
+provides="php-$_pkgreal=$pkgver-r$pkgrel php7-$_pkgreal=$pkgver-r$pkgrel"
+replaces="php-$_pkgreal php7-$_pkgreal"
 
 prepare() {
     default_prepare || return 1
