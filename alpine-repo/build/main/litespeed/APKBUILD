@@ -95,7 +95,6 @@ check() {
 
 package() {
   local file;
-  provides="$pkgname=$pkgver-r$pkgrel"
 
   cd "$builddir"
 
@@ -173,7 +172,6 @@ package() {
 
 doc() {
   default_doc
-  provides="$pkgname-doc=$pkgver-r$pkgrel"
 
   mkdir -p "$subpkgdir"/var/lib/$pkgname/docs || return 1
   mv "$pkgdir"/$_pkghome/docs/* \
@@ -183,7 +181,6 @@ doc() {
 snmp() {
   pkgdesc="$pkgdesc (snmp monitoring add-on + cacti templates)"
   depends="$pkgname net-snmp"
-  provides="$pkgname-snmp=$pkgver-r$pkgrel"
 
   mkdir -p "$subpkgdir"/$_pkghome/add-ons || return 1
   mv "$pkgdir"/$_pkghome/add-ons/snmp_monitoring \
