@@ -3,7 +3,7 @@
 pkgname=php7.1-apcu
 _pkgreal=apcu
 pkgver=5.1.8
-# Package release number is started at 100 so it overwrites the default package
+# Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
 pkgdesc="APCu - APC User Cache extension for PHP"

@@ -5,7 +5,7 @@ pkgname=php7.1-composer
 _pkgreal=composer
 pkgver=1.4.2
 _pkgver=$pkgver
-# Package release number is started at 100 so it overwrites the default package
+# Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 pkgdesc="Dependency manager for PHP"
 url="https://getcomposer.org/"

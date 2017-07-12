@@ -1,11 +1,12 @@
 # Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=openlitespeed
+pkgname=litespeed
 pkgver=1.4.26
-pkgrel=1
+# Package release number is started at 100 so it overwrites the official package
+pkgrel=100
 _pkgreal=openlitespeed
-_pkghome=var/lib/$_pkgreal
+_pkghome=var/lib/$pkgname
 pkgdesc="High-performance, lightweight, open source HTTP server"
 url="http://open.litespeedtech.com/"
 arch="all !aarch64 !ppc64le"
@@ -17,7 +18,7 @@ depends_dev=
 makedepends="php7.1-litespeed linux-headers openssl-dev geoip-dev expat-dev pcre-dev zlib-dev file udns-dev"
 install="$pkgname.pre-install"
 subpackages="$pkgname-doc $pkgname-snmp::noarch"
-source="http://open.litespeedtech.com/packages/openlitespeed-$pkgver.tgz
+source="http://open.litespeedtech.com/packages/$_pkgreal-$pkgver.tgz
 cgiconnection.cpp.patch
 configure.patch
 DAttrBase.php.patch
@@ -39,7 +40,7 @@ missing
 multiplexer.cpp.patch
 multiplexertest.h.patch
 ntwkiolink.cpp.patch
-openlitespeed.initd
+$pkgname.initd
 pcutil.cpp.patch
 poller.cpp.patch
 pollfdreactor.cpp.patch
@@ -59,7 +60,7 @@ build() {
   ./configure \
     --host=$CHOST \
     --build=$CBUILD \
-    --prefix=/var/lib/$_pkgreal \
+    --prefix=/var/lib/$pkgname \
     --with-user=$pkgusers \
     --with-group=$pkggroups \
     --enable-adminssl=no \
@@ -68,7 +69,7 @@ build() {
     --with-openssl=/usr \
     --with-expat \
     --with-pcre \
-    --with-zlib \
+    --with-zlib=/usr \
     || return 1
 
   make || return 1
@@ -94,7 +95,7 @@ check() {
 
 package() {
   local file;
-  replaces="litespeed"
+  provides="$pkgname=$pkgver-r$pkgrel"
 
   cd "$builddir"
 
@@ -103,7 +104,7 @@ package() {
 
   make DESTDIR="$pkgdir" install || return 1
 
-  mkdir -p "$pkgdir"/usr/lib/$_pkgreal \
+  mkdir -p "$pkgdir"/usr/lib/$pkgname \
     "$pkgdir"/usr/sbin \
     "$pkgdir"/var/log || return 1
 
@@ -137,15 +138,15 @@ package() {
   #  "$pkgdir"/$_pkghome/Example/logs || return 1
 
   # Install configs
-  install -Dm755 "$srcdir"/$_pkgreal.initd \
-    "$pkgdir"/etc/init.d/$_pkgreal || return 1
+  install -Dm755 "$srcdir"/$pkgname.initd \
+    "$pkgdir"/etc/init.d/$pkgname || return 1
   mv "$pkgdir"/$_pkghome/conf \
-    "$pkgdir"/etc/$_pkgreal || return 1
+    "$pkgdir"/etc/$pkgname || return 1
   mv "$pkgdir"/$_pkghome/admin/conf \
-    "$pkgdir"/etc/$_pkgreal/admin || return 1
-  ln -s /etc/$_pkgreal "$pkgdir"/$_pkghome/conf || return 1
-  ln -s /etc/$_pkgreal/admin "$pkgdir"/$_pkghome/admin/conf || return 1
-  find "$pkgdir"/etc/$_pkgreal -type f -print0 | xargs -0 chmod -x || return 1
+    "$pkgdir"/etc/$pkgname/admin || return 1
+  ln -s /etc/$pkgname "$pkgdir"/$_pkghome/conf || return 1
+  ln -s /etc/$pkgname/admin "$pkgdir"/$_pkghome/admin/conf || return 1
+  find "$pkgdir"/etc/$pkgname -type f -print0 | xargs -0 chmod -x || return 1
 
   # Install binaries
   mv "$pkgdir"/$_pkghome/bin/$_pkgreal \
@@ -157,23 +158,24 @@ package() {
 
   # Install modules
   for file in $(find "$pkgdir"/$_pkghome/modules -name "*.so"); do
-    mv $file "$pkgdir"/usr/lib/$_pkgreal/${file##*/} || return 1
-    ln -s /usr/lib/$_pkgreal/${file##*/} $file || return 1
+    mv $file "$pkgdir"/usr/lib/$pkgname/${file##*/} || return 1
+    ln -s /usr/lib/$pkgname/${file##*/} $file || return 1
   done
 
   # Install logs
-  mv "$pkgdir"/$_pkghome/logs "$pkgdir"/var/log/$_pkgreal || return 1
-  mv "$pkgdir"/$_pkghome/admin/logs "$pkgdir"/var/log/$_pkgreal/admin || return 1
-  mv "$pkgdir"/$_pkghome/Example/logs "$pkgdir"/var/log/$_pkgreal/Example || return 1
-  ln -s /var/log/$_pkgreal "$pkgdir"/$_pkghome/logs || return 1
-  ln -s /var/log/$_pkgreal/admin "$pkgdir"/$_pkghome/admin/logs || return 1
-  ln -s /var/log/$_pkgreal/Example "$pkgdir"/$_pkghome/Example/logs || return 1
+  mv "$pkgdir"/$_pkghome/logs "$pkgdir"/var/log/$pkgname || return 1
+  mv "$pkgdir"/$_pkghome/admin/logs "$pkgdir"/var/log/$pkgname/admin || return 1
+  mv "$pkgdir"/$_pkghome/Example/logs "$pkgdir"/var/log/$pkgname/Example || return 1
+  ln -s /var/log/$pkgname "$pkgdir"/$_pkghome/logs || return 1
+  ln -s /var/log/$pkgname/admin "$pkgdir"/$_pkghome/admin/logs || return 1
+  ln -s /var/log/$pkgname/Example "$pkgdir"/$_pkghome/Example/logs || return 1
 }
 
 doc() {
   default_doc
+  provides="$pkgname-doc=$pkgver-r$pkgrel"
 
-  mkdir -p "$subpkgdir"/var/lib/$_pkgreal/docs || return 1
+  mkdir -p "$subpkgdir"/var/lib/$pkgname/docs || return 1
   mv "$pkgdir"/$_pkghome/docs/* \
     "$subpkgdir"/$_pkghome/docs
 }
@@ -181,6 +183,7 @@ doc() {
 snmp() {
   pkgdesc="$pkgdesc (snmp monitoring add-on + cacti templates)"
   depends="$pkgname net-snmp"
+  provides="$pkgname-snmp=$pkgver-r$pkgrel"
 
   mkdir -p "$subpkgdir"/$_pkghome/add-ons || return 1
   mv "$pkgdir"/$_pkghome/add-ons/snmp_monitoring \
@@ -208,7 +211,7 @@ aa492ae54a6796286fe259beca9d643aba3d0fe5681278367a0ddb3b53525581faee9b7cbead030d
 01aad3cbbab954ada49869c8b992d6a0a3ac3c4d10b3b929d3e8bf0fb866fb0435f0ab1f477e4d1385ec4447078ea150fe326387f369febd925535d0125a0a3e  multiplexer.cpp.patch
 0f3230817f5e7c51c29193bf446e82eb56814a041cfd10fc61b8a49fadf53d19214a489dd120ffe9c4cc4b3839ead121be35bf5e9f08f4d11bb18b0f75e4d738  multiplexertest.h.patch
 3ef7dc09abdf1400f2d6cce896cd2fefed9e171ac51726bbffbf3297a0641503c0f1d085d559001b2b28dc5a71d5a9845fc715b865762ca64cdc8791b713a721  ntwkiolink.cpp.patch
-98db2641e62c509485f0996f2dec7304e0b2bf38878ace60438719e56588d903f29a0ce3a8399ff94770ab4e079e55e218fd8357d98c269d2c03e13363a49145  openlitespeed.initd
+a2c7826cbcb1cc7ad3745d31d2f0c189fb43844a2c465de075f2e563bf68cdbe532339f4e34b4379472bc5d0bdd34f64f92ea87c3df8c054a3b694be8a52bc3b  litespeed.initd
 b12e63b9cf1dbc873d7fc7f1fc9e99764ad9b26f0bc15577e5a2a9e9214d65df82d286a13228534be49085e10c9402a6d1a895023f1377eb1caf5d4df5cd7fa6  pcutil.cpp.patch
 e49a721ef0ba12c04f9a4207230245abd1c0e3ec32ddada14af78c17abaecdcb722c191d9bddb81f547954b455bfa47285da9724dea01aacecf3302df491e71d  poller.cpp.patch
 e6a7acdd61439a01646ac215986677dfc5fde4e990f6ccfd27d43cf7f312ea6560f58412bb3e2ca2473504c85f729f21a2920f5fe39d4269b76f9866dc964f3e  pollfdreactor.cpp.patch

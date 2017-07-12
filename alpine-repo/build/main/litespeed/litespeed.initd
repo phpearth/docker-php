@@ -2,7 +2,7 @@
 
 description="OpenLiteSpeed Web Server"
 
-lshome=/var/lib/openlitespeed
+lshome=/var/lib/litespeed
 
 command=$lshome/bin/lswsctrl
 cfgfile=$lshome/conf/httpd_config.conf

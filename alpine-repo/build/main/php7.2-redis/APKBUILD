@@ -13,6 +13,7 @@ depends="php7.2-common>7.2.0 php7.2-session>7.2.0"
 makedepends="php7.2-dev>7.2.0"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
+options="!check"
 
 prepare() {
     default_prepare || return 1

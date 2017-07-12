@@ -1,16 +1,9 @@
-# PHP.earth Alpine repository
+# [PHP.earth Alpine repository](https://php.earth/alpine)
 
-Visit [alpine.php.earth](https://alpine.php.earth/) for usage information.
+This repository includes the latest PHP versions and packages for the elegant PHP
+development experience on [Alpine Linux](https://alpinelinux.org/).
 
-## Building packages
-
-```bash
-make build-package r=main p=php7.1
-```
-
-This is a custom Alpine repository with the latest PHP versions for the elegant PHP development on Alpine Linux.
-
-## Instructions
+## Installation
 
 In case you don't have wget and common CA certificates PEM files installed:
 
@@ -32,7 +25,7 @@ echo "https://alpine.php.earth" >> /etc/apk/repositories
 
 ## Usage
 
-PHP packages of this repository are prefixed with `php7.1` and `php7.2`.
+PHP.earth packages are prefixed with `php7.1` and `php7.2`.
 
 ```bash
 apk search --no-cache php7.1*
@@ -40,7 +33,8 @@ apk search --no-cache php7.1*
 
 ## Docker
 
-Most common use case of Alpine Linux is undoubtedly the Docker. Add the PHP.earth Alpine repository to your Dockerfile:
+Most common use case of Alpine Linux is Docker. Add the PHP.earth Alpine repository
+to your Dockerfile:
 
 ```Dockerfile
 FROM alpine:3.6
@@ -49,5 +43,3 @@ ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
     && apk add --no-cache php7.1
 ```
-
-## Packages
