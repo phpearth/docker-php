@@ -1,9 +1,9 @@
 file:
-  /var/log/openlitespeed/access.log:
+  /var/log/litespeed/access.log:
     exists: true
     linked-to: /dev/stdout
     filetype: symlink
-  /var/log/openlitespeed/error.log:
+  /var/log/litespeed/error.log:
     exists: true
     linked-to: /dev/stderr
     filetype: symlink
