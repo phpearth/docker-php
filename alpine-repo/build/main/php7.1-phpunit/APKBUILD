@@ -5,7 +5,8 @@ pkgname=php7.1-phpunit
 _pkgreal=phpunit
 pkgver=6.2.3
 pkgrel=0
-pkgdesc="The PHP Unit Testing framework"
+_phpver=7.1
+pkgdesc="The PHP Unit Testing framework for PHP $_phpver"
 url="https://phpunit.de/"
 arch="noarch"
 license="	BSD 3 Clause"
@@ -15,6 +16,6 @@ source="$_pkgreal-$pkgver.phar::https://phar.phpunit.de/$_pkgreal-$pkgver.phar"
 options="!check"
 
 package() {
-    install -m 0755 -D "$srcdir"/$_pkgreal-$pkgver.phar "$pkgdir"/usr/bin/$_pkgreal
+  install -m 0755 -D "$srcdir"/$_pkgreal-$pkgver.phar "$pkgdir"/usr/bin/$_pkgreal
 }
 sha512sums="82d55afa43766e7f35f86ef83ac11ff2463baec40b3575f5e6e4313d13310f5657c1d3e4f7cb1055f1b2540a713a3b0117b4f88305c9f959ba9441fb3356640f  phpunit-6.2.3.phar"

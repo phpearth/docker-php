@@ -5,7 +5,7 @@ _pkgreal=memcached
 pkgver=3.0.3
 pkgrel=0
 _phpver=7.2
-pkgdesc="Memcached extension for PHP $_phpver"
+pkgdesc="PHP $_phpver Memcached extension"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
@@ -15,33 +15,38 @@ source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 
 prepare() {
-    default_prepare || return 1
+  default_prepare
 }
 
 build() {
-    cd "$builddir"
-    phpize || return 1
-    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
-        --with-php-config=/usr/bin/php-config || return 1
-    make || return 1
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
 }
 
 check() {
-    cd "$builddir"
+  cd "$builddir"
 
-    local allow_fail='no'
+  local allow_fail='no'
 
-    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
-        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
-        TZ= LANG= LC_ALL= \
-        make test || [ "$allow_fail" = yes ] || return 1
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
 }
 
 package() {
-    mkdir -p "$pkgdir" || return 1
-    install -d $pkgdir/ || return 1
-    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
-    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
-    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
 sha512sums="cb24d76f82ce8c1fdd8877bbb46131545bba5011cfff965e3c190b7c0f71f754b47ded6289d3125724d9de781b916971aaadfa0b247c6fe2f51aab77dce61b61  memcached-3.0.3.tgz"

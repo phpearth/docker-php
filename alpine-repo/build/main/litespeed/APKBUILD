@@ -52,10 +52,12 @@ thread.h.patch
 builddir="$srcdir/$_pkgreal-$pkgver"
 
 build() {
+  local processors=$(nproc)
+
   cd "$builddir"
 
   install -Dm755 "$srcdir"/../missing \
-    "$builddir"/missing || return 1
+    "$builddir"/missing
 
   ./configure \
     --host=$CHOST \
@@ -69,10 +71,9 @@ build() {
     --with-openssl=/usr \
     --with-expat \
     --with-pcre \
-    --with-zlib=/usr \
-    || return 1
+    --with-zlib=/usr
 
-  make || return 1
+  make -j$processors
 }
 
 prepare() {
@@ -80,9 +81,9 @@ prepare() {
 
   default_prepare
 
-  ln -sf /usr/bin/lsphp "$builddir"/dist/fcgi-bin/lsphp || return 1
-  rm "$builddir"/dist/admin/misc/php.ini || return 1
-  rm "$builddir"/dist/admin/conf/php.ini || return 1
+  ln -sf /usr/bin/lsphp "$builddir"/dist/fcgi-bin/lsphp
+  rm "$builddir"/dist/admin/misc/php.ini
+  rm "$builddir"/dist/admin/conf/php.ini
 }
 
 check() {
@@ -90,7 +91,7 @@ check() {
 
   local allow_fail='yes'
 
-  make test || [ "$allow_fail" = yes ] || return 1
+  make test || [ "$allow_fail" = yes ]
 }
 
 package() {
@@ -101,11 +102,11 @@ package() {
   # Create necessary users
   sudo "$builddir"/../../$pkgname.pre-install
 
-  make DESTDIR="$pkgdir" install || return 1
+  make DESTDIR="$pkgdir" install
 
   mkdir -p "$pkgdir"/usr/lib/$pkgname \
     "$pkgdir"/usr/sbin \
-    "$pkgdir"/var/log || return 1
+    "$pkgdir"/var/log
 
   # Remove some not used files
   #rm -rf "$pkgdir"/$_pkghome/php* \
@@ -117,8 +118,7 @@ package() {
   #  "$pkgdir"/$_pkghome/bin/lshttpd \
   #  "$pkgdir"/$_pkghome/admin/misc/gdb-bt \
   #  "$pkgdir"/$_pkghome/admin/misc/convertxml.* \
-  #  "$pkgdir"/$_pkghome/admin/misc/build_admin_php.sh \
-  #  || return 1
+  #  "$pkgdir"/$_pkghome/admin/misc/build_admin_php.sh
 
   # fix permissions
   chown -R $pkgusers:$pkggroups \
@@ -134,46 +134,46 @@ package() {
   #  "$pkgdir"/$_pkghome/admin/tmp \
   #  "$pkgdir"/$_pkghome/admin/logs \
   #  "$pkgdir"/$_pkghome/admin/conf \
-  #  "$pkgdir"/$_pkghome/Example/logs || return 1
+  #  "$pkgdir"/$_pkghome/Example/logs
 
   # Install configs
   install -Dm755 "$srcdir"/$pkgname.initd \
-    "$pkgdir"/etc/init.d/$pkgname || return 1
+    "$pkgdir"/etc/init.d/$pkgname
   mv "$pkgdir"/$_pkghome/conf \
-    "$pkgdir"/etc/$pkgname || return 1
+    "$pkgdir"/etc/$pkgname
   mv "$pkgdir"/$_pkghome/admin/conf \
-    "$pkgdir"/etc/$pkgname/admin || return 1
-  ln -s /etc/$pkgname "$pkgdir"/$_pkghome/conf || return 1
-  ln -s /etc/$pkgname/admin "$pkgdir"/$_pkghome/admin/conf || return 1
-  find "$pkgdir"/etc/$pkgname -type f -print0 | xargs -0 chmod -x || return 1
+    "$pkgdir"/etc/$pkgname/admin
+  ln -s /etc/$pkgname "$pkgdir"/$_pkghome/conf
+  ln -s /etc/$pkgname/admin "$pkgdir"/$_pkghome/admin/conf
+  find "$pkgdir"/etc/$pkgname -type f -print0 | xargs -0 chmod -x
 
   # Install binaries
   mv "$pkgdir"/$_pkghome/bin/$_pkgreal \
-    "$pkgdir"/usr/sbin/lshttpd || return 1
+    "$pkgdir"/usr/sbin/lshttpd
   ln -sf /usr/sbin/lshttpd \
-    "$pkgdir"/$_pkghome/bin/$_pkgreal || return 1
+    "$pkgdir"/$_pkghome/bin/$_pkgreal
   ln -sf /usr/bin/lsphp \
-    "$pkgdir"/$_pkghome/fcgi-bin/lsphp || return 1
+    "$pkgdir"/$_pkghome/fcgi-bin/lsphp
 
   # Install modules
   for file in $(find "$pkgdir"/$_pkghome/modules -name "*.so"); do
-    mv $file "$pkgdir"/usr/lib/$pkgname/${file##*/} || return 1
-    ln -s /usr/lib/$pkgname/${file##*/} $file || return 1
+    mv $file "$pkgdir"/usr/lib/$pkgname/${file##*/}
+    ln -s /usr/lib/$pkgname/${file##*/} $file
   done
 
   # Install logs
-  mv "$pkgdir"/$_pkghome/logs "$pkgdir"/var/log/$pkgname || return 1
-  mv "$pkgdir"/$_pkghome/admin/logs "$pkgdir"/var/log/$pkgname/admin || return 1
-  mv "$pkgdir"/$_pkghome/Example/logs "$pkgdir"/var/log/$pkgname/Example || return 1
-  ln -s /var/log/$pkgname "$pkgdir"/$_pkghome/logs || return 1
-  ln -s /var/log/$pkgname/admin "$pkgdir"/$_pkghome/admin/logs || return 1
-  ln -s /var/log/$pkgname/Example "$pkgdir"/$_pkghome/Example/logs || return 1
+  mv "$pkgdir"/$_pkghome/logs "$pkgdir"/var/log/$pkgname
+  mv "$pkgdir"/$_pkghome/admin/logs "$pkgdir"/var/log/$pkgname/admin
+  mv "$pkgdir"/$_pkghome/Example/logs "$pkgdir"/var/log/$pkgname/Example
+  ln -s /var/log/$pkgname "$pkgdir"/$_pkghome/logs
+  ln -s /var/log/$pkgname/admin "$pkgdir"/$_pkghome/admin/logs
+  ln -s /var/log/$pkgname/Example "$pkgdir"/$_pkghome/Example/logs
 }
 
 doc() {
   default_doc
 
-  mkdir -p "$subpkgdir"/var/lib/$pkgname/docs || return 1
+  mkdir -p "$subpkgdir"/var/lib/$pkgname/docs
   mv "$pkgdir"/$_pkghome/docs/* \
     "$subpkgdir"/$_pkghome/docs
 }
@@ -182,7 +182,7 @@ snmp() {
   pkgdesc="$pkgdesc (snmp monitoring add-on + cacti templates)"
   depends="$pkgname net-snmp"
 
-  mkdir -p "$subpkgdir"/$_pkghome/add-ons || return 1
+  mkdir -p "$subpkgdir"/$_pkghome/add-ons
   mv "$pkgdir"/$_pkghome/add-ons/snmp_monitoring \
     "$subpkgdir"/$_pkghome/add-ons
 }

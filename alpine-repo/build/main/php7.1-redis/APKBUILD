@@ -2,11 +2,11 @@
 
 pkgname=php7.1-redis
 _pkgreal=redis
-pkgver=3.1.2
+pkgver=3.1.3
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
-pkgdesc="PHP $_phpver extension for interfacing with redis"
+pkgdesc="PHP $_phpver extension for interfacing with Redis"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
@@ -19,34 +19,39 @@ provides="php-$_pkgreal=$pkgver-r$pkgrel php7-$_pkgreal=$pkgver-r$pkgrel"
 replaces="php-$_pkgreal php7-$_pkgreal"
 
 prepare() {
-    default_prepare || return 1
+  default_prepare
 }
 
 build() {
-    cd "$builddir"
-    phpize || return 1
-    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
-        --with-php-config=/usr/bin/php-config || return 1
-    make || return 1
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
 }
 
 check() {
-    cd "$builddir"
+  cd "$builddir"
 
-    local allow_fail='no'
+  local allow_fail='no'
 
-    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
-        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
-        TZ= LANG= LC_ALL= \
-        make test || [ "$allow_fail" = yes ] || return 1
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
 }
 
 package() {
-    replaces="php7-redis"
-    mkdir -p "$pkgdir" || return 1
-    install -d $pkgdir/ || return 1
-    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
-    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
-    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+  replaces="php7-redis"
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="14b6321072f8ab41b8293b40ea8e1e2bdac1bb694c4566467ea4e6ced37c8fc41bf5712bd27cebf509f25fda0492765cd2c8d2fe61395bcb0b0d9cbbceebe684  redis-3.1.2.tgz"
+sha512sums="269a45675e9547fdeebf9d9a1a36e6f75d6f9913ffc1069d0fc2a7f1a5d88ff4fb9f38693f488469339c2a7bfdfd81df102de5e12656e0662af166f874fc5fac  redis-3.1.3.tgz"

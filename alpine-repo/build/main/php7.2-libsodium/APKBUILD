@@ -2,10 +2,10 @@
 
 pkgname=php7.2-libsodium
 _pkgreal=libsodium
-pkgver=1.0.6
+pkgver=2.0.1
 pkgrel=0
 _phpver=7.2
-pkgdesc="Wrapper for the Sodium cryptographic library for PHP $_phpver"
+pkgdesc="PHP $_phpver extension - Wrapper for the Sodium cryptographic library"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="BSD-2"
@@ -15,33 +15,38 @@ source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 
 prepare() {
-    default_prepare || return 1
+  default_prepare
 }
 
 build() {
-    cd "$builddir"
-    phpize || return 1
-    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
-        --with-php-config=/usr/bin/php-config || return 1
-    make || return 1
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
 }
 
 check() {
-    cd "$builddir"
+  cd "$builddir"
 
-    local allow_fail='no'
+  local allow_fail='no'
 
-    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
-        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
-        TZ= LANG= LC_ALL= \
-        make test || [ "$allow_fail" = yes ] || return 1
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
 }
 
 package() {
-    mkdir -p "$pkgdir" || return 1
-    install -d $pkgdir/ || return 1
-    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
-    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
-    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="ef0039a97f6e87eef368d2fb6b4d1824e54c37f30a159a1a77d2360f3f54aa208e76efc7708f89ed4cbfef0731ce1a3079f14adb58ca8f5321b455c5c88e75da  libsodium-1.0.6.tgz"
+sha512sums="234523f93522826d82acd0340a968eb67ddb822a4614f88b1d1bfd8d097eefc8e740865ee7487433a34bcf3f7a2760b986f7c93e4169c93bbad875bc7b995aa9  libsodium-2.0.1.tgz"

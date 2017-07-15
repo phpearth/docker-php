@@ -43,9 +43,10 @@ fi
 
 for package in $packages; do
   cd /build/main/$package
+  rm -rf src pkg
 
   abuild checksum
-  abuild -r
+  abuild -r -K
 
   # Generate index with trusted signature
   generate-index main

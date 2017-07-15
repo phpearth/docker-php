@@ -6,7 +6,7 @@ pkgver=5.1.8
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
-pkgdesc="APCu - APC User Cache extension for PHP"
+pkgdesc="PHP $_phpver APCu - APC User Cache extension"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
@@ -18,15 +18,20 @@ provides="php-$_pkgreal=$pkgver-r$pkgrel php7-$_pkgreal=$pkgver-r$pkgrel"
 replaces="php-$_pkgreal php7-$_pkgreal"
 
 prepare() {
-    default_prepare || return 1
+  default_prepare
 }
 
 build() {
-    cd "$builddir"
-    phpize || return 1
-    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
-        --with-php-config=/usr/bin/php-config || return 1
-    make || return 1
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
 }
 
 check() {
@@ -37,14 +42,14 @@ check() {
     NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
         SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
         TZ= LANG= LC_ALL= \
-        make test || [ "$allow_fail" = yes ] || return 1
+        make test || [ "$allow_fail" = yes ]
 }
 
 package() {
-    mkdir -p "$pkgdir" || return 1
-    install -d $pkgdir/ || return 1
-    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
-    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
-    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+    mkdir -p "$pkgdir"
+    install -d $pkgdir/
+    make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+    install -d "$pkgdir"/etc/php/$_phpver/conf.d
+    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
 sha512sums="4f377389e713bcae5534c64ea28f72c20ab2176aa758188c4d956c1f2370be49bc33dd2a1db43941fff5344a164aaeebc4e73e6d579f62d17334bcc520171526  apcu-5.1.8.tgz"

@@ -6,7 +6,7 @@ pkgver=2.5.5
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
-pkgdesc="xDebug Profiler"
+pkgdesc="PHP $_phpver xDebug Profiler"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="XDEBUG-1"
@@ -18,34 +18,38 @@ provides="php-$_pkgreal=$pkgver-r$pkgrel php7-$_pkgreal=$pkgver-r$pkgrel"
 replaces="php-$_pkgreal php7-$_pkgreal"
 
 prepare() {
-    default_prepare || return 1
+  default_prepare
 }
 
 build() {
-    cd "$builddir"
+  local processors=$(nproc)
 
-    phpize || return 1
-    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
-        --with-php-config=/usr/bin/php-config || return 1
-    make || return 1
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
 }
 
 check() {
-    cd "$builddir"
+  cd "$builddir"
 
-    local allow_fail='no'
+  local allow_fail='no'
 
-    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
-        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
-        TZ= LANG= LC_ALL= \
-        make test || [ "$allow_fail" = yes ] || return 1
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
 }
 
 package() {
-    mkdir -p "$pkgdir" || return 1
-    install -d $pkgdir/ || return 1
-    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
-    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
-    echo "zend_extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "zend_extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
 sha512sums="9faab421bd90c03734c047d8c6dcc021c8bc665eb36781c692f194d04c7dca24fe1eb920ca8dc407e5bf4ae0912c4b917587f940f34b07171a8881d4cf8695d1  xdebug-2.5.5.tgz"

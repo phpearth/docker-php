@@ -5,7 +5,7 @@ _pkgreal=mcrypt
 pkgver=1.0.1
 pkgrel=0
 _phpver=7.2
-pkgdesc="Bindings for the libmcrypt library for PHP $_phpver"
+pkgdesc="PHP $_phpver bindings for the libmcrypt library"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP"
@@ -15,33 +15,38 @@ source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 
 prepare() {
-    default_prepare || return 1
+  default_prepare
 }
 
 build() {
-    cd "$builddir"
-    phpize || return 1
-    EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
-        --with-php-config=/usr/bin/php-config || return 1
-    make || return 1
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
 }
 
 check() {
-    cd "$builddir"
+  cd "$builddir"
 
-    local allow_fail='yes'
+  local allow_fail='yes'
 
-    NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
-        SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
-        TZ= LANG= LC_ALL= \
-        make test || [ "$allow_fail" = yes ] || return 1
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
 }
 
 package() {
-    mkdir -p "$pkgdir" || return 1
-    install -d $pkgdir/ || return 1
-    make -C "$builddir" INSTALL_ROOT="$pkgdir" install || return 1
-    install -d "$pkgdir"/etc/php/$_phpver/conf.d || return 1
-    echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini || return 1
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
 sha512sums="1677202715499a41ac6999089257a059106e58cbac06ca8a7dd2e9edd28be5a4118234dd7468110e9e3d7f9de5d099367848fe84bcd06716ea56645c9015c578  mcrypt-1.0.1.tgz"
