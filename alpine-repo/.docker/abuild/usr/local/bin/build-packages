@@ -9,11 +9,11 @@ packages_71="
 php7.1-apcu
 php7.1-composer
 php7.1-imagick
-php7.1-libsodium
 php7.1-memcached
 php7.1-mongodb
 php7.1-phpunit
 php7.1-redis
+php7.1-sodium
 php7.1-swoole
 php7.1-xdebug
 "
@@ -22,12 +22,12 @@ packages_72="
 php7.2-apcu
 php7.2-composer
 php7.2-imagick
-php7.2-libsodium
 php7.2-mcrypt
 php7.2-memcached
 php7.2-mongodb
 php7.2-phpunit
 php7.2-redis
+php7.2-sodium
 php7.2-swoole
 "
 
