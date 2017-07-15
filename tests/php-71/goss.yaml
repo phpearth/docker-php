@@ -20,7 +20,7 @@ command:
     - iconv
     - imagick
     - json
-    - libsodium
+    - sodium
     - libxml
     - mbstring
     - memcached
