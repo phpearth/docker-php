@@ -3,7 +3,7 @@
 pkgname=php7.2-mongodb
 _pkgreal=mongodb
 pkgver=1.2.9
-pkgrel=0
+pkgrel=1
 _phpver=7.2
 pkgdesc="PHP $_phpver MongoDB extension"
 url="http://pecl.php.net/package/$_pkgreal"
@@ -47,6 +47,6 @@ package() {
   install -d $pkgdir/
   make -C "$builddir" INSTALL_ROOT="$pkgdir" install
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
-  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
+  echo "extension=$_pkgreal" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
 sha512sums="7eff5cfce08f3d69bc7acdb9ab5f8f55d02dab67593e5d03402c8bb6b6611fd703e8dfda89b99e8d3de387ed58cb9eea096fe68e0c9657ec3f8b1b7f622cfe58  mongodb-1.2.9.tgz"

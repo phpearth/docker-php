@@ -3,7 +3,7 @@
 pkgname=php7.2-memcached
 _pkgreal=memcached
 pkgver=3.0.3
-pkgrel=0
+pkgrel=1
 _phpver=7.2
 pkgdesc="PHP $_phpver Memcached extension"
 url="http://pecl.php.net/package/$_pkgreal"
@@ -47,6 +47,6 @@ package() {
   install -d $pkgdir/
   make -C "$builddir" INSTALL_ROOT="$pkgdir" install
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
-  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
+  echo "extension=$_pkgreal" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
 sha512sums="cb24d76f82ce8c1fdd8877bbb46131545bba5011cfff965e3c190b7c0f71f754b47ded6289d3125724d9de781b916971aaadfa0b247c6fe2f51aab77dce61b61  memcached-3.0.3.tgz"
