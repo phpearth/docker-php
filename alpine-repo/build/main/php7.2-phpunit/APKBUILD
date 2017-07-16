@@ -2,20 +2,23 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
 pkgname=php7.2-phpunit
-_pkgreal=phpunit
 pkgver=6.2.3
 pkgrel=0
 _phpver=7.2
-pkgdesc="The PHP Unit Testing framework for PHP $_phpver"
+pkgdesc="PHPUnit meta package with PHP $_phpver dependencies"
 url="https://phpunit.de/"
 arch="noarch"
-license="	BSD 3 Clause"
-depends="php7.2 php7.2-phar php7.2-json php7.2-mbstring php7.2-openssl php7.2-dom php7.2-xml"
+license="BSD 3 Clause"
+depends="phpunit php7.2 php7.2-phar php7.2-json php7.2-mbstring php7.2-openssl php7.2-dom php7.2-xml"
 makedepends=""
-source="$_pkgreal-$pkgver.phar::https://phar.phpunit.de/$_pkgreal-$pkgver.phar"
 options="!check"
+install_if="phpunit php7.2-common"
+
+build() {
+  # Meta package
+  return 0
+}
 
 package() {
-  install -m 0755 -D "$srcdir"/$_pkgreal-$pkgver.phar "$pkgdir"/usr/bin/$_pkgreal
+  mkdir -p "$pkgdir"
 }
-sha512sums="82d55afa43766e7f35f86ef83ac11ff2463baec40b3575f5e6e4313d13310f5657c1d3e4f7cb1055f1b2540a713a3b0117b4f88305c9f959ba9441fb3356640f  phpunit-6.2.3.phar"

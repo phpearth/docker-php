@@ -6,6 +6,7 @@ Carefully crafted Docker images for PHP developers with latest PHP versions 7.1 
 
 * Fast and simple PHP extensions installation
 * Optional [Composer](https://getcomposer.org) installation
+* Optional [PHPUnit](https://phpunit.de) installation
 * [runit](http://smarden.org/runit/) for running multiple services without overhead.
 * Alpine base image with PHP.earth Alpine PHP repositories
 * Optimized Docker image sizes
@@ -72,7 +73,17 @@ To install Composer:
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
 
-RUN apk add --no-cache php7.1-composer
+RUN apk add --no-cache composer
+```
+
+### PHPUnit
+
+To install PHPUnit:
+
+```Dockerfile
+FROM phpearth/php:7.1-nginx
+
+RUN apk add --no-cache phpunit
 ```
 
 ### PHP extensions

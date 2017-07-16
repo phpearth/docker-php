@@ -5,6 +5,12 @@
 
 BUILD_PACKAGES="${1:-all}"
 
+packages_others="
+composer
+litespeed
+phpunit
+"
+
 packages_71="
 php7.1-apcu
 php7.1-composer
@@ -36,7 +42,7 @@ if [ "$BUILD_PACKAGES" = "7.1" ]; then
 elif [ "$BUILD_PACKAGES" = "7.2" ]; then
   packages=$packages_72
 elif [ "$BUILD_PACKAGES" = "all" ]; then
-  packages="litespeed $packages_71$packages_72"
+  packages="$packages_others$packages_71$packages_72"
 else
   packages="$BUILD_PACKAGES"
 fi

@@ -1,0 +1,19 @@
+# Contributor: Peter Kokot <peterkokot@gmail.com>
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
+
+pkgname=phpunit
+pkgver=6.2.3
+pkgrel=0
+pkgdesc="The PHP Unit Testing framework"
+url="https://phpunit.de/"
+arch="noarch"
+license="BSD 3 Clause"
+depends=""
+makedepends=""
+source="$pkgname-$pkgver.phar::https://phar.phpunit.de/$pkgname-$pkgver.phar"
+options="!check"
+
+package() {
+  install -m 0755 -D "$srcdir"/$pkgname-$pkgver.phar "$pkgdir"/usr/bin/$pkgname
+}
+sha512sums="82d55afa43766e7f35f86ef83ac11ff2463baec40b3575f5e6e4313d13310f5657c1d3e4f7cb1055f1b2540a713a3b0117b4f88305c9f959ba9441fb3356640f  phpunit-6.2.3.phar"

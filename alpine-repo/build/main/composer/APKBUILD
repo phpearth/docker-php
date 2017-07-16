@@ -1,0 +1,20 @@
+# Contributor: Peter Kokot <peterkokot@gmail.com>
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
+
+pkgname=composer
+pkgver=1.4.2
+# Package release number is started at 100 so it overwrites the official package
+pkgrel=100
+pkgdesc="Dependency manager for PHP"
+url="https://getcomposer.org/"
+arch="noarch"
+license="MIT"
+depends=""
+makedepends=""
+source="$pkgname-$pkgver.phar::https://getcomposer.org/download/$pkgver/$pkgname.phar"
+options="!check"
+
+package() {
+  install -m 0755 -D "$srcdir"/$pkgname-$pkgver.phar "$pkgdir"/usr/bin/$pkgname
+}
+sha512sums="38bb2a696df65a47f6dfa22907e76c3210731530f51dc70f8e104d8b64e9ff2a40b18ea01f3948664fb7595d0e0c92c18dce1efaed6d1d57f05c28fa76f9966f  composer-1.4.2.phar"

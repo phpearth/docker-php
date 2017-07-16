@@ -2,22 +2,23 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
 pkgname=php7.2-composer
-_pkgreal=composer
 pkgver=1.4.2
-_pkgver=$pkgver
 pkgrel=1
 _phpver=7.2
-pkgdesc="Dependency manager for PHP $_phpver"
+pkgdesc="Composer meta package with PHP $_phpver dependencies"
 url="https://getcomposer.org/"
 arch="noarch"
 license="MIT"
-depends="php7.2 php7.2-phar php7.2-json php7.2-mbstring php7.2-openssl php7.2-zip php7.2-zlib"
+depends="composer php7.2 php7.2-phar php7.2-json php7.2-mbstring php7.2-openssl php7.2-zip php7.2-zlib"
 makedepends=""
-source="$_pkgreal-$_pkgver.phar::https://getcomposer.org/download/$_pkgver/$_pkgreal.phar"
 options="!check"
+install_if="composer php7.2-common"
+
+build() {
+  # Meta package
+  return 0
+}
 
 package() {
-  replaces="composer php7.1-composer"
-  install -m 0755 -D "$srcdir"/$_pkgreal-$_pkgver.phar "$pkgdir"/usr/bin/$_pkgreal
+  mkdir -p "$pkgdir"
 }
-sha512sums="38bb2a696df65a47f6dfa22907e76c3210731530f51dc70f8e104d8b64e9ff2a40b18ea01f3948664fb7595d0e0c92c18dce1efaed6d1d57f05c28fa76f9966f  composer-1.4.2.phar"
