@@ -32,4 +32,6 @@ indent_style = space
 indent_size = 2
 
 [*.patch]
-trim_trailing_whitespace = false
+trim_trailing_whitespace = unset
+end_of_line = unset
+insert_final_newline = unset
