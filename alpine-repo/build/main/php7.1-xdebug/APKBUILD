@@ -4,7 +4,7 @@ pkgname=php7.1-xdebug
 _pkgreal=xdebug
 pkgver=2.5.5
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=100
+pkgrel=101
 _phpver=7.1
 pkgdesc="PHP $_phpver xDebug Profiler"
 url="http://pecl.php.net/package/$_pkgreal"
@@ -12,7 +12,9 @@ arch="all"
 license="XDEBUG-1"
 depends="php7.1-common>7.1.0"
 makedepends="php7.1-dev>7.1.0"
-source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
+source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz
+config.m4.patch
+xdebug_com.c.patch"
 builddir="$srcdir/$_pkgreal-$pkgver"
 provides="php-$_pkgreal=$pkgver-r$pkgrel php7-$_pkgreal=$pkgver-r$pkgrel"
 replaces="php-$_pkgreal php7-$_pkgreal"
@@ -52,4 +54,6 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "zend_extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="9faab421bd90c03734c047d8c6dcc021c8bc665eb36781c692f194d04c7dca24fe1eb920ca8dc407e5bf4ae0912c4b917587f940f34b07171a8881d4cf8695d1  xdebug-2.5.5.tgz"
+sha512sums="9faab421bd90c03734c047d8c6dcc021c8bc665eb36781c692f194d04c7dca24fe1eb920ca8dc407e5bf4ae0912c4b917587f940f34b07171a8881d4cf8695d1  xdebug-2.5.5.tgz
+b7db6bc293509ac1d85dc97794eef5e7d6330fd2f14d51d6413b4940324d4d94d43d972ffd8e41eff56c1a01293fda4d9fea8c34a60b27a9525c78c631edbc40  config.m4.patch
+7d358ec036cda50b824b66304a4ee5eb587c4789c458e2ef9039b1aeef19f694ee3b3925ea83197f509320648ca2154b8ea37e0bab0d80ab8ba6cbb0456bedf5  xdebug_com.c.patch"
