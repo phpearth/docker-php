@@ -11,7 +11,7 @@ package:
   nginx:
     installed: true
     versions:
-    - 1.12.0-r2
+    - 1.12.1-r0
 port:
   tcp:80:
     listening: true
