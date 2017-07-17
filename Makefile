@@ -12,7 +12,7 @@ test: ## Run all tests
 build: ## Build necessary image for building packages
 	docker-compose -f alpine-repo/.docker/docker-compose.yml build abuild
 
-build-packages: ## Usage: make build-package p=[7.1|7.2|all|{package-name1 package-name2}]
+build-packages: ## Usage: make build-package p=[7.0|7.1|7.2|all|{package-name1 package-name2}]
 	make build
 	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-packages "$(p)"
 

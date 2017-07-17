@@ -1,0 +1,52 @@
+# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+
+pkgname=php7.0-xdebug
+_pkgreal=xdebug
+pkgver=2.5.5
+pkgrel=1
+_phpver=7.0
+pkgdesc="PHP $_phpver xDebug Profiler"
+url="http://pecl.php.net/package/$_pkgreal"
+arch="all"
+license="XDEBUG-1"
+depends="php7.0-common>7.0.0"
+makedepends="php7.0-dev>7.0.0"
+source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
+builddir="$srcdir/$_pkgreal-$pkgver"
+
+prepare() {
+  default_prepare
+}
+
+build() {
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
+}
+
+check() {
+  cd "$builddir"
+
+  local allow_fail='no'
+
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
+}
+
+package() {
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "zend_extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
+}
+sha512sums="9faab421bd90c03734c047d8c6dcc021c8bc665eb36781c692f194d04c7dca24fe1eb920ca8dc407e5bf4ae0912c4b917587f940f34b07171a8881d4cf8695d1  xdebug-2.5.5.tgz"

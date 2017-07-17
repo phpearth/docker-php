@@ -3,9 +3,8 @@
 pkgname=php7.2-sodium
 _pkgreal=sodium
 _pkglong=libsodium
-pkgver=2.0.1
-# Package release number is started at 100 so it overwrites the official package
-pkgrel=101
+pkgver=2.0.2
+pkgrel=0
 _phpver=7.2
 pkgdesc="PHP $_phpver extension - Wrapper for the Sodium cryptographic library"
 url="http://pecl.php.net/package/$_pkglong"
@@ -15,8 +14,6 @@ depends="php7.2-common>7.2.0 libsodium"
 makedepends="php7.2-dev>7.2.0 libsodium-dev"
 source="http://pecl.php.net/get/$_pkglong-$pkgver.tgz"
 builddir="$srcdir/$_pkglong-$pkgver"
-provides="php-$_pkglong=$pkgver-r$pkgrel php7-$_pkglong=$pkgver-r$pkgrel php-$_pkgreal php7-$_pkgreal"
-replaces="php-$_pkglong php7-$_pkglong"
 
 prepare() {
   default_prepare
@@ -53,4 +50,4 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "extension=$_pkgreal" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="234523f93522826d82acd0340a968eb67ddb822a4614f88b1d1bfd8d097eefc8e740865ee7487433a34bcf3f7a2760b986f7c93e4169c93bbad875bc7b995aa9  libsodium-2.0.1.tgz"
+sha512sums="695069e35f951ec297cb5dc8a682a63f9e375f1b65beddc23dd7afec8cfc2a41f875dc448ee1e204eb0f00b3afdfb30f46085635a789523466bb06a63898e0a4  libsodium-2.0.2.tgz"

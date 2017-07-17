@@ -1,4 +1,4 @@
-# Contributing Guide
+# Contributing guide
 
 Contributions are most welcome. Below is described procedure for contributing to
 this repository.
@@ -21,14 +21,14 @@ this repository.
   ```
 * Open a pull request
 
-## Style Guide
+## Style guide
 
 * This repository uses [Markdown](https://daringfireball.net/projects/markdown/)
   syntax and follows
   [cirosantilli/markdown-style-guide](http://www.cirosantilli.com/markdown-style-guide/)
   style guide.
 
-## GitHub Issues Labels
+## GitHub issues labels
 
 Labels are used to organize issues and pull requests into manageable categories.
 The following labels are used:
@@ -41,7 +41,7 @@ The following labels are used:
 * **question** - Attached for questions or discussions.
 * **wontfix** - Attached when decided that issue will not be fixed.
 
-## Release Process
+## Release process
 
 *(For repository maintainers)*
 
@@ -49,16 +49,24 @@ This repository follows [semantic versioning](http://semver.org/). When source
 code changes, new features are implemented, or PHP version gets upgraded, a new
 version (e.g. 1.x.y) is released by the following release process:
 
-* **1. Update Changelog**
+* **1. Tests**
+
+  Tests are run with [Goss](https://github.com/aelsabbahy/goss):
+
+  ```bash
+  make test
+  ```
+
+* **2. Update changelog**
 
   Create an entry in [CHANGELOG.md](CHANGELOG.md) describing all the changes from
   previous release.
 
-* **2. Tag a New Release**
+* **3. Tag a new release**
 
   Tag a new version on [GitHub](https://github.com/php-earth/docker-php/releases).
 
-* **3. Docker Images**
+* **4. Docker images**
 
   With a new tag release, Docker images are build automatically on
   [Docker Hub](https://hub.docker.com/r/phpearth/php/).

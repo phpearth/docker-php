@@ -1,19 +1,20 @@
-# 🐳 Docker for PHP developers
+# Docker for PHP developers
 
 [![Build Status](https://img.shields.io/travis/php-earth/docker-php/master.svg?style=plastic)](https://travis-ci.org/php-earth/docker-php) [![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
 
-Carefully crafted Docker images for PHP developers with latest PHP versions 7.1 and upcoming 7.2, [Nginx](https://nginx.org/), [OpenLiteSpeed](http://open.litespeedtech.com/) and [Apache HTTP Server](https://httpd.apache.org/).
+Carefully crafted Docker images for PHP developers with PHP 7.0, PHP 7.1, PHP 7.2, Nginx, OpenLiteSpeed, and Apache HTTP Server.
 
 * Fast and simple PHP extensions installation
-* Optional [Composer](https://getcomposer.org) installation
-* Optional [PHPUnit](https://phpunit.de) installation
-* [runit](http://smarden.org/runit/) for running multiple services without overhead.
+* Optional Composer installation
+* Optional PHPUnit installation
+* [runit](http://smarden.org/runit/) for running multiple services without overhead
 * Alpine base image with PHP.earth Alpine PHP repositories
 * Optimized Docker image sizes
+* Multiple PHP versions
 
-## 📖 Documentation
+## Documentation
 
-A more detailed documentation with Docker and PHP recipes is available on [PHP.earth](https://php.earth/doc/docker).
+Documentation with Docker and PHP recipes is available on [PHP.earth](https://php.earth/doc/docker).
 
 ## Docker tags
 
@@ -31,27 +32,31 @@ The following list contains all current Docker tags and what is included in each
 | | [`7.2-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx) | Nginx 1.12.1, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx "Image size") |
 | | [`7.2-apache`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-apache) | Apache 2.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache.svg)](https://microbadger.com/images/phpearth/php:7.2-apache "Image size") |
 | | [`7.2-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cgi) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cgi.svg)](https://microbadger.com/images/phpearth/php:7.2-cgi "Image size") |
+| **PHP 7.0.21**@Alpine 3.6 | [`7.0`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.0) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0.svg)](https://microbadger.com/images/phpearth/php:7.0 "Image size") |
+| | [`7.0-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.0-litespeed) | OpenLiteSpeed 1.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.0-litespeed "Image size") |
+| | [`7.0-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.0-nginx) | Nginx 1.12.1, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-nginx.svg)](https://microbadger.com/images/phpearth/php:7.0-nginx "Image size") |
+| | [`7.0-apache`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.0-apache) | Apache 2.4.26 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-apache.svg)](https://microbadger.com/images/phpearth/php:7.0-apache "Image size") |
+| | [`7.0-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.0-cgi) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-cgi.svg)](https://microbadger.com/images/phpearth/php:7.0-cgi "Image size") |
 
 Tags follow PHP release cycle and [PHP supported versions timeline](http://php.net/supported-versions.php).
 
-| PHP | Active Support Until | Security Support Until |
-| --- | -------------------- | ---------------------- |
-| 7.1 | 2018-12-01           | 2019-12-01             |
-| 7.2 | TBD                  | TBD                    |
+| PHP     | Active Support Until | Security Support Until | Info |
+| ------- | -------------------- | ---------------------- | ---- |
+| **7.0** | 2017-12-03           | 2018-12-03             | Previous branch for legacy projects |
+| **7.1** | 2018-12-01           | 2019-12-01             | Current recommended branch for production |
+| **7.2** | TBD                  | TBD                    | Next PHP version, unstable |
 
 ## Quick usage
 
-For using these images you'll usually want to create a `Dockerfile` or go further and use Docker Compose to simplify usage of multiple containers for your application.
-
 ### Nginx
 
-For example, to run an Nginx HTTP server with PHP FPM, create a `Dockerfile`:
+`Dockerfile` for running Nginx HTTP server with PHP FPM:
 
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
 ```
 
-And then build Docker image and run Docker container:
+Build Docker image and run Docker container:
 
 ```bash
 docker build -t custom-php .
@@ -86,9 +91,17 @@ FROM phpearth/php:7.1-nginx
 RUN apk add --no-cache phpunit
 ```
 
+### OpenLiteSpeed
+
+To run OpenLiteSpeed web server:
+
+```Dockerfile
+FROM phpearth/php:7.1-litespeed
+```
+
 ### PHP extensions
 
-To install additional PHP extensions, you can use our packages from the [PHP.earth Alpine](https://alpine.php.earth) repository:
+To install additional PHP extensions, you can use packages from the [PHP.earth Alpine](https://alpine.php.earth) repository:
 
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
@@ -96,27 +109,70 @@ FROM phpearth/php:7.1-nginx
 RUN apk add --no-cache php7.1-sodium php7.1-intl php7.1-pdo_mysql
 ```
 
-### PHP 7.2
+or install them with `pecl`:
 
-To use PHP 7.2 images just prepend the Docker tag name with `7.2`:
+```bash
+apk add --no-cache php7.1-dev gcc g++
+pecl install {extension-name}
+```
 
-* `phpearth/php:7.2`
-* `phpearth/php:7.2-apache`
-* `phpearth/php:7.2-cgi`
-* `phpearth/php:7.2-nginx`
-* `phpearth/php:7.2-litespeed`
+#### Missing extension?
 
-### OpenLiteSpeed
+In case you'd need an additional extension in the PHP.earth repository, [open an issue](https://github.com/php-earth/docker-php/issues).
 
-To run OpenLiteSpeed web server create the following `Dockerfile`:
+### Docker Compose
+
+Docker Compose simplifies usage of multiple containers of your application. In this example we'll run an Nginx web server with PHP 7.1 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
 
 ```Dockerfile
-FROM phpearth/php:7.1-litespeed
+FROM phpearth/php:7.1-nginx
+```
+
+The `docker-compose.yml` file:
+
+```yml
+version: '3.3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 80:80
+```
+
+The `index.php` file:
+
+```php
+<?php
+
+phpinfo();
+```
+
+Finally we run:
+
+```bash
+docker-compose up
+```
+
+And there should be `phpinfo()` output visible on `http://localhost`. Make sure there isn't any other service listening on port 80 before running above command.
+
+### PHP 7.0 and PHP 7.2
+
+To use PHP 7.0 or 7.2 use Docker images with `7.2` or `7.0`:
+
+```Dockerfile
+FROM phpearth/php:7.2-nginx
+
+RUN apk add --no-cache composer
 ```
 
 ## PHP.earth Alpine repository
 
-These Docker images include the latest PHP versions and packages for Alpine Linux with [PHP.earth Alpine repository](https://php.earth/alpine).
+These Docker images include the latest PHP versions and packages for Alpine Linux via the 3rd party [PHP.earth Alpine repository](https://php.earth/alpine).
 
 ```Dockerfile
 FROM alpine:3.6
@@ -126,19 +182,7 @@ RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
     && apk add --no-cache php7.1
 ```
 
-PHP.earth Alpine packages are prefixed with `php7.1` and `php7.2`:
-
-```bash
-apk search --no-cache php7.1*
-```
-
-## Tests
-
-[Goss](https://github.com/aelsabbahy/goss) is required to run tests:
-
-```bash
-make test
-```
+PHP.earth Alpine packages are prefixed with `php7.0`, `php7.1` and `php7.2`.
 
 ## License and contributing
 

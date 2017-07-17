@@ -6,15 +6,15 @@ _pkgreal=php
 _phpver=7.1
 pkgver=7.1.7
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=101
+pkgrel=102
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
 arch="all"
 license="PHP-3 BSD LGPL2 MIT Zend"
 depends="$pkgname-common"
-depends_dev="$pkgname=$pkgver-r$pkgrel autoconf pcre-dev re2c file"
-# Most dependencies between extensions is auto-discovered (see _extension()).
+depends_dev="$pkgname=$pkgver-r$pkgrel $pkgname-pear autoconf pcre-dev re2c file"
+# Most dependencies between extensions are auto-discovered (see _extension()).
 _depends_mysqlnd="$pkgname-openssl"
 _depends_pdo_mysql="$pkgname-pdo $pkgname-mysqlnd"
 _depends_phar="$pkgname $pkgname-zlib"
@@ -22,59 +22,60 @@ _depends_phar="$pkgname $pkgname-zlib"
 # index based on number of dependencies.
 _depends_mysqli="$pkgname-mysqlnd $pkgname-openssl"
 makedepends="
-    autoconf
-    apache2
-    apache2-dev
-    aspell-dev
-    bison
-    bzip2-dev
-    curl-dev
-    db-dev
-    enchant-dev
-    file
-    freetds-dev
-    freetype-dev
-    gdbm-dev
-    gettext-dev
-    gmp-dev
-    icu-dev
-    imap-dev
-    krb5-dev
-    libedit-dev
-    libical-dev
-    libjpeg-turbo-dev
-    libmcrypt-dev
-    libpng-dev
-    libressl-dev
-    libwebp-dev
-    libxml2-dev
-    libxpm-dev
-    libxslt-dev
-    libzip-dev
-    net-snmp-dev
-    openldap-dev
-    pcre-dev
-    postgresql-dev
-    re2c
-    recode-dev
-    sqlite-dev
-    tidyhtml-dev
-    unixodbc-dev
-    zlib-dev
-    "
-subpackages="$pkgname-dev $pkgname-doc $pkgname-apache2 $pkgname-phpdbg $pkgname-embed $pkgname-litespeed $pkgname-cgi $pkgname-fpm $pkgname-pear::noarch"
+  apache2
+  apache2-dev
+  aspell-dev
+  autoconf
+  bison
+  bzip2-dev
+  coreutils
+  curl-dev
+  db-dev
+  enchant-dev
+  file
+  freetds-dev
+  freetype-dev
+  gdbm-dev
+  gettext-dev
+  gmp-dev
+  icu-dev
+  imap-dev
+  krb5-dev
+  libedit-dev
+  libical-dev
+  libjpeg-turbo-dev
+  libmcrypt-dev
+  libpng-dev
+  libressl-dev
+  libwebp-dev
+  libxml2-dev
+  libxpm-dev
+  libxslt-dev
+  libzip-dev
+  net-snmp-dev
+  openldap-dev
+  pcre-dev
+  postgresql-dev
+  re2c
+  recode-dev
+  sqlite-dev
+  tidyhtml-dev
+  unixodbc-dev
+  zlib-dev
+  "
+
 source="http://php.net/distributions/$_pkgreal-$pkgver.tar.xz
-allow-build-recode-and-imap-together.patch
-disabled-tests.list
-fix-asm-constraints-in-aarch64-multiply-macro.patch
-fix-tests-devserver.patch
-install-pear.patch
-php-fpm.initd
-php-fpm.logrotate
-php-module.conf
-phpdbg.c.patch
-snmp.c.patch
-"
+  allow-build-recode-and-imap-together.patch
+  disabled-tests.list
+  fix-asm-constraints-in-aarch64-multiply-macro.patch
+  fix-tests-devserver.patch
+  install-pear.patch
+  php-fpm.initd
+  php-fpm.logrotate
+  php-module.conf
+  phpdbg.c.patch
+  snmp.c.patch
+  "
 
 builddir="$srcdir/$_pkgreal-$pkgver"
 _libdir="/usr/lib/php/$_phpver"
@@ -82,488 +83,492 @@ _extension_dir="$_libdir/modules"
 _extension_confd="/etc/php/$_phpver/conf.d"
 
 _extensions="
-    bcmath
-    bz2
-    calendar
-    ctype
-    curl
-    dba
-    dom
-    enchant
-    exif
-    fileinfo
-    ftp
-    gd
-    gettext
-    gmp
-    iconv
-    imap
-    intl
-    json
-    ldap
-    mbstring
-    mcrypt
-    mysqli
-    mysqlnd
-    odbc
-    opcache
-    openssl
-    pcntl
-    pdo
-    pdo_dblib
-    pdo_mysql
-    pdo_odbc
-    pdo_pgsql
-    pdo_sqlite
-    pgsql
-    phar
-    posix
-    pspell
-    recode
-    session
-    shmop
-    simplexml
-    snmp
-    soap
-    sockets
-    sqlite3
-    sysvmsg
-    sysvsem
-    sysvshm
-    tidy
-    tokenizer
-    wddx
-    xml
-    xmlreader
-    xmlrpc
-    xmlwriter
-    xsl
-    zip
-    zlib
-    "
+  bcmath
+  bz2
+  calendar
+  ctype
+  curl
+  dba
+  dom
+  enchant
+  exif
+  fileinfo
+  ftp
+  gd
+  gettext
+  gmp
+  iconv
+  imap
+  intl
+  json
+  ldap
+  mbstring
+  mcrypt
+  mysqli
+  mysqlnd
+  odbc
+  opcache
+  openssl
+  pcntl
+  pdo
+  pdo_dblib
+  pdo_mysql
+  pdo_odbc
+  pdo_pgsql
+  pdo_sqlite
+  pgsql
+  phar
+  posix
+  pspell
+  recode
+  session
+  shmop
+  simplexml
+  snmp
+  soap
+  sockets
+  sqlite3
+  sysvmsg
+  sysvsem
+  sysvshm
+  tidy
+  tokenizer
+  wddx
+  xml
+  xmlreader
+  xmlrpc
+  xmlwriter
+  xsl
+  zip
+  zlib
+  "
 
+subpackages="$pkgname-dev $pkgname-doc $pkgname-apache2 $pkgname-phpdbg $pkgname-embed $pkgname-litespeed $pkgname-cgi $pkgname-fpm $pkgname-pear::noarch"
 for _ext in $_extensions; do
-    case "$_ext" in
-        phar) subpackages="$subpackages $pkgname-$_ext:$_ext";;
-        *) subpackages="$subpackages $pkgname-$_ext:_extension";;
-    esac
+  case "$_ext" in
+    phar) subpackages="$subpackages $pkgname-$_ext:$_ext";;
+    *) subpackages="$subpackages $pkgname-$_ext:_extension";;
+  esac
 done
 subpackages="$subpackages $pkgname-common::noarch"
 
 case "$CARCH" in
-    s390x) options="$options !check";;
+  s390x) options="$options !check";;
 esac
 
 prepare() {
-    cd "$builddir"
+  cd "$builddir"
 
-    default_prepare
-    update_config_sub
+  default_prepare
+  update_config_sub
 
-    local vapi=$(sed -n '/#define PHP_API_VERSION/{s/.* //;p}' main/php.h)
-    if [ "$vapi" != "$_apiver" ]; then
-        error "Upstreram API version is now $vapi. Expecting $_apiver"
-        error "After updating _apiver, all 3rd-party extensions must be rebuilt."
-        return 1
-    fi
+  local vapi=$(sed -n '/#define PHP_API_VERSION/{s/.* //;p}' main/php.h)
+  if [ "$vapi" != "$_apiver" ]; then
+    error "Upstreram API version is now $vapi. Expecting $_apiver"
+    error "After updating _apiver, all 3rd-party extensions must be rebuilt."
+    return 1
+  fi
 
-    # https://bugs.php.net/63362 - Not needed but installed headers.
-    # Drop some Windows specific headers to avoid installation,
-    # before build to ensure they are really not needed.
-    rm -f TSRM/tsrm_win32.h \
-          TSRM/tsrm_config.w32.h \
-          Zend/zend_config.w32.h \
-          ext/mysqlnd/config-win.h \
-          ext/standard/winver.h \
-          main/win32_internal_function_disabled.h \
-          main/win95nt.h
+  # https://bugs.php.net/63362 - Not needed but installed headers.
+  # Drop some Windows specific headers to avoid installation,
+  # before build to ensure they are really not needed.
+  rm -f TSRM/tsrm_win32.h \
+    TSRM/tsrm_config.w32.h \
+    Zend/zend_config.w32.h \
+    ext/mysqlnd/config-win.h \
+    ext/standard/winver.h \
+    main/win32_internal_function_disabled.h \
+    main/win95nt.h
 
-    # Fix some bogus permissions.
-    find . -name \*.[ch] -exec chmod 644 {} \;
+  # Fix some bogus permissions.
+  find . -name \*.[ch] -exec chmod 644 {} \;
 
-    # XXX: Delete failing tests.
-    sed -n '/^[^#]/p' "$srcdir"/disabled-tests.list | while read item; do
-        rm -r $item  # do it in this way to apply globbing...
-    done
+  # XXX: Delete failing tests.
+  sed -n '/^[^#]/p' "$srcdir"/disabled-tests.list | while read item; do
+    rm -r $item  # do it in this way to apply globbing...
+  done
 
-    autoconf
+  autoconf
 }
 
 _build() {
-    local without_pcre_jit
-    [ "$CARCH" = "s390x" ] && without_pcre_jit="--without-pcre-jit"
+  local without_pcre_jit
+  [ "$CARCH" = "s390x" ] && without_pcre_jit="--without-pcre-jit"
 
-    local processors=$(nproc)
+  local processors=$(nproc)
 
-    EXTENSION_DIR=$_extension_dir ./configure \
-        --build=$CBUILD \
-        --host=$CHOST \
-        --prefix=/usr \
-        --program-suffix=$_phpver \
-        --libdir=$_libdir \
-        --datadir=/usr/share/php/$_phpver \
-        --sysconfdir=/etc/php/$_phpver \
-        --localstatedir=/var \
-        --with-layout=GNU \
-        --with-pic \
-        --with-pear=/usr/share/php/$_phpver \
-        --with-config-file-path=/etc/php/$_phpver \
-        --with-config-file-scan-dir=$_extension_confd \
-        --disable-short-tags \
-        --enable-bcmath=shared \
-        --with-bz2=shared \
-        --enable-calendar=shared \
-        --enable-ctype=shared \
-        --with-curl=shared \
-        --enable-dba=shared \
-            --with-db4 \
-            --with-dbmaker=shared \
-            --with-gdbm \
-        --enable-dom=shared \
-        --with-enchant=shared \
-        --enable-exif=shared \
-        --enable-fileinfo=shared \
-        --enable-ftp=shared \
-        --with-gd=shared \
-            --with-freetype-dir=/usr \
-            --disable-gd-jis-conv \
-            --with-jpeg-dir=/usr \
-            --with-png-dir=/usr \
-            --with-webp-dir=/usr \
-            --with-xpm-dir=/usr \
-        --with-gettext=shared \
-        --with-gmp=shared \
-        --with-iconv=shared \
-        --with-imap=shared \
-            --with-imap-ssl \
-        --with-icu-dir=/usr \
-        --enable-intl=shared \
-        --enable-json=shared \
-        --with-kerberos \
-        --with-ldap=shared \
-            --with-ldap-sasl \
-        --with-libedit \
-        --enable-libxml \
-        --with-libxml-dir=/usr \
-        --enable-mbstring=shared \
-        --with-mcrypt=shared \
-        --with-mysqli=shared,mysqlnd \
-            --with-mysql-sock=/run/mysqld/mysqld.sock \
-        --enable-mysqlnd=shared \
-        --enable-opcache=shared \
-        --with-openssl=shared  \
-        --with-system-ciphers \
-        --enable-pcntl=shared \
-        --with-pcre-regex=/usr \
-            $without_pcre_jit \
-        --enable-pdo=shared \
-            --with-pdo-dblib=shared \
-            --with-pdo-mysql=shared,mysqlnd \
-            --with-pdo-odbc=shared,unixODBC,/usr \
-            --with-pdo-pgsql=shared \
-            --with-pdo-sqlite=shared,/usr \
-        --with-pgsql=shared \
-        --enable-phar=shared \
-        --enable-posix=shared \
-        --with-pspell=shared \
-        --without-readline \
-        --with-recode=shared \
-        --enable-session=shared \
-        --enable-shmop=shared \
-        --enable-simplexml=shared \
-        --with-snmp=shared \
-        --enable-soap=shared \
-        --enable-sockets=shared \
-        --with-sqlite3=shared,/usr \
-        --enable-sysvmsg=shared \
-        --enable-sysvsem=shared \
-        --enable-sysvshm=shared \
-        --with-tidy=shared \
-        --enable-tokenizer=shared \
-        --with-unixODBC=shared,/usr \
-        --enable-wddx=shared \
-        --enable-xml=shared \
-        --enable-xmlreader=shared \
-        --with-xmlrpc=shared \
-        --enable-xmlwriter=shared \
-        --with-xsl=shared \
-        --enable-zip=shared \
-            --with-libzip=/usr \
-        --with-zlib=shared \
-        --with-zlib-dir=/usr \
-        $@
+  EXTENSION_DIR=$_extension_dir ./configure \
+    --build=$CBUILD \
+    --host=$CHOST \
+    --prefix=/usr \
+    --program-suffix=$_phpver \
+    --libdir=$_libdir \
+    --includedir=/usr/include/php/$_phpver \
+    --datadir=/usr/share/php/$_phpver \
+    --sysconfdir=/etc/php/$_phpver \
+    --localstatedir=/var \
+    --with-layout=GNU \
+    --with-pic \
+    --with-pear=/usr/share/php/$_phpver \
+    --with-config-file-path=/etc/php/$_phpver \
+    --with-config-file-scan-dir=$_extension_confd \
+    --disable-short-tags \
+    --enable-bcmath=shared \
+    --with-bz2=shared \
+    --enable-calendar=shared \
+    --enable-ctype=shared \
+    --with-curl=shared \
+    --enable-dba=shared \
+      --with-db4 \
+      --with-dbmaker=shared \
+      --with-gdbm \
+    --enable-dom=shared \
+    --with-enchant=shared \
+    --enable-exif=shared \
+    --enable-fileinfo=shared \
+    --enable-ftp=shared \
+    --with-gd=shared \
+      --with-freetype-dir=/usr \
+      --disable-gd-jis-conv \
+      --with-jpeg-dir=/usr \
+      --with-png-dir=/usr \
+      --with-webp-dir=/usr \
+      --with-xpm-dir=/usr \
+    --with-gettext=shared \
+    --with-gmp=shared \
+    --with-iconv=shared \
+    --with-imap=shared \
+      --with-imap-ssl \
+    --enable-intl=shared \
+      --with-icu-dir=/usr \
+    --enable-json=shared \
+    --with-ldap=shared \
+      --with-ldap-sasl \
+    --with-libedit \
+    --enable-libxml \
+      --with-libxml-dir=/usr \
+    --enable-mbstring=shared \
+    --with-mcrypt=shared \
+    --with-mysqli=shared,mysqlnd \
+      --with-mysql-sock=/run/mysqld/mysqld.sock \
+    --enable-mysqlnd=shared \
+    --enable-opcache=shared \
+    --with-openssl=shared  \
+      --with-system-ciphers \
+      --with-kerberos \
+    --enable-pcntl=shared \
+    --with-pcre-regex=/usr \
+      $without_pcre_jit \
+    --enable-pdo=shared \
+      --with-pdo-dblib=shared \
+      --with-pdo-mysql=shared,mysqlnd \
+      --with-pdo-odbc=shared,unixODBC,/usr \
+      --with-pdo-pgsql=shared \
+      --with-pdo-sqlite=shared,/usr \
+    --with-pgsql=shared \
+    --enable-phar=shared \
+    --enable-posix=shared \
+    --with-pspell=shared \
+    --without-readline \
+    --with-recode=shared \
+    --enable-session=shared \
+    --enable-shmop=shared \
+    --enable-simplexml=shared \
+    --with-snmp=shared \
+    --enable-soap=shared \
+    --enable-sockets=shared \
+    --with-sqlite3=shared,/usr \
+    --enable-sysvmsg=shared \
+    --enable-sysvsem=shared \
+    --enable-sysvshm=shared \
+    --with-tidy=shared \
+    --enable-tokenizer=shared \
+    --with-unixODBC=shared,/usr \
+    --enable-wddx=shared \
+    --enable-xml=shared \
+    --enable-xmlreader=shared \
+    --with-xmlrpc=shared \
+    --enable-xmlwriter=shared \
+    --with-xsl=shared \
+    --enable-zip=shared \
+      --with-libzip=/usr \
+    --with-zlib=shared \
+      --with-zlib-dir=/usr \
+    $@
 
-    make -j$processors
+  make -j$processors
 }
 
 build() {
-    cd "$builddir"
+  cd "$builddir"
 
-    # phpdbg
-    _build --enable-phpdbg \
-           --enable-phpdbg \
-           --enable-phpdbg-webhelper \
-           --disable-cgi \
-           --disable-cli
+  # phpdbg
+  _build --enable-phpdbg \
+         --enable-phpdbg \
+         --enable-phpdbg-webhelper \
+         --disable-cgi \
+         --disable-cli
 
-    # apache2 module
-    _build --disable-phpdbg \
-           --disable-cgi \
-           --disable-cli \
-           --with-apxs2
-    cp libs/libphp7.so sapi/apache2handler/mod_php.so
+  # apache2 module
+  _build --disable-phpdbg \
+         --disable-cgi \
+         --disable-cli \
+         --with-apxs2
+  cp libs/libphp7.so sapi/apache2handler/mod_php.so
 
-    # cgi, cli, fpm, embed, litespeed
-    _build --disable-phpdbg \
-           --enable-fpm \
-           --enable-embed \
-           --with-litespeed
+  # cgi, cli, fpm, embed, litespeed
+  _build --disable-phpdbg \
+         --enable-fpm \
+         --enable-embed \
+         --with-litespeed
 }
 
 check() {
-    cd "$builddir"
+  cd "$builddir"
 
-    # PHP is so stupid that it's not able to resolve dependencies
-    # between extensions and load them in correct order, so we must
-    # help it...
-    # opcache is Zend extension, it's handled specially in Makefile
-    local php_modules=$(_extensions_by_load_order \
-          | grep -vx opcache \
-          | xargs -n 1 printf "'$builddir/modules/%s.la' ")
-    sed -i "/^PHP_TEST_SHARED_EXTENSIONS/,/extension=/ \
-        s|in \$(PHP_MODULES)\"*|in $php_modules|" Makefile
+  # PHP cannot resolve dependencies between extensions and load them in correct order
+  # opcache is Zend extension, it's handled specially in Makefile
+  local php_modules=$(_extensions_by_load_order \
+    | grep -vx opcache \
+    | xargs -n 1 printf "'$builddir/modules/%s.la' ")
+  sed -i "/^PHP_TEST_SHARED_EXTENSIONS/,/extension=/ \
+    s|in \$(PHP_MODULES)\"*|in $php_modules|" Makefile
 
-    # XXX: Few tests fail on the named platforms.
-    # Ignore it for now and continue build even on test failures.
-    local allow_fail='no'
-    case "$CARCH" in
-        x86 | armhf | aarch64) allow_fail='yes'
-    esac
+  # XXX: Few tests fail on the named platforms.
+  # Ignore it for now and continue build even on test failures.
+  local allow_fail='no'
+  case "$CARCH" in
+    x86 | armhf | aarch64) allow_fail='yes'
+  esac
 
-    #NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
-    #    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
-    #    TZ= LANG= LC_ALL= \
-    #    make test || [ "$allow_fail" = yes ]
+  #NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+  #  SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+  #  TZ= LANG= LC_ALL= \
+  #  make test || [ "$allow_fail" = yes ]
 
-    echo 'NOTE: We have skipped quite a lot tests, see disabled-tests.list.'
+  echo 'NOTE: We have skipped quite a lot tests, see disabled-tests.list.'
 }
 
 package() {
-    install="$pkgname.post-install"
-    provides="php=$pkgver-r$pkgrel php7=$pkgver-r$pkgrel"
-    replaces="php php7"
+  install="$pkgname.post-install"
+  provides="php=$pkgver-r$pkgrel php7=$pkgver-r$pkgrel"
+  replaces="php php7"
 
-    cd "$builddir"
+  cd "$builddir"
 
-    make INSTALL_ROOT="$pkgdir" install
+  make INSTALL_ROOT="$pkgdir" install
 
-    install -Dm644 php.ini-production "$pkgdir"/etc/php/$_phpver/php.ini
+  install -Dm644 php.ini-production "$pkgdir"/etc/php/$_phpver/php.ini
 
-    find "$pkgdir" -name '.*' | xargs rm -rf
-    rmdir "$pkgdir"/var/run
+  local file; for file in pear peardev pecl; do
+    sed -i -e "s|/usr/bin/php|/usr/bin/php$_phpver|g" \
+      -e "s|PHP=php|PHP=php$_phpver|" \
+      "$pkgdir"/usr/bin/$file
+  done
+
+  find "$pkgdir" -name '.*' | xargs rm -rf
+  rmdir "$pkgdir"/var/run
 }
 
 dev() {
-    default_dev
-    provides="php-dev=$pkgver-r$pkgrel php7-dev=$pkgver-r$pkgrel"
-    replaces="php-dev php7-dev"
-    install="$pkgname-dev.post-install"
+  default_dev
+  provides="php-dev=$pkgver-r$pkgrel php7-dev=$pkgver-r$pkgrel"
+  replaces="php-dev php7-dev"
+  install="$pkgname-dev.post-install"
 
-    cd "$pkgdir"
+  cd "$pkgdir"
 
-    _mv usr/bin/php-config$_phpver \
-        usr/bin/phpize$_phpver \
-        "$subpkgdir"/usr/bin/
+  _mv usr/bin/php-config$_phpver \
+    usr/bin/phpize$_phpver \
+    "$subpkgdir"/usr/bin/
 
-    _mv ./$_libdir/build "$subpkgdir"/$_libdir/
+  _mv ./$_libdir/build "$subpkgdir"/$_libdir/
 }
 
 doc() {
-    default_doc
-    provides="php-doc=$pkgver-r$pkgrel php7-doc=$pkgver-r$pkgrel"
-    replaces="php-doc php7-doc"
+  default_doc
+  provides="php-doc=$pkgver-r$pkgrel php7-doc=$pkgver-r$pkgrel"
+  replaces="php-doc php7-doc"
 
-    cd "$builddir"
+  cd "$builddir"
 
-    mkdir -p "$subpkgdir"/usr/share/doc/php/$_phpver
-    cp CODING_STANDARDS CREDITS EXTENSIONS INSTALL LICENSE NEWS README* UPGRADING* \
-        "$subpkgdir"/usr/share/doc/php/$_phpver/
+  mkdir -p "$subpkgdir"/usr/share/doc/php/$_phpver
+  cp CODING_STANDARDS CREDITS EXTENSIONS INSTALL LICENSE NEWS README* UPGRADING* \
+    "$subpkgdir"/usr/share/doc/php/$_phpver/
 }
 
 apache2() {
-    pkgdesc="PHP Module for Apache2"
-    depends="$depends apache2"
-    provides="php-apache2=$pkgver-r$pkgrel php7-apache2=$pkgver-r$pkgrel"
-    replaces="php-apache2 php7-apache2"
+  pkgdesc="PHP Module for Apache2"
+  depends="$depends apache2"
+  provides="php-apache2=$pkgver-r$pkgrel php7-apache2=$pkgver-r$pkgrel"
+  replaces="php-apache2 php7-apache2"
 
-    install -D -m 755 "$builddir"/sapi/apache2handler/mod_php.so \
-        "$subpkgdir"/usr/lib/apache2/mod_php.so
+  install -D -m 755 "$builddir"/sapi/apache2handler/mod_php.so \
+    "$subpkgdir"/usr/lib/apache2/mod_php.so
 
-    install -D -m 644 "$srcdir/php-module.conf" \
-        "$subpkgdir/etc/apache2/conf.d/php-module.conf"
+  install -D -m 644 "$srcdir"/php-module.conf \
+    "$subpkgdir"/etc/apache2/conf.d/php-module.conf
 }
 
 phpdbg() {
-    pkgdesc="Interactive PHP debugger"
-    provides="php-phpdbg=$pkgver-r$pkgrel php7-phpdbg=$pkgver-r$pkgrel"
-    replaces="php-phpdbg php7-phpdbg"
-    install="$pkgname-phpdbg.post-install"
+  pkgdesc="Interactive PHP debugger"
+  provides="php-phpdbg=$pkgver-r$pkgrel php7-phpdbg=$pkgver-r$pkgrel"
+  replaces="php-phpdbg php7-phpdbg"
+  install="$pkgname-phpdbg.post-install"
 
-    install -Dm755 "$builddir"/sapi/phpdbg/phpdbg \
-        "$subpkgdir"/usr/bin/phpdbg$_phpver
+  install -Dm755 "$builddir"/sapi/phpdbg/phpdbg \
+    "$subpkgdir"/usr/bin/phpdbg$_phpver
 }
 
 embed() {
-    pkgdesc="PHP Embedded Library"
-    provides="php-embed=$pkgver-r$pkgrel php7-embed=$pkgver-r$pkgrel"
-    replaces="php-embed php7-embed"
+  pkgdesc="PHP Embedded Library"
+  provides="php-embed=$pkgver-r$pkgrel php7-embed=$pkgver-r$pkgrel"
+  replaces="php-embed php7-embed"
 
-    mkdir "$subpkgdir"
-
-    _mv "$pkgdir"/usr/lib/libphp*.so "$subpkgdir"/usr/lib/
+  _mv "$pkgdir"/usr/lib/libphp*.so "$subpkgdir"/usr/lib/
 }
 
 litespeed() {
-    pkgdesc="PHP $_phpver LiteSpeed SAPI"
-    provides="php-litespeed=$pkgver-r$pkgrel php7-litespeed=$pkgver-r$pkgrel"
-    replaces="php-litespeed php7-litespeed"
-    install="$pkgname-litespeed.post-install"
-    # OpenLiteSpeed requires some additional PHP extensions for admin panel
-    depends="$pkgname-bcmath $pkgname-json $pkgname-session"
+  pkgdesc="PHP $_phpver LiteSpeed SAPI"
+  provides="php-litespeed=$pkgver-r$pkgrel php7-litespeed=$pkgver-r$pkgrel"
+  replaces="php-litespeed php7-litespeed"
+  install="$pkgname-litespeed.post-install"
+  # OpenLiteSpeed requires some additional PHP extensions for admin panel
+  depends="$depends $pkgname-bcmath $pkgname-json $pkgname-session"
 
-    mkdir -p "$subpkgdir"/usr/bin
-    mv "$pkgdir"/usr/bin/lsphp "$subpkgdir"/usr/bin/lsphp$_phpver
+  mkdir -p "$subpkgdir"/usr/bin
+  mv "$pkgdir"/usr/bin/lsphp "$subpkgdir"/usr/bin/lsphp$_phpver
 }
 
 cgi() {
-    pkgdesc="PHP $_phpver Common Gateway Interface"
-    provides="php-cgi=$pkgver-r$pkgrel php7-cgi=$pkgver-r$pkgrel"
-    replaces="php-cgi php7-cgi"
-    install="$pkgname-cgi.post-install"
+  pkgdesc="PHP $_phpver Common Gateway Interface"
+  provides="php-cgi=$pkgver-r$pkgrel php7-cgi=$pkgver-r$pkgrel"
+  replaces="php-cgi php7-cgi"
+  install="$pkgname-cgi.post-install"
 
-    _mv "$pkgdir"/usr/bin/php-cgi$_phpver "$subpkgdir"/usr/bin/
+  _mv "$pkgdir"/usr/bin/php-cgi$_phpver "$subpkgdir"/usr/bin/
 }
 
 fpm() {
-    pkgdesc="PHP $_phpver FastCGI Process Manager"
-    provides="php-fpm=$pkgver-r$pkgrel php7-fpm=$pkgver-r$pkgrel"
-    replaces="php-fpm php7-fpm"
-    install="$pkgname-fpm.post-install"
+  pkgdesc="PHP $_phpver FastCGI Process Manager"
+  provides="php-fpm=$pkgver-r$pkgrel php7-fpm=$pkgver-r$pkgrel"
+  replaces="php-fpm php7-fpm"
+  install="$pkgname-fpm.post-install"
 
-    cd "$pkgdir"
+  cd "$pkgdir"
 
-    _mv var "$subpkgdir"/
-    _mv usr/share/php/$_phpver/fpm "$subpkgdir"/var/lib/php/$_phpver/
-    _mv usr/sbin "$subpkgdir"/usr/
-    _mv etc/php/$_phpver/php-fpm* "$subpkgdir"/etc/php/$_phpver/
+  _mv var "$subpkgdir"/
+  _mv usr/share/php/$_phpver/fpm "$subpkgdir"/var/lib/php/$_phpver/
+  _mv usr/sbin "$subpkgdir"/usr/
+  _mv etc/php/$_phpver/php-fpm* "$subpkgdir"/etc/php/$_phpver/
 
-    local file; for file in php-fpm.conf php-fpm.d/www.conf; do
-        mv "$subpkgdir"/etc/php/$_phpver/$file.default \
-            "$subpkgdir"/etc/php/$_phpver/$file
-    done
+  local file; for file in php-fpm.conf php-fpm.d/www.conf; do
+    mv "$subpkgdir"/etc/php/$_phpver/$file.default \
+      "$subpkgdir"/etc/php/$_phpver/$file
+  done
 
-    install -D -m 755 "$srcdir"/php-fpm.initd \
-        "$subpkgdir"/etc/init.d/php-fpm
+  install -D -m 755 "$srcdir"/php-fpm.initd \
+    "$subpkgdir"/etc/init.d/php-fpm
 
-    install -D -m 644 "$srcdir"/php-fpm.logrotate \
-        "$subpkgdir"/etc/logrotate.d/php-fpm
+  install -D -m 644 "$srcdir"/php-fpm.logrotate \
+    "$subpkgdir"/etc/logrotate.d/php-fpm
 
-    mkdir -p "$subpkgdir"/var/log/php/$_phpver
+  mkdir -p "$subpkgdir"/var/log/php/$_phpver
 }
 
 pear() {
-    pkgdesc="PHP Extension and Application Repository"
-    depends="$pkgname $pkgname-xml"
-    provides="php-pear=$pkgver-r$pkgrel php7-pear=$pkgver-r$pkgrel"
-    replaces="php-pear php7-pear"
-    install="$pkgname-pear.post-install"
+  pkgdesc="PHP $_phpver Extension and Application Repository"
+  depends="$pkgname $pkgname-xml"
+  provides="php-pear=$pkgver-r$pkgrel php7-pear=$pkgver-r$pkgrel"
+  replaces="php-pear php7-pear"
+  install="$pkgname-pear.post-install"
 
-    cd "$pkgdir"
+  cd "$pkgdir"
 
-    # pecl needs xml extension and since we build it as shared, it must be
-    # explicitly declared to be loaded.
-    sed -i 's/\$INCARG/& -d extension=xml.so/' usr/bin/pecl
+  # pecl needs xml extension and since we build it as shared, it must be
+  # explicitly declared to be loaded.
+  sed -i 's/\$INCARG/& -d extension=xml.so/' usr/bin/pecl
 
-    mkdir -p "$subpkgdir"/usr/bin
-    local file; for file in pecl pear peardev; do
-        mv usr/bin/$file "$subpkgdir"/usr/bin/$file$_phpver
-    done
+  mkdir -p "$subpkgdir"/usr/bin
+  local file; for file in pecl pear peardev; do
+    mv usr/bin/$file "$subpkgdir"/usr/bin/$file$_phpver
+  done
 
-    _mv etc/php/$_phpver/pear.conf "$subpkgdir"/etc/php/$_phpver/
-    _mv usr/share "$subpkgdir"/usr/
+  _mv etc/php/$_phpver/pear.conf "$subpkgdir"/etc/php/$_phpver/
+  _mv usr/share "$subpkgdir"/usr/
 }
 
 common() {
-    pkgdesc="$pkgdesc (common config)"
-    depends=""
-    provides="php-common=$pkgver-r$pkgrel php7-common=$pkgver-r$pkgrel"
-    replaces="php-common php7-common"
+  pkgdesc="$pkgdesc (common config)"
+  depends=""
+  provides="php-common=$pkgver-r$pkgrel php7-common=$pkgver-r$pkgrel"
+  replaces="php-common php7-common"
 
-    cd "$pkgdir"
+  cd "$pkgdir"
 
-    _mv usr/lib "$subpkgdir"/usr/
-    _mv etc "$subpkgdir"/
-    mkdir -p "$subpkgdir"/$_extension_confd
+  _mv usr/lib "$subpkgdir"/usr/
+  _mv etc "$subpkgdir"/
+  mkdir -p "$subpkgdir"/$_extension_confd
 }
 
 phar() {
-    _extension
-    provides="php-phar=$pkgver-r$pkgrel php7-phar=$pkgver-r$pkgrel"
-    replaces="php-phar php7-phar"
-    install="$pkgname-phar.post-install"
+  _extension
+  provides="php-phar=$pkgver-r$pkgrel php7-phar=$pkgver-r$pkgrel"
+  replaces="php-phar php7-phar"
+  install="$pkgname-phar.post-install"
 
-    cd "$pkgdir"
+  cd "$pkgdir"
 
-    mkdir -p "$subpkgdir"/usr/bin
-    mv usr/bin/phar.phar "$subpkgdir"/usr/bin/phar.phar$_phpver
+  mkdir -p "$subpkgdir"/usr/bin
+  mv usr/bin/phar.phar "$subpkgdir"/usr/bin/phar.phar$_phpver
 
-    rm usr/bin/phar
-    ln -s phar.phar$_phpver "$subpkgdir"/usr/bin/phar$_phpver
+  rm usr/bin/phar
+  ln -s phar.phar$_phpver "$subpkgdir"/usr/bin/phar$_phpver
 }
 
 _extension() {
-    local extname="${subpkgname#$pkgname-}"
-    local extdepends="$(eval "echo \$_depends_$extname")"
-    local extdesc="$(head -n1 "$builddir"/ext/$extname/CREDITS 2>/dev/null ||:)"
-    pkgdesc="PHP extension: ${extdesc:-$extname}"
-    provides="php-$extname=$pkgver-r$pkgrel php7-$extname=$pkgver-r$pkgrel"
-    replaces="php-$extname php7-$extname"
+  local extname="${subpkgname#$pkgname-}"
+  local extdepends="$(eval "echo \$_depends_$extname")"
+  local extdesc="$(head -n1 "$builddir"/ext/$extname/CREDITS 2>/dev/null ||:)"
+  pkgdesc="PHP $_phpver extension: ${extdesc:-$extname}"
+  provides="php-$extname=$pkgver-r$pkgrel php7-$extname=$pkgver-r$pkgrel"
+  replaces="php-$extname php7-$extname"
 
-    : ${extdepends:=$(_resolve_extension_deps "$extname")}
-    depends="$depends $extdepends"
+  : ${extdepends:=$(_resolve_extension_deps "$extname")}
+  depends="$depends $extdepends"
 
-    local load_order=$(_extension_load_order "$extname")
+  local load_order=$(_extension_load_order "$extname")
 
-    # extension prefix
-    local prefix=
-    [ "$extname" != "opcache" ] || prefix="zend_"
+  # extension prefix
+  local prefix=
+  [ "$extname" != "opcache" ] || prefix="zend_"
 
-    _mv "$pkgdir"/$_extension_dir/$extname.so \
-        "$subpkgdir"/$_extension_dir/
+  _mv "$pkgdir"/$_extension_dir/$extname.so \
+    "$subpkgdir"/$_extension_dir/
 
-    mkdir -p "$subpkgdir"/$_extension_confd
-    echo "${prefix}extension=$extname.so" \
-          > "$subpkgdir"/$_extension_confd/$(printf %02d $load_order)_$extname.ini
+  mkdir -p "$subpkgdir"/$_extension_confd
+  echo "${prefix}extension=$extname.so" \
+    > "$subpkgdir"/$_extension_confd/$(printf %02d $load_order)_$extname.ini
 }
 
 # Resolves dependencies of the given extension name (without $pkgname- prefix)
 # on other extensions in $_extensions and prints them with $pkgname- prefix.
 _resolve_extension_deps() {
-    local name="$1"
+  local name="$1"
 
-    # We use config.w32 just because it's more accurate than config.m4.
-    local config="$builddir/ext/$name/config.w32"
-    [ -f "$config" ] || return 0
+  # We use config.w32 just because it's more accurate than config.m4.
+  local config="$builddir/ext/$name/config.w32"
+  [ -f "$config" ] || return 0
 
-    cat "$config" \
-        | sed -En "s/.*ADD_EXTENSION_DEP\('$name', ([^)]+)\).*/\1/p" \
-        | tr -d "'," | tr ' ' '\n' \
-        | sort -u \
-        | while read dep; do
-            if echo "$_extensions" | grep -qw "$dep"; then
-                echo "$pkgname-$dep"
-            fi
-        done
+  cat "$config" \
+    | sed -En "s/.*ADD_EXTENSION_DEP\('$name', ([^)]+)\).*/\1/p" \
+    | tr -d "'," | tr ' ' '\n' \
+    | sort -u \
+    | while read dep; do
+      if echo "$_extensions" | grep -qw "$dep"; then
+        echo "$pkgname-$dep"
+      fi
+    done
 }
 
 # Prints a load order (0-based integer) for the given extension name. Extension
@@ -571,31 +576,32 @@ _resolve_extension_deps() {
 # It's based on number of dependencies of the extension (with exception for
 # "imap"), which is flawed, but simple and good enough for now.
 _extension_load_order() {
-    local name="$1"
-    local deps=$(eval "echo \$_depends_$name")
+  local name="$1"
+  local deps=$(eval "echo \$_depends_$name")
 
-    case "$name" in
-    # XXX: This must be loaded after recode, even though it does
-    # not depend on it. So we must use this hack...
-        imap) echo 1;;
-        *) echo "${deps:=$(_resolve_extension_deps $name)}" | wc -w;;
-    esac
+  case "$name" in
+  # XXX: This must be loaded after recode, even though it does
+  # not depend on it. So we must use this hack...
+    imap) echo 1;;
+    *) echo "${deps:=$(_resolve_extension_deps $name)}" | wc -w;;
+  esac
 }
 
 # Prints $_extensions sorted by load order and name.
 _extensions_by_load_order() {
-    local deps list name
+  local deps list name
 
-    for name in $_extensions; do
-        list="$list $(_extension_load_order $name);$name"
-    done
-    printf '%s\n' $list | sort -t ';' -k 1 | sed -E 's/\d+;//'
+  for name in $_extensions; do
+    list="$list $(_extension_load_order $name);$name"
+  done
+  printf '%s\n' $list | sort -t ';' -k 1 | sed -E 's/\d+;//'
 }
 
+# Move source to destination folder and creating destination folder if missing
 _mv() {
-    local dest; for dest; do true; done  # get last argument
-    mkdir -p "$dest"
-    mv $@
+  local dest; for dest; do true; done  # get last argument
+  mkdir -p "$dest"
+  mv $@
 }
 sha512sums="aaf846feccc8ab1cc4ab68ec166596d1a610334ed461e1203208c40b7a7db4bbaee7a79d6e47be1cba07e59087846ea6d2f8fbbd17deae6cc724e08fa9813cd0  php-7.1.7.tar.xz
 f8ecae241a90cbc3e98aa4deb3d5d35ef555f51380e29f4e182a8060dffeb84be74f030a14c6b452668471030d78964f52795ca74275db05543ccad20ef1f2cc  allow-build-recode-and-imap-together.patch

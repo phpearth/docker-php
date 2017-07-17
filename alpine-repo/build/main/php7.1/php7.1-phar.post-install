@@ -4,12 +4,12 @@ _suffix="7.1"
 
 link=$(readlink /usr/bin/phar.phar)
 
-if [[ "$link" != "/usr/bin/phar.phar7.2" || ! -f "$link" ]]; then
+if [[ "$link" != "/usr/bin/phar.phar7.0" && "$link" != "/usr/bin/phar.phar7.2" ]] || [[ ! -f "$link" ]]; then
   ln -sf /usr/bin/phar.phar$_suffix /usr/bin/phar.phar
 fi
 
 link=$(readlink /usr/bin/phar)
 
-if [[ "$link" != "/usr/bin/phar.phar7.2" || ! -f "$link" ]]; then
+if [[ "$link" != "/usr/bin/phar.phar7.0" && "$link" != "/usr/bin/phar.phar7.2" ]] || [[ ! -f "$link" ]]; then
   ln -sf /usr/bin/phar.phar$_suffix /usr/bin/phar
 fi

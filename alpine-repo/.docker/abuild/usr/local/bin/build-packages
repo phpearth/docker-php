@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Script for building and packaging
-# Usage build-packages [7.1|7.2|all|{package-name}]
+# Usage build-packages [7.0|7.1|7.2|all|{package-name}]
 
 BUILD_PACKAGES="${1:-all}"
 
@@ -9,6 +9,19 @@ packages_others="
 composer
 litespeed
 phpunit
+"
+
+packages_70="
+php7.0-apcu
+php7.0-composer
+php7.0-imagick
+php7.0-memcached
+php7.0-mongodb
+php7.0-phpunit
+php7.0-redis
+php7.0-sodium
+php7.0-swoole
+php7.0-xdebug
 "
 
 packages_71="
@@ -37,12 +50,14 @@ php7.2-sodium
 php7.2-swoole
 "
 
-if [ "$BUILD_PACKAGES" = "7.1" ]; then
+if [ "$BUILD_PACKAGES" = "7.0" ]; then
+  packages=$packages_70
+elif [ "$BUILD_PACKAGES" = "7.1" ]; then
   packages=$packages_71
 elif [ "$BUILD_PACKAGES" = "7.2" ]; then
   packages=$packages_72
 elif [ "$BUILD_PACKAGES" = "all" ]; then
-  packages="$packages_others$packages_71$packages_72"
+  packages="$packages_others $packages_70 $packages_71 $packages_72"
 else
   packages="$BUILD_PACKAGES"
 fi

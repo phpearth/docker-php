@@ -1,0 +1,53 @@
+# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+
+pkgname=php7.0-sodium
+_pkgreal=sodium
+_pkglong=libsodium
+pkgver=2.0.2
+pkgrel=0
+_phpver=7.0
+pkgdesc="PHP $_phpver extension - Wrapper for the Sodium cryptographic library"
+url="http://pecl.php.net/package/$_pkglong"
+arch="all"
+license="BSD-2"
+depends="php7.0-common>7.0.0 libsodium"
+makedepends="php7.0-dev>7.0.0 libsodium-dev"
+source="http://pecl.php.net/get/$_pkglong-$pkgver.tgz"
+builddir="$srcdir/$_pkglong-$pkgver"
+
+prepare() {
+  default_prepare
+}
+
+build() {
+  local processors=$(nproc)
+
+  cd "$builddir"
+
+  phpize
+
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+    --with-php-config=/usr/bin/php-config
+
+  make -j$processors
+}
+
+check() {
+  cd "$builddir"
+
+  local allow_fail='no'
+
+  NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+    SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+    TZ= LANG= LC_ALL= \
+    make test || [ "$allow_fail" = yes ]
+}
+
+package() {
+  mkdir -p "$pkgdir"
+  install -d $pkgdir/
+  make -C "$builddir" INSTALL_ROOT="$pkgdir" install
+  install -d "$pkgdir"/etc/php/$_phpver/conf.d
+  echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
+}
+sha512sums="695069e35f951ec297cb5dc8a682a63f9e375f1b65beddc23dd7afec8cfc2a41f875dc448ee1e204eb0f00b3afdfb30f46085635a789523466bb06a63898e0a4  libsodium-2.0.2.tgz"

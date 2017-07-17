@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ## [UNREALEASED] 2017-01-01
 
 * Refactor and fix multiple issues with Alpine repository packages
+* PHP 7.0
 * ...
 
 ## [1.1.0] 2017-07-06
