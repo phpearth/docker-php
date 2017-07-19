@@ -46,7 +46,6 @@ php7.2-memcached
 php7.2-mongodb
 php7.2-phpunit
 php7.2-redis
-php7.2-sodium
 php7.2-swoole
 "
 
