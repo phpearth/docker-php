@@ -2,4 +2,8 @@
 
 _suffix="7.0"
 
-ln -sf /usr/bin/lsphp$_suffix /usr/bin/lsphp
+link=$(readlink /usr/bin/lsphp)
+
+if [[ "$link" != "/usr/bin/lsphp7.1" && "$link" != "/usr/bin/lsphp7.2" ]] || [[ ! -f "$link" ]]; then
+  ln -sf /usr/bin/lsphp$_suffix /usr/bin/lsphp
+fi

@@ -2,4 +2,8 @@
 
 _suffix="7.0"
 
-ln -sf /usr/bin/php$_suffix /usr/bin/php
+link=$(readlink /usr/bin/php)
+
+if [[ "$link" != "/usr/bin/php7.1" && "$link" != "/usr/bin/php7.2" ]] || [[ ! -f "$link" ]]; then
+  ln -sf /usr/bin/php$_suffix /usr/bin/php
+fi

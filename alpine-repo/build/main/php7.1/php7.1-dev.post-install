@@ -4,12 +4,12 @@ _suffix="7.1"
 
 link=$(readlink /usr/bin/phpize)
 
-if [[ "$link" != "/usr/bin/phpize7.0" && "$link" != "/usr/bin/phpize7.2" ]] || [[ ! -f "$link" ]]; then
+if [[ "$link" != "/usr/bin/phpize7.2" || ! -f "$link" ]]; then
   ln -sf /usr/bin/phpize$_suffix /usr/bin/phpize
 fi
 
-link=$(readlink /usr/bin/php-config)
+link=$(readlink /usr/bin/phpize)
 
-if [[ "$link" != "/usr/bin/php-config7.0" && "$link" != "/usr/bin/php-config7.2" ]] || [[ ! -f "$link" ]]; then
+if [[ "$link" != "/usr/bin/php-config7.2" || ! -f "$link" ]]; then
   ln -sf /usr/bin/php-config$_suffix /usr/bin/php-config
 fi

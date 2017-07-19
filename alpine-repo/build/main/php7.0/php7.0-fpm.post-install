@@ -2,4 +2,8 @@
 
 _suffix="7.0"
 
-ln -sf /usr/sbin/php-fpm$_suffix /usr/sbin/php-fpm
+link=$(readlink /usr/sbin/php-fpm)
+
+if [[ "$link" != "/usr/sbin/php-fpm7.1" && "$link" != "/usr/sbin/php-fpm7.2" ]] || [[ ! -f "$link" ]]; then
+  ln -sf /usr/sbin/php-fpm$_suffix /usr/sbin/php-fpm
+fi

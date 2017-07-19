@@ -4,6 +4,6 @@ _suffix="7.1"
 
 link=$(readlink /usr/bin/phpdbg)
 
-if [[ "$link" != "/usr/bin/phpdbg7.0" && "$link" != "/usr/bin/phpdbg7.2" ]] || [[ ! -f "$link" ]]; then
+if [[ "$link" != "/usr/bin/phpdbg7.2" || ! -f "$link" ]]; then
   ln -sf /usr/bin/phpdbg$_suffix /usr/bin/phpdbg
 fi

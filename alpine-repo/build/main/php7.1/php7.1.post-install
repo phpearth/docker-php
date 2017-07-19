@@ -4,6 +4,6 @@ _suffix="7.1"
 
 link=$(readlink /usr/bin/php)
 
-if [[ "$link" != "/usr/bin/php7.0" && "$link" != "/usr/bin/php7.2" ]] || [[ ! -f "$link" ]]; then
+if [[ "$link" != "/usr/bin/php7.2" || ! -f "$link" ]]; then
   ln -sf /usr/bin/php$_suffix /usr/bin/php
 fi
