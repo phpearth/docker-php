@@ -2,8 +2,11 @@
 
 _suffix="7.1"
 
+mkdir -p /run/php
+
 link=$(readlink /usr/sbin/php-fpm)
 
 if [[ "$link" != "/usr/sbin/php-fpm7.2" || ! -f "$link" ]]; then
   ln -sf /usr/sbin/php-fpm$_suffix /usr/sbin/php-fpm
+  ln -sf /run/php/php-fpm$_suffix.sock /run/php/php-fpm.sock
 fi

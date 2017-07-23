@@ -6,7 +6,7 @@ _pkgreal=php
 _phpver=7.2
 pkgver=7.2.0
 _pkgrealver=7.2.0beta1
-pkgrel=6
+pkgrel=7
 _apiver=20170718
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -301,7 +301,6 @@ build() {
 
   # phpdbg
   _build --enable-phpdbg \
-         --enable-phpdbg \
          --enable-phpdbg-webhelper \
          --disable-cgi \
          --disable-cli
@@ -316,6 +315,8 @@ build() {
   # cgi, cli, fpm, embed, litespeed
   _build --disable-phpdbg \
          --enable-fpm \
+         --with-fpm-user=www-data \
+         --with-fpm-group=www-data \
          --enable-embed \
          --with-litespeed
 }
@@ -441,7 +442,7 @@ cgi() {
 fpm() {
   pkgdesc="PHP $_phpver FastCGI Process Manager"
   replaces="php-fpm php7-fpm"
-  install="$pkgname-fpm.post-install"
+  install="$pkgname-fpm.pre-install $pkgname-fpm.post-install"
 
   cd "$pkgdir"
 
@@ -455,11 +456,18 @@ fpm() {
       "$subpkgdir"/etc/php/$_phpver/$file
   done
 
+  # Fix FPM versions in configuration files
+  sed -i 's/\;pid \= run\/php-fpm\.pid/pid \= \/run\/php\/php-fpm7\.2\.pid/g' "$subpkgdir"/etc/php/$_phpver/php-fpm.conf
+  sed -i 's/\;error\_log \= log\/php-fpm\.log/error\_log \= \/var\/log\/php\/7\.2\/php-fpm\.log/g' "$subpkgdir"/etc/php/$_phpver/php-fpm.conf
+  sed -i 's/listen \= 127\.0\.0\.1\:9000/listen \= \/run\/php\/php-fpm7\.2\.sock/g' "$subpkgdir"/etc/php/$_phpver/php-fpm.d/www.conf
+  sed -i 's/\;listen\.owner \= www-data/listen\.owner \= www-data/g' "$subpkgdir"/etc/php/$_phpver/php-fpm.d/www.conf
+  sed -i 's/\;listen\.group \= www-data/listen\.group \= www-data/g' "$subpkgdir"/etc/php/$_phpver/php-fpm.d/www.conf
+
   install -D -m 755 "$srcdir"/php-fpm.initd \
-    "$subpkgdir"/etc/init.d/php-fpm
+    "$subpkgdir"/etc/init.d/php-fpm$_phpver
 
   install -D -m 644 "$srcdir"/php-fpm.logrotate \
-    "$subpkgdir"/etc/logrotate.d/php-fpm
+    "$subpkgdir"/etc/logrotate.d/php-fpm$_phpver
 
   mkdir -p "$subpkgdir"/var/log/php/$_phpver
 }
@@ -592,6 +600,6 @@ sha512sums="6d85a4175ba7ce7fb7601175f5fe249e91263713f6759f0f042bebbeea3cb0d49d2b
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 01c3c65f153ea92192f2b2694d93a086ffa67c282fe046f877842942692c25666e4154a09aba6c2161f7f2a3b6595f4d79573e9ee74aec774a95f2f9725846f9  fix-tests-devserver.patch
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
-554e7574c2ba7b5abea08889d502c5006a1914e15efb96bbf1b3ed91c1f4d598be0f03e8b7e947f029738d630ff852a2dd850e55c4a7436721308b21a0c8c83c  php-fpm.initd
-1f6fc65f4cc7873d740e3741f9b1c4b401b41d1fb3558bbc09037bb3d393e1145992302914ddee2b87f0e1f2c95d89f21c3760e082108e3445c21266a2a7ca67  php-fpm.logrotate
+0dde6dfaa9e03a4c84be7ba3df4321c983f4ae60b1919f29285c47db3b580bc938a2bde83c183db2460f4caf6c16261849a0a7a05d1b0b15096b4984ae16371e  php-fpm.initd
+618e8dc8b24fb517c04644bf245f7731f75c2a5a37f9c661ca093373ffcb49fdeb246774be7a1d9e8c947bcb1efbd065866f2d33da0d7750bf029db6233a8f53  php-fpm.logrotate
 6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf"

@@ -8,10 +8,10 @@
 
 : ${name:="PHP FastCGI Process Manager"}
 
-command="/usr/sbin/php-fpm"
+command="/usr/sbin/php-fpm7.0"
 command_background="yes"
 start_stop_daemon_args="--quiet"
-pidfile="/run/$RC_SVCNAME/php-fpm.pid"
+pidfile="/run/$RC_SVCNAME/php-fpm7.0.pid"
 retry="SIGTERM/20"
 
 # configtest is here only for backward compatibility
@@ -30,14 +30,14 @@ depend() {
 
 init_vars() {
 	# Defaults for single master process with multiple pools
-	if [ "$RC_SVCNAME" = "php-fpm7" ]; then
-		: ${fpm_config:="/etc/php/php-fpm.conf"}
+	if [ "$RC_SVCNAME" = "php-fpm7.0" ]; then
+		: ${fpm_config:="/etc/php/7.0/php-fpm.conf"}
 		: ${user:="root"}
 	# Defaults for master process per pool
 	else
-		: ${fpm_config="/etc/php/php-fpm.d/${RC_SVCNAME#php-fpm.}.conf"}
+		: ${fpm_config="/etc/php/7.0/php-fpm.d/${RC_SVCNAME#php-fpm.}.conf"}
 		: ${user:="$(conf_get user)"}
-		: ${user:="nobody"}
+		: ${user:="www-data"}
 		: ${group:="$(conf_get group)"}
 	fi
 	command_args="--nodaemonize --fpm-config $fpm_config"

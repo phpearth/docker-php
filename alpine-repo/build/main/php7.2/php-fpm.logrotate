@@ -8,6 +8,6 @@
 	dateext
 	sharedscripts
 	postrotate
-		/etc/init.d/php-fpm7 --ifstarted --quiet reopen
+		/etc/init.d/php-fpm7.2 --ifstarted --quiet reopen
 	endscript
 }

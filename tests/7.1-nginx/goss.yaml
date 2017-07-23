@@ -26,4 +26,4 @@ http:
     no-follow-redirects: false
     timeout: 5000
     body:
-    - Welcome to nginx!
+    - PHP Version 7.1

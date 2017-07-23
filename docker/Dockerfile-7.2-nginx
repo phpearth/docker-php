@@ -57,13 +57,10 @@ ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
     && echo "https://alpine.php.earth" >> /etc/apk/repositories \
-    && addgroup -g 82 -S www-data \
-    && adduser -u 82 -S -D -H -h /var/lib/nginx -s /sbin/nologin -G www-data -g www-data www-data \
     && apk add --no-cache $DEPS \
-    && mkdir /run/php && mkdir /run/nginx \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY tags/7.2-nginx /
+COPY tags/nginx /
 
 CMD ["/sbin/runit-wrapper"]
