@@ -54,7 +54,7 @@ version (e.g. 1.x.y) is released by the following release process:
   Tests are run with [Goss](https://github.com/aelsabbahy/goss):
 
   ```bash
-  make test
+  make test [t="<test-folder-1> <test-folder-2> ..."]
   ```
 
 * **2. Update changelog**

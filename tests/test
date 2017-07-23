@@ -1,24 +1,25 @@
 #!/bin/bash
 
-FOLDER="${1:-all}"
+tests="${1:-all}"
 i=0
 
-if [ "$FOLDER" = "all" ]; then
-  for x in */;do
-    echo -e "\n\n======================="
-    echo "testing $x"
-    echo "======================="
-    pushd $x > /dev/null
-    ./test || ((i++))
-    popd > /dev/null
-  done
-else
+run() {
   echo -e "\n\n======================="
-  echo "testing $FOLDER"
+  echo "testing $1"
   echo "======================="
-  pushd $FOLDER > /dev/null
+  pushd $1 > /dev/null
   ./test || ((i++))
   popd > /dev/null
+}
+
+if [ "$tests" = "all" ]; then
+  for x in */;do
+    run $x
+  done
+else
+  for test in $tests; do
+    run $test
+  done
 fi
 
 exit $i

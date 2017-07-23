@@ -1,18 +1,18 @@
-.PHONY: test build build-package build-all generate-index abuild-generate-private-key abuild-generate-public-key
+.PHONY: test build build-packages generate-index abuild-generate-private-key abuild-generate-public-key
 .DEFAULT_GOAL := help
 
 help: ## Output usage documentation
 	@echo "Usage: make COMMAND [args]\n\nCommands:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-test: ## Run all tests usage make test [t={test-folder}]
+test: ## Run all tests; Usage: make test [t="<test-folder-1> <test-folder-2> ..."]
 	cd tests; \
 	./test "$(t)"
 
 build: ## Build necessary image for building packages
 	docker-compose -f alpine-repo/.docker/docker-compose.yml build abuild
 
-build-packages: ## Usage: make build-package p=[7.0|7.1|7.2|all|{package-name1 package-name2}]
+build-packages: ## Usage: make build-package [p=7.0|7.1|7.2|all|<package-name1 package-name2>]
 	make build
 	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild build-packages "$(p)"
 
