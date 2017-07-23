@@ -1,0 +1,12 @@
+FROM phpearth/test:7.0
+
+RUN set -x \
+    && apk add --no-cache \
+        php7.0-apcu \
+        php7.0-imagick \
+        php7.0-sodium \
+        php7.0-memcached \
+        php7.0-mongodb \
+        php7.0-redis \
+        php7.0-swoole \
+        php7.0-xdebug

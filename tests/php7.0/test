@@ -1,8 +1,0 @@
-#!/bin/bash
-
-docker build -t phpearth/test:php-7.0 -f Dockerfile .
-
-i=0
-time dgoss run -it phpearth/test:php-7.0 || ((i++))
-
-exit $i

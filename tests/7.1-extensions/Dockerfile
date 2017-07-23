@@ -1,4 +1,4 @@
-FROM phpearth/php:7.1
+FROM phpearth/test:7.1
 
 RUN apk add --no-cache \
     php7.1-apcu \

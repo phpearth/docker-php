@@ -1,8 +1,0 @@
-#!/bin/bash
-
-docker build -t test-php71 -f Dockerfile .
-
-i=0
-time dgoss run -it test-php71 || ((i++))
-
-exit $i
