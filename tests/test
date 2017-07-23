@@ -1,0 +1,24 @@
+#!/bin/bash
+
+FOLDER="${1:-all}"
+i=0
+
+if [ "$FOLDER" = "all" ]; then
+  for x in */;do
+    echo -e "\n\n======================="
+    echo "testing $x"
+    echo "======================="
+    pushd $x > /dev/null
+    ./test || ((i++))
+    popd > /dev/null
+  done
+else
+  echo -e "\n\n======================="
+  echo "testing $FOLDER"
+  echo "======================="
+  pushd $FOLDER > /dev/null
+  ./test || ((i++))
+  popd > /dev/null
+fi
+
+exit $i
