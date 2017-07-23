@@ -49,7 +49,6 @@ command:
     - zip
     - zlib
     - '[Zend Modules]'
-    - Xdebug
     - Zend OPcache
     stderr: []
     timeout: 10000
