@@ -9,8 +9,8 @@ On Alpine Linux add a PHP.earth repository and make it trusted:
 
 ```bash
 apk add --no-cache wget ca-certificates \
-&& wget -O /etc/apk/keys/phpearth.rsa.pub https://alpine.php.earth/phpearth.rsa.pub \
-&& echo "https://alpine.php.earth" >> /etc/apk/repositories
+&& wget -O /etc/apk/keys/phpearth.rsa.pub https://repos.php.earth/alpine/phpearth.rsa.pub \
+&& echo "https://repos.php.earth/alpine" >> /etc/apk/repositories
 ```
 
 PHP.earth packages are prefixed with `php7.0`, `php7.1`, and `php7.2`:
@@ -27,8 +27,8 @@ your Dockerfile:
 ```Dockerfile
 FROM alpine:3.6
 
-ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
-RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+RUN echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache php7.1
 ```
 
@@ -51,14 +51,14 @@ apk add --no-cache wget ca-certificates
 Making the repository trusted is done by downloading the public key:
 
 ```bash
-wget -O /etc/apk/keys/phpearth.rsa.pub https://alpine.php.earth/phpearth.rsa.pub
+wget -O /etc/apk/keys/phpearth.rsa.pub https://repos.php.earth/alpine/phpearth.rsa.pub
 ```
 
 Last step is registering the repository on APK by appending a new line in
 `/etc/apk/repositories`:
 
 ```bash
-echo "https://alpine.php.earth" >> /etc/apk/repositories
+echo "https://repos.php.earth/alpine" >> /etc/apk/repositories
 ```
 
 ### PHP 7.1

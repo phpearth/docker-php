@@ -11,9 +11,9 @@ COPY .docker/abuild /
 
 # To build PHP Pecl extensions and some packages, we'll need some deps from the
 # local PHP.earth Alpine repository
-COPY repo/main /alpine.php.earth
-RUN echo "/alpine.php.earth" | tee -a /etc/apk/repositories \
-    && abuild-sign -k /home/packager/.abuild/phpearth.rsa.priv /alpine.php.earth/x86_64/APKINDEX.tar.gz \
+COPY repo/main /alpine-repo
+RUN echo "/alpine-repo" | tee -a /etc/apk/repositories \
+    && abuild-sign -k /home/packager/.abuild/phpearth.rsa.priv /alpine-repo/x86_64/APKINDEX.tar.gz \
     && apk update
 
 USER packager

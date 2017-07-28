@@ -8,7 +8,7 @@ Carefully crafted Docker images for PHP developers with PHP 7.0, PHP 7.1, PHP 7.
 * Optional Composer installation
 * Optional PHPUnit installation
 * [runit](http://smarden.org/runit/) for running multiple services without overhead
-* Alpine base image with PHP.earth Alpine PHP repositories
+* Alpine base image with PHP.earth PHP repositories
 * Optimized Docker image sizes
 * Multiple PHP versions
 
@@ -101,7 +101,7 @@ FROM phpearth/php:7.1-litespeed
 
 ### PHP extensions
 
-To install additional PHP extensions, you can use packages from the [PHP.earth Alpine](https://alpine.php.earth) repository:
+To install additional PHP extensions, you can use packages from the [PHP.earth Alpine repository](https://php.earth/alpine):
 
 ```Dockerfile
 FROM phpearth/php:7.1-nginx
@@ -177,12 +177,44 @@ These Docker images include the latest PHP versions and packages for Alpine Linu
 ```Dockerfile
 FROM alpine:3.6
 
-ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
-RUN echo "https://alpine.php.earth" >> /etc/apk/repositories \
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+RUN echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache php7.1
 ```
 
 PHP.earth Alpine packages are prefixed with `php7.0`, `php7.1` and `php7.2`.
+
+## Building Images
+
+Images are automatically build on [Docker Hub](https://hub.docker.com/r/phpearth/php/).
+
+Docker Cloud and therefore Docker Hub also provides
+[overriding and customization](https://docs.docker.com/docker-cloud/builds/advanced/)
+of various commands when building images automatically.
+
+There are some hooks defined in the `docker/hooks` folder:
+
+* `hooks/build` - executed when building image
+* `hooks/post_push` - executed after building image, used to push additional tags
+  to Docker Hub.
+
+### Labels
+
+[Labels](https://docs.docker.com/engine/userguide/labels-custom-metadata/) are
+neat way to expose additional metadata about particular Docker object. We use
+[Label Schema](http://label-schema.org/) when defining image labels:
+
+* `build-date` - Date and time of the build. Defined as
+  `org.label-schema.build-date=$BUILD_DATE`, where `$BUILD_DATE` is set dynamically
+  via above `hooks/build` script
+* `vcs-url` - Repository location on GitHub. Defined as
+  `org.label-schema.vcs-url="https://github.com/php-earth/docker-php.git"`
+* `vcs-ref` - Reference to commit in Git repository
+* `schema-version` - Version of the Label Schema in use.
+* `vendor` - Vendor name of the image creators.
+* `name`
+* `description`
+* `url`
 
 ## License and contributing
 

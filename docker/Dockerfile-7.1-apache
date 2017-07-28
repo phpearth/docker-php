@@ -52,10 +52,10 @@ ENV \
         apache2"
 
 # PHP.earth Alpine repository for better developer experience
-ADD https://alpine.php.earth/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
-    && echo "https://alpine.php.earth" >> /etc/apk/repositories \
+    && echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
     && mkdir /run/apache2
 
