@@ -3,10 +3,10 @@ version: '3.3'
 services:
   abuild:
     build:
-      context: ..
-      dockerfile: .docker/abuild/Dockerfile
+      context: abuild
+      dockerfile: Dockerfile
     container_name: phpearth-abuild
     volumes:
-      - ../repo:/repo
       - ../build:/build
+      - ../repo:/repo
     working_dir: /build

@@ -49,6 +49,11 @@ php7.2-redis
 php7.2-swoole
 "
 
+# To build PHP Pecl extensions and some packages, we'll need some deps from the
+# local PHP.earth Alpine repository
+abuild-sign -k /home/packager/.abuild/phpearth.rsa.priv /repo/main/x86_64/APKINDEX.tar.gz
+sudo apk update
+
 if [ "$BUILD_PACKAGES" = "7.0" ]; then
   packages=$packages_70
 elif [ "$BUILD_PACKAGES" = "7.1" ]; then
