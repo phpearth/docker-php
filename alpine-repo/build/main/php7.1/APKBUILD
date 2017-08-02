@@ -4,9 +4,9 @@
 pkgname=php7.1
 _pkgreal=php
 _phpver=7.1
-pkgver=7.1.7
+pkgver=7.1.8
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=103
+pkgrel=100
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -73,8 +73,6 @@ source="http://php.net/distributions/$_pkgreal-$pkgver.tar.xz
   php-fpm.initd
   php-fpm.logrotate
   php-module.conf
-  phpdbg.c.patch
-  snmp.c.patch
   "
 
 builddir="$srcdir/$_pkgreal-$pkgver"
@@ -611,7 +609,7 @@ _mv() {
   mkdir -p "$dest"
   mv $@
 }
-sha512sums="aaf846feccc8ab1cc4ab68ec166596d1a610334ed461e1203208c40b7a7db4bbaee7a79d6e47be1cba07e59087846ea6d2f8fbbd17deae6cc724e08fa9813cd0  php-7.1.7.tar.xz
+sha512sums="89345cf6983ddac498a612e6b63e57b84917f2e55ef9cbd3ba7eb4db9dd8f3d083dd6fdb288bcdf373ca67441fbbe84e16b643659df867984f72d79e446f2823  php-7.1.8.tar.xz
 f8ecae241a90cbc3e98aa4deb3d5d35ef555f51380e29f4e182a8060dffeb84be74f030a14c6b452668471030d78964f52795ca74275db05543ccad20ef1f2cc  allow-build-recode-and-imap-together.patch
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad338142de78e4844aed885b1ad1865282072999fb045c8ad7  fix-asm-constraints-in-aarch64-multiply-macro.patch
@@ -619,6 +617,4 @@ d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
 bdfc4a1caaadd49151cda5af6b011e17f5404927d427a51826415c15f839b6d65f8dc5532ad346be2da349de407db127c1203de432fb487b8a3ee79ac42106a0  php-fpm.initd
 0ebb6f6ffa2ed613b966d88161e8cc46633ee18b3a399f05de4782ebe8aacc5206ce1259f8ea873fbb3df11c7c68728670695ef35e4696a5b00d0c2bbd597b80  php-fpm.logrotate
-6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf
-d2e6fe0b3635d56de6cead8ff1b579490a19ff6733d58a82accc1bbef8acb3686ad3f2c4b66991d6fd3d43f89cce16cb676ffaee9f491c6b891b20dc66b32dcc  phpdbg.c.patch
-df95039139a6726487a7a01202c027c097f1fd226ac0c800c1f42a635560505436eeac544f0bdbe1867c0c9ad5cfc49706aba2edb94d72e47120234a5782eeb5  snmp.c.patch"
+6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf"

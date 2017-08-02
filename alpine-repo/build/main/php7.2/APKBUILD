@@ -5,8 +5,8 @@ pkgname=php7.2
 _pkgreal=php
 _phpver=7.2
 pkgver=7.2.0
-_pkgrealver=7.2.0beta1
-pkgrel=7
+_pkgrealver=7.2.0beta2
+pkgrel=8
 _apiver=20170718
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -595,7 +595,7 @@ _mv() {
   mkdir -p "$dest"
   mv $@
 }
-sha512sums="6d85a4175ba7ce7fb7601175f5fe249e91263713f6759f0f042bebbeea3cb0d49d2b988e05bb9b1a72409036c38f5382f3990e88d4c984a6c906b934b8c82f28  php-7.2.0beta1.tar.xz
+sha512sums="2c757055a9e20ca740119fbeda76c6fd6f4b49567b5259e9c66aa505466cdad2a1737e6e360f6d0879373cfc98fe1f28cc758d8486179f56e525e4b08b444107  php-7.2.0beta2.tar.xz
 1ff2a0a98fadd90b32dd1f8e94b4102ff6b713ee3e6687821b063ff2a7eabea42b963bc88db5668a1dfd7269e62b65f96a1530c3da16992840fc92686a7aa4f4  allow-build-recode-and-imap-together.patch
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 01c3c65f153ea92192f2b2694d93a086ffa67c282fe046f877842942692c25666e4154a09aba6c2161f7f2a3b6595f4d79573e9ee74aec774a95f2f9725846f9  fix-tests-devserver.patch

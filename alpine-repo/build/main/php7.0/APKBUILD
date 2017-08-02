@@ -4,9 +4,9 @@
 pkgname=php7.0
 _pkgreal=php
 _phpver=7.0
-pkgver=7.0.21
+pkgver=7.0.22
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=101
+pkgrel=100
 _apiver=20151012
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -597,7 +597,7 @@ _mv() {
   mkdir -p "$dest"
   mv $@
 }
-sha512sums="6fabbadc6076622628e5c408c1be546982412f56b631285f6abe4a98cedc2bbb5d05f4c1c14b07a7e0a04e24270a8a0d7361baa4f42a2232703baee70934ec34  php-7.0.21.tar.xz
+sha512sums="5308beec7126f9c80884972a6ea1e4e2404773b735d7f6fd46360cbb759809eed4d5672129acae45abfe449199b2969abd41fc437ede174f741e49f1a0791ad1  php-7.0.22.tar.xz
 90630bfb9fcc51e1566336d7dad5488b34978d228ba04f5f5da56f9ab95fde49f5f6f68853cfb195a21998ed8b670ff1cf3fbf4508bb6f5bf7ce2a6d9ec516c1  allow-build-recode-and-imap-together.patch
 d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad338142de78e4844aed885b1ad1865282072999fb045c8ad7  fix-asm-constraints-in-aarch64-multiply-macro.patch
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
