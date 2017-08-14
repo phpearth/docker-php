@@ -1,0 +1,7 @@
+command:
+  phpunit --version:
+    exit-status: 0
+    stdout:
+    - 'by Sebastian Bergmann and contributors.'
+    stderr: []
+    timeout: 10000
