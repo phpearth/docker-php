@@ -6,11 +6,18 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
-* Refactor and fix multiple issues with Alpine repository packages
-* Swoole 1.9.17
-* PHP 7.2.0 beta 1
-* PHP 7.0
 * ...
+
+## [1.1.1] 2017-08-14
+
+* Refactor and fix multiple issues with Alpine repository packages
+* Swoole 1.9.18
+* PHPUnit 6.3.0
+* Composer 1.5.1
+* PHP 7.2.0 beta 2
+* PHP 7.1.8
+* PHP 7.0.22
+* New tests
 
 ## [1.1.0] 2017-07-06
 
