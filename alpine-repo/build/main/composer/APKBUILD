@@ -2,7 +2,7 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
 pkgname=composer
-pkgver=1.4.2
+pkgver=1.5.1
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 pkgdesc="Dependency manager for PHP"
@@ -17,4 +17,4 @@ options="!check"
 package() {
   install -m 0755 -D "$srcdir"/$pkgname-$pkgver.phar "$pkgdir"/usr/bin/$pkgname
 }
-sha512sums="38bb2a696df65a47f6dfa22907e76c3210731530f51dc70f8e104d8b64e9ff2a40b18ea01f3948664fb7595d0e0c92c18dce1efaed6d1d57f05c28fa76f9966f  composer-1.4.2.phar"
+sha512sums="e64d865d6fa40000b886c0ac1926d29cd2120a65b3041a69606dc4af3d5132cc386368b83bb020b8ac1de5fd9fe0a543cb568b13010b4a0a9f6ac97a15b59d42  composer-1.5.1.phar"

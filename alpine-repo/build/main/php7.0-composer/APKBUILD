@@ -2,8 +2,8 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
 pkgname=php7.0-composer
-pkgver=1.4.2
-pkgrel=1
+pkgver=1.0.0
+pkgrel=0
 _phpver=7.0
 pkgdesc="Composer meta package with PHP $_phpver dependencies"
 url="https://getcomposer.org/"

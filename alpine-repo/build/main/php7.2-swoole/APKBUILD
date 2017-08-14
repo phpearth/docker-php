@@ -2,7 +2,7 @@
 
 pkgname=php7.2-swoole
 _pkgreal=swoole
-pkgver=1.9.17
+pkgver=1.9.18
 pkgrel=0
 _phpver=7.2
 pkgdesc="PHP $_phpver extension - Event-driven asynchronous and concurrent networking engine with high performance"
@@ -49,4 +49,4 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "extension=$_pkgreal" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="d5c7b3ae9beab9f282b531900649285d0d9f20c13ad66c21cacd4c2913f618d3bf41b02052c38aa807836089a5251a7efa2db4dec754f44dcfb04bf3c8b2984f  swoole-1.9.17.tgz"
+sha512sums="3a3578881c082651bac31172de36a2cbf892e350a39b6e48658822f1b8f6cc3c579138d5a0e9a2920e5f1b4ca1a5fc004f0a9f38301f8f706f683c5141df0d1a  swoole-1.9.18.tgz"
