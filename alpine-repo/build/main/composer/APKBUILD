@@ -1,10 +1,9 @@
-# Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=composer
 pkgver=1.5.1
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
+pkgname=composer
 pkgdesc="Dependency manager for PHP"
 url="https://getcomposer.org/"
 arch="noarch"

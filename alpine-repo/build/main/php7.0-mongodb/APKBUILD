@@ -1,16 +1,17 @@
-# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.0-mongodb
-_pkgreal=mongodb
 pkgver=1.2.9
 pkgrel=1
 _phpver=7.0
+_php=php$_phpver
+_pkgreal=mongodb
+pkgname=$_php-$_pkgreal
 pkgdesc="PHP $_phpver MongoDB extension"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="Apache"
-depends="php7.0-common>7.0.0 php7.0-json>7.0.0"
-makedepends="php7.0-dev>7.0.0 openssl-dev pcre-dev"
+depends="$_php-common $_php-json"
+makedepends="$_php-dev coreutils openssl-dev pcre-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

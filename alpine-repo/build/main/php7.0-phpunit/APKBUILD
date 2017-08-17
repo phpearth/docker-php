@@ -1,18 +1,18 @@
-# Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.0-phpunit
 pkgver=1.0.0
 pkgrel=0
 _phpver=7.0
+_php=php$_phpver
+pkgname=$_php-phpunit
 pkgdesc="PHPUnit meta package with PHP $_phpver dependencies"
 url="https://phpunit.de/"
 arch="noarch"
 license="BSD 3 Clause"
-depends="phpunit php7.0 php7.0-phar php7.0-json php7.0-mbstring php7.0-openssl php7.0-dom php7.0-xml"
+depends="phpunit $_php $_php-phar $_php-json $_php-mbstring $_php-openssl $_php-dom $_php-xml"
 makedepends=""
 options="!check"
-install_if="phpunit php7.0-common"
+install_if="phpunit $_php-common"
 
 build() {
   # Meta package

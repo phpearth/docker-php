@@ -1,17 +1,18 @@
-# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.1-redis
-_pkgreal=redis
 pkgver=3.1.3
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
+_php=php$_phpver
+_pkgreal=redis
+pkgname=$_php-$_pkgreal
 pkgdesc="PHP $_phpver extension for interfacing with Redis"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
-depends="php7.1-common>7.1.0 php7.1-session>7.1.0"
-makedepends="php7.1-dev>7.1.0"
+depends="$_php-common $_php-session"
+makedepends="$_php-dev coreutils"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 options="!check"
@@ -47,7 +48,6 @@ check() {
 }
 
 package() {
-  replaces="php7-redis"
   mkdir -p "$pkgdir"
   install -d $pkgdir/
   make -C "$builddir" INSTALL_ROOT="$pkgdir" install

@@ -1,16 +1,17 @@
-# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.0-redis
-_pkgreal=redis
 pkgver=3.1.3
 pkgrel=1
 _phpver=7.0
+_php=php$_phpver
+_pkgreal=redis
+pkgname=$_php-$_pkgreal
 pkgdesc="PHP $_phpver extension for interfacing with Redis"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP-3"
-depends="php7.0-common>7.0.0 php7.0-session>7.0.0"
-makedepends="php7.0-dev>7.0.0"
+depends="$_php-common $_php-session"
+makedepends="$_php-dev coreutils"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 options="!check"
@@ -44,7 +45,6 @@ check() {
 }
 
 package() {
-  replaces="php7-redis"
   mkdir -p "$pkgdir"
   install -d $pkgdir/
   make -C "$builddir" INSTALL_ROOT="$pkgdir" install

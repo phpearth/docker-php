@@ -1,17 +1,18 @@
-# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.0-sodium
-_pkgreal=sodium
-_pkglong=libsodium
 pkgver=2.0.4
 pkgrel=0
 _phpver=7.0
+_php=php$_phpver
+_pkgreal=sodium
+pkgname=$_php-$_pkgreal
+_pkglong=libsodium
 pkgdesc="PHP $_phpver extension - Wrapper for the Sodium cryptographic library"
 url="http://pecl.php.net/package/$_pkglong"
 arch="all"
 license="BSD-2"
-depends="php7.0-common>7.0.0 libsodium"
-makedepends="php7.0-dev>7.0.0 libsodium-dev"
+depends="$_php-common libsodium"
+makedepends="$_php-dev coreutils libsodium-dev"
 source="http://pecl.php.net/get/$_pkglong-$pkgver.tgz"
 builddir="$srcdir/$_pkglong-$pkgver"
 

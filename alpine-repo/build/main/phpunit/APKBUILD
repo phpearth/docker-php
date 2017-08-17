@@ -1,9 +1,8 @@
-# Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=phpunit
 pkgver=6.3.0
 pkgrel=0
+pkgname=phpunit
 pkgdesc="The PHP Unit Testing framework"
 url="https://phpunit.de/"
 arch="noarch"

@@ -1,17 +1,18 @@
-# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.1-mongodb
-_pkgreal=mongodb
 pkgver=1.2.9
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
+_php=php$_phpver
+_pkgreal=mongodb
+pkgname=$_php-$_pkgreal
 pkgdesc="PHP $_phpver MongoDB extension"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="Apache"
-depends="php7.1-common>7.1.0 php7.1-json>7.1.0"
-makedepends="php7.1-dev>7.1.0 openssl-dev pcre-dev"
+depends="$_php-common $_php-json"
+makedepends="$_php-dev coreutils openssl-dev pcre-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 provides="php-$_pkgreal=$pkgver-r$pkgrel php7-$_pkgreal=$pkgver-r$pkgrel"

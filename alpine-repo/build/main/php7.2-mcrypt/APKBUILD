@@ -1,16 +1,17 @@
-# Maintainer: "Peter Kokot <peterkokot@gmail.com>"
+# Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.2-mcrypt
-_pkgreal=mcrypt
 pkgver=1.0.1
 pkgrel=1
 _phpver=7.2
+_php=php$_phpver
+_pkgreal=mcrypt
+pkgname=$_php-$_pkgreal
 pkgdesc="PHP $_phpver bindings for the libmcrypt library"
 url="http://pecl.php.net/package/$_pkgreal"
 arch="all"
 license="PHP"
-depends="php7.2-common>7.2.0 libmcrypt"
-makedepends="php7.2-dev>7.2.0 libmcrypt-dev"
+depends="$_php-common libmcrypt"
+makedepends="$_php-dev coreutils libmcrypt-dev"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
 

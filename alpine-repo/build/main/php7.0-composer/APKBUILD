@@ -1,18 +1,18 @@
-# Contributor: Peter Kokot <peterkokot@gmail.com>
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgname=php7.0-composer
 pkgver=1.0.0
 pkgrel=0
 _phpver=7.0
+_php=php$_phpver
+pkgname=$_php-composer
 pkgdesc="Composer meta package with PHP $_phpver dependencies"
 url="https://getcomposer.org/"
 arch="noarch"
 license="MIT"
-depends="composer php7.0 php7.0-phar php7.0-json php7.0-mbstring php7.0-openssl php7.0-zip php7.0-zlib"
+depends="composer $_php $_php-phar $_php-json $_php-mbstring $_php-openssl $_php-zip $_php-zlib"
 makedepends=""
 options="!check"
-install_if="composer php7.0-common"
+install_if="composer $_php-common"
 
 build() {
   # Meta package
