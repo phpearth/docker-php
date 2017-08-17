@@ -25,3 +25,6 @@ abuild-generate-private-key: ## Generate new private key
 
 abuild-generate-public-key: ## Generate new public key
 	docker-compose -f alpine-repo/.docker/docker-compose.yml run abuild openssl rsa -in phpearth.rsa.priv -pubout -out /repo/phpearth.rsa.pub
+
+clean: ## Remove pkg and src folders when building packages for Alpine
+	rm -rf alpine-repo/build/main/*/pkg alpine-repo/build/main/*/src
