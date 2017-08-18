@@ -1,11 +1,12 @@
 diff --git a/src/thread/thread.h b/src/thread/thread.h
-index 99bda16..2443562 100644
+index 99bda16..ac48ab7 100644
 --- a/src/thread/thread.h
 +++ b/src/thread/thread.h
-@@ -87,11 +87,6 @@ public:
+@@ -86,12 +86,6 @@ public:
+ 
      int timedJoin(void **pRetVal, struct timespec *timeout)
      {   return pthread_timedjoin_np(m_tid, pRetVal, timeout);    }
- 
+-
 -    int attrSetAffinity(size_t cpusetsize, const cpu_set_t *cpuset)
 -    {   return pthread_attr_setaffinity_np(&m_attr, cpusetsize, cpuset);  }
 -
@@ -14,3 +15,9 @@ index 99bda16..2443562 100644
  #endif
  
      int attrSetDetachState(int detachstate)
+@@ -166,5 +160,3 @@ public:
+ 
+ 
+ #endif //THREAD_H
+-
+-

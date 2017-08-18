@@ -1,5 +1,5 @@
 diff --git a/include/lsr/ls_lock.h b/include/lsr/ls_lock.h
-index 2eb4e96..c898be0 100644
+index b3e5b66..5b88804 100644
 --- a/include/lsr/ls_lock.h
 +++ b/include/lsr/ls_lock.h
 @@ -52,16 +52,9 @@
@@ -19,3 +19,26 @@ index 2eb4e96..c898be0 100644
  #define USE_ATOMIC_SPIN
  
  #define MAX_FUTEX_SPINCNT      10
+@@ -478,7 +471,7 @@ ls_inline int ls_atomic_spin_unlock(ls_atom_spinlock_t *p)
+  * @param[in] p - A pointer to the lock.
+  * @return 1 - locked, 0 - not locked.
+  *
+- * @see ls_atomic_spin_setup, ls_atomic_spin_lock, ls_atomic_spin_trylock 
++ * @see ls_atomic_spin_setup, ls_atomic_spin_lock, ls_atomic_spin_trylock
+  *      ls_atomic_spin_unlock
+  */
+ ls_inline int ls_atomic_spin_locked(ls_atom_spinlock_t *p)
+@@ -511,7 +504,7 @@ ls_inline int ls_atomic_spin_pidunlock(ls_atom_spinlock_t *p)
+  * @param[in] p - A pointer to the lock.
+  * @return 1 - locked, 0 - not locked.
+  *
+- * @see ls_atomic_spin_setup, ls_atomic_spin_lock, ls_atomic_spin_trylock 
++ * @see ls_atomic_spin_setup, ls_atomic_spin_lock, ls_atomic_spin_trylock
+  *      ls_atomic_spin_unlock
+  */
+ ls_inline int ls_atomic_pidlocked(ls_atom_spinlock_t *p)
+@@ -545,4 +538,3 @@ int ls_pspinlock_setup(ls_pspinlock_t *p);
+ #endif
+ 
+ #endif //LS_LOCK_H
+-
