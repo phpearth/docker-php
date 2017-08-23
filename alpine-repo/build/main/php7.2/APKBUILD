@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.2
 pkgver=7.2.0
 _pkgrealver=7.2.0beta3
-pkgrel=9
+pkgrel=10
 _apiver=20170718
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -23,6 +23,7 @@ _depends_mysqli="$pkgname-mysqlnd $pkgname-openssl"
 makedepends="
   apache2
   apache2-dev
+  argon2-dev
   aspell-dev
   autoconf
   bison
@@ -273,6 +274,7 @@ _build() {
     --enable-soap=shared \
     --enable-sockets=shared \
     --with-sodium=shared \
+    --with-password-argon2 \
     --with-sqlite3=shared,/usr \
     --enable-sysvmsg=shared \
     --enable-sysvsem=shared \

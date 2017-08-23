@@ -6,6 +6,7 @@
 BUILD_PACKAGES="${1:-all}"
 
 packages_others="
+argon2
 composer
 litespeed
 phpunit
