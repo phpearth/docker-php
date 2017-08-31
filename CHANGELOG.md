@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file. This projec
 * Swoole 1.9.20
 * OpenLiteSpeed 1.4.27
 * PHP 7.2.0 RC1
+* PHP 7.1.9
+* PHP 7.0.23
 * ...
 
 ## [1.1.1] 2017-08-14
