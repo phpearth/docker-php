@@ -4,8 +4,8 @@ pkgname=php7.2
 _pkgreal=php
 _phpver=7.2
 pkgver=7.2.0
-_pkgrealver=7.2.0RC1
-pkgrel=11
+_pkgrealver=7.2.0RC2
+pkgrel=12
 _apiver=20170718
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -64,7 +64,7 @@ makedepends="
   zlib-dev
   "
 
-source="https://downloads.php.net/~remi/$_pkgreal-$_pkgrealver.tar.xz
+source="https://downloads.php.net/~pollita/$_pkgreal-$_pkgrealver.tar.xz
   allow-build-recode-and-imap-together.patch
   disabled-tests.list
   fix-tests-devserver.patch
@@ -596,7 +596,7 @@ _mv() {
   mkdir -p "$dest"
   mv $@
 }
-sha512sums="0b342416df181f7e67174e9be899e1db1d621630366b7b27a3568a076e7eae4b1f7bf08093f39cf8a3adc9698cf35a66c4b59a6014c7cbb2d4d00e4c1cf2618d  php-7.2.0RC1.tar.xz
+sha512sums="aa7e3632381677db995a72dcf0276a3be0d40c32138743a225d8e41e791a6fe00859e27ed7699be90e3843d3eb4da90af6a31aab65dc790c402863d09f409a48  php-7.2.0RC2.tar.xz
 1ff2a0a98fadd90b32dd1f8e94b4102ff6b713ee3e6687821b063ff2a7eabea42b963bc88db5668a1dfd7269e62b65f96a1530c3da16992840fc92686a7aa4f4  allow-build-recode-and-imap-together.patch
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 01c3c65f153ea92192f2b2694d93a086ffa67c282fe046f877842942692c25666e4154a09aba6c2161f7f2a3b6595f4d79573e9ee74aec774a95f2f9725846f9  fix-tests-devserver.patch
