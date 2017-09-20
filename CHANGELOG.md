@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* ...
+
+## [1.1.2] 2017-09-20
+
 * Swoole 1.9.20
 * OpenLiteSpeed 1.4.27
 * PHP 7.2.0 RC2
@@ -14,7 +18,6 @@ All notable changes to this project will be documented in this file. This projec
 * MongoDB 1.3.0
 * Composer 1.5.2
 * [iconv bug fix](https://github.com/php-earth/docker-php/issues/3)
-* ...
 
 ## [1.1.1] 2017-08-14
 
