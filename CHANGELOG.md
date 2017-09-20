@@ -8,9 +8,12 @@ All notable changes to this project will be documented in this file. This projec
 
 * Swoole 1.9.20
 * OpenLiteSpeed 1.4.27
-* PHP 7.2.0 RC1
+* PHP 7.2.0 RC2
 * PHP 7.1.9
 * PHP 7.0.23
+* MongoDB 1.3.0
+* Composer 1.5.2
+* [iconv bug fix](https://github.com/php-earth/docker-php/issues/3)
 * ...
 
 ## [1.1.1] 2017-08-14
