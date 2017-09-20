@@ -1,0 +1,19 @@
+--- a/ext/iconv/config.m4
++++ b/ext/iconv/config.m4
+@@ -52,8 +52,15 @@
+       LDFLAGS="-liconv $LDFLAGS"
+       AC_TRY_RUN([
+ #include <$PHP_ICONV_H_PATH>
++#include <stdio.h>
++
+ int main() {
+-  printf("%d", _libiconv_version);
++  char *version = "unknown";
++  static char buf[16];
++  snprintf(buf, sizeof(buf), "%d.%d",
++    ((_LIBICONV_VERSION >> 8) & 0x0f), (_LIBICONV_VERSION & 0x0f));
++  version = buf;
++  printf("version %s ", version);
+   return 0;
+ }
+       ],[

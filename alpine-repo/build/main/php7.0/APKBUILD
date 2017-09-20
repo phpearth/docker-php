@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.0
 pkgver=7.0.23
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=100
+pkgrel=101
 _apiver=20151012
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -20,6 +20,7 @@ _depends_phar="$pkgname $pkgname-zlib"
 # openssl is actually transitive dependency here, but we need to because of load
 # index based on number of dependencies.
 _depends_mysqli="$pkgname-mysqlnd $pkgname-openssl"
+_depends_iconv="gnu-libiconv"
 makedepends="
   apache2
   apache2-dev
@@ -37,6 +38,7 @@ makedepends="
   gdbm-dev
   gettext-dev
   gmp-dev
+  gnu-libiconv-dev
   icu-dev
   imap-dev
   krb5-dev
@@ -65,7 +67,11 @@ makedepends="
 
 source="http://php.net/distributions/$_pkgreal-$pkgver.tar.xz
   allow-build-recode-and-imap-together.patch
+  config.m4.patch
+  configure.patch
+  disabled-tests.list
   fix-asm-constraints-in-aarch64-multiply-macro.patch
+  iconv.c.patch
   install-pear.patch
   php-fpm.initd
   php-fpm.logrotate
@@ -248,7 +254,7 @@ _build() {
       --with-mysql-sock=/run/mysqld/mysqld.sock \
     --enable-mysqlnd=shared \
     --enable-opcache=shared \
-    --with-openssl=shared  \
+    --with-openssl=shared \
       --with-system-ciphers \
       --with-kerberos \
     --enable-pcntl=shared \
@@ -598,7 +604,11 @@ _mv() {
 }
 sha512sums="62201592fca88fb1c302badf7e73e5d417e9a062300e0d32fdfcb346d300cd86bf957b880a73795037a332fe148b64589bb15204bdd6b0ddcbbddc5a12e6d042  php-7.0.23.tar.xz
 90630bfb9fcc51e1566336d7dad5488b34978d228ba04f5f5da56f9ab95fde49f5f6f68853cfb195a21998ed8b670ff1cf3fbf4508bb6f5bf7ce2a6d9ec516c1  allow-build-recode-and-imap-together.patch
+0955b336f0847967dbc9760131bacc0238c8b5dc84c09902bae7b2ffa62a78a6d22fd95fb140286e7f8171da128ad9ff3f9e885607242573b75ad8a384353913  config.m4.patch
+b96af7136f0bd3c0b8c42a98c36dd35b91b4d102f0704b5b071a9c2291a29a7345a54ebdb83c05f26d842a245aa648a6816f648134fc03535ad82833bd6418a5  configure.patch
+87170d6f920179b4844454b39560617aa5d5d64f35349c0d5f04b84038c5be29c24551052a3e323730041cb8ba4b55e28d3027b739a38b564906a592fa988c82  disabled-tests.list
 d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad338142de78e4844aed885b1ad1865282072999fb045c8ad7  fix-asm-constraints-in-aarch64-multiply-macro.patch
+724a77f756b24dc199f5932827f28023c23b2f8487b6f31a53527b628a53c77a5a3d6c40a9b8b0fb35fd585a4b5ba16212c7f4249bc702101f089ae3c0c027e3  iconv.c.patch
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
 f20c5dfa88bcbca2adf10a792ea420edb26c3d7e3428b4e49f07a6e5b9ae52a8270b6087b46899036dc86ba1962c92b535be56f31a6a9c341f73cded67698cab  php-fpm.initd
 3a8fa61867526355ba0278b83f01a104a591c46dba4b96d600f5b66bebee30e6aa18b579dbee371f87166a2c9dff3ba7cc5faf2f836dfc91fa5a94970e535fec  php-fpm.logrotate

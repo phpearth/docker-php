@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.2
 pkgver=7.2.0
 _pkgrealver=7.2.0RC2
-pkgrel=12
+pkgrel=13
 _apiver=20170718
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -20,6 +20,7 @@ _depends_phar="$pkgname $pkgname-zlib"
 # openssl is actually transitive dependency here, but we need to because of load
 # index based on number of dependencies.
 _depends_mysqli="$pkgname-mysqlnd $pkgname-openssl"
+_depends_iconv="gnu-libiconv"
 makedepends="
   apache2
   apache2-dev
@@ -38,6 +39,7 @@ makedepends="
   gdbm-dev
   gettext-dev
   gmp-dev
+  gnu-libiconv-dev
   icu-dev
   imap-dev
   krb5-dev
@@ -66,8 +68,11 @@ makedepends="
 
 source="https://downloads.php.net/~pollita/$_pkgreal-$_pkgrealver.tar.xz
   allow-build-recode-and-imap-together.patch
+  config.m4.patch
+  configure.patch
   disabled-tests.list
   fix-tests-devserver.patch
+  iconv.c.patch
   install-pear.patch
   php-fpm.initd
   php-fpm.logrotate
@@ -249,7 +254,7 @@ _build() {
       --with-mysql-sock=/run/mysqld/mysqld.sock \
     --enable-mysqlnd=shared \
     --enable-opcache=shared \
-    --with-openssl=shared  \
+    --with-openssl=shared \
       --with-system-ciphers \
       --with-kerberos \
     --enable-pcntl=shared \
@@ -598,8 +603,11 @@ _mv() {
 }
 sha512sums="aa7e3632381677db995a72dcf0276a3be0d40c32138743a225d8e41e791a6fe00859e27ed7699be90e3843d3eb4da90af6a31aab65dc790c402863d09f409a48  php-7.2.0RC2.tar.xz
 1ff2a0a98fadd90b32dd1f8e94b4102ff6b713ee3e6687821b063ff2a7eabea42b963bc88db5668a1dfd7269e62b65f96a1530c3da16992840fc92686a7aa4f4  allow-build-recode-and-imap-together.patch
+0955b336f0847967dbc9760131bacc0238c8b5dc84c09902bae7b2ffa62a78a6d22fd95fb140286e7f8171da128ad9ff3f9e885607242573b75ad8a384353913  config.m4.patch
+39104a51a9b2cbcefff94f2d8d8757a694f7cf260bc98fe4a69aa5faa14f0942d3e6061b08e8f3b69917e1d412ee3a9a4b1811d4de430dc251e6bbf0a107ca9a  configure.patch
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 01c3c65f153ea92192f2b2694d93a086ffa67c282fe046f877842942692c25666e4154a09aba6c2161f7f2a3b6595f4d79573e9ee74aec774a95f2f9725846f9  fix-tests-devserver.patch
+724a77f756b24dc199f5932827f28023c23b2f8487b6f31a53527b628a53c77a5a3d6c40a9b8b0fb35fd585a4b5ba16212c7f4249bc702101f089ae3c0c027e3  iconv.c.patch
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
 0dde6dfaa9e03a4c84be7ba3df4321c983f4ae60b1919f29285c47db3b580bc938a2bde83c183db2460f4caf6c16261849a0a7a05d1b0b15096b4984ae16371e  php-fpm.initd
 618e8dc8b24fb517c04644bf245f7731f75c2a5a37f9c661ca093373ffcb49fdeb246774be7a1d9e8c947bcb1efbd065866f2d33da0d7750bf029db6233a8f53  php-fpm.logrotate
