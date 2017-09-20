@@ -1,6 +1,6 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgver=1.2.10
+pkgver=1.3.0
 pkgrel=0
 _phpver=7.2
 _php=php$_phpver
@@ -26,7 +26,8 @@ build() {
 
   phpize
 
-  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure \
+    --prefix=/usr \
     --with-php-config=/usr/bin/php-config
 
   make -j$processors
@@ -50,4 +51,4 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "extension=$_pkgreal" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="cd0a3c00e48f2a6f7286a58ac5ed71fce87962cc5de3abb53f6ef97979fdfc4469c05b6148ce9a48f8c8598cdb10bf0abd1899ffba11edefd681d98256154b34  mongodb-1.2.10.tgz"
+sha512sums="5fb8f568fcb8f05c6dbb0e2f003c29939fe4f152b26cc9b41991222f825bf87df4bf7db9d772e424ff5fee903b51c02ea94ecb52fb83107c6cc0347db7f4d02e  mongodb-1.3.0.tgz"
