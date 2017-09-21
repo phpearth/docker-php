@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.1
 pkgver=7.1.9
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=101
+pkgrel=102
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -35,6 +35,7 @@ makedepends="
   file
   freetds-dev
   freetype-dev
+  gd-dev
   gdbm-dev
   gettext-dev
   gmp-dev
@@ -229,7 +230,7 @@ _build() {
     --enable-exif=shared \
     --enable-fileinfo=shared \
     --enable-ftp=shared \
-    --with-gd=shared \
+    --with-gd=shared,/usr \
       --with-freetype-dir=/usr \
       --disable-gd-jis-conv \
       --with-jpeg-dir=/usr \

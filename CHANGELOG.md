@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* Fixed bug with PHP bundled libgd not working with provided GNU libiconv package:
+  ```
+  PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib/php/7.1/modules/gd.so' - Error relocating /usr/lib/php/7.1/modules/gd.so: libiconv: symbol not found in Unknown on line )
+  ```
 * ...
 
 ## [1.1.2] 2017-09-20
