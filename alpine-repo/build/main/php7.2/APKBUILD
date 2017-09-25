@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.2
 pkgver=7.2.0
 _pkgrealver=7.2.0RC2
-pkgrel=14
+pkgrel=15
 _apiver=20170718
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -75,6 +75,7 @@ source="https://downloads.php.net/~pollita/$_pkgreal-$_pkgrealver.tar.xz
   fix-tests-devserver.patch
   iconv.c.patch
   install-pear.patch
+  Makefile.frag.patch
   php-fpm.initd
   php-fpm.logrotate
   php-module.conf
@@ -84,6 +85,7 @@ builddir="$srcdir/$_pkgreal-$_pkgrealver"
 _libdir="/usr/lib/php/$_phpver"
 _extension_dir="$_libdir/modules"
 _extension_confd="/etc/php/$_phpver/conf.d"
+_tmpdir="$startdir/tmp"
 
 _extensions="
   bcmath
@@ -198,7 +200,7 @@ _build() {
   local without_pcre_jit
   [ "$CARCH" = "s390x" ] && without_pcre_jit="--without-pcre-jit"
 
-  local processors=$(nproc)
+  local jobs=$(($(nproc)+1))
 
   EXTENSION_DIR=$_extension_dir ./configure \
     --build=$CBUILD \
@@ -208,13 +210,13 @@ _build() {
     --libdir=$_libdir \
     --includedir=/usr/include/php/$_phpver \
     --datadir=/usr/share/php/$_phpver \
-    --sysconfdir=/etc/php/$_phpver \
     --localstatedir=/var \
     --with-layout=GNU \
+    --sysconfdir=/etc/php/$_phpver \
+    --with-config-file-path=/etc/php/$_phpver \
+    --with-config-file-scan-dir=/etc/php/$_phpver/conf.d \
     --with-pic \
     --with-pear=/usr/share/php/$_phpver \
-    --with-config-file-path=/etc/php/$_phpver \
-    --with-config-file-scan-dir=$_extension_confd \
     --disable-short-tags \
     --enable-bcmath=shared \
     --with-bz2=shared \
@@ -298,34 +300,32 @@ _build() {
       --with-libzip=/usr \
     --with-zlib=shared \
       --with-zlib-dir=/usr \
+    --enable-phpdbg \
+    --enable-phpdbg-webhelper \
+    --enable-fpm \
+    --with-fpm-user=www-data \
+    --with-fpm-group=www-data \
     $@
 
-  make -j$processors
+  make -j$jobs
+
+  make INSTALL_ROOT="$_tmpdir" install
 }
 
 build() {
   cd "$builddir"
 
-  # phpdbg
-  _build --enable-phpdbg \
-         --enable-phpdbg-webhelper \
-         --disable-cgi \
-         --disable-cli
+  # PHP can't be built with Apache and Embed SAPIs at the same time, so we build
+  # embed SAPI and other SAPIs separately.
 
-  # apache2 module
-  _build --disable-phpdbg \
-         --disable-cgi \
-         --disable-cli \
-         --with-apxs2
-  cp libs/libphp7.so sapi/apache2handler/mod_php.so
+  # cli, cgi, phpdbg, fpm, apache, litespeed
+  # https://bugs.php.net/bug.php?id=75250
+  install -Dm644 /etc/apache2/httpd.conf $_tmpdir/etc/apache2/httpd.conf
+  _build --with-apxs2 \
+         --with-litespeed \
 
-  # cgi, cli, fpm, embed, litespeed
-  _build --disable-phpdbg \
-         --enable-fpm \
-         --with-fpm-user=www-data \
-         --with-fpm-group=www-data \
-         --enable-embed \
-         --with-litespeed
+  # embed
+  _build --enable-embed
 }
 
 check() {
@@ -360,9 +360,8 @@ package() {
 
   cd "$builddir"
 
-  make INSTALL_ROOT="$pkgdir" install
-
-  install -Dm644 php.ini-production "$pkgdir"/etc/php/$_phpver/php.ini
+  mkdir -p "$pkgdir"
+  mv $_tmpdir/* "$pkgdir"
 
   local file; for file in pear peardev pecl; do
     sed -i -e "s|/usr/bin/php|/usr/bin/php$_phpver|g" \
@@ -370,7 +369,6 @@ package() {
       "$pkgdir"/usr/bin/$file
   done
 
-  find "$pkgdir" -name '.*' | xargs rm -rf
   rmdir "$pkgdir"/var/run
 }
 
@@ -404,11 +402,12 @@ apache2() {
   depends="$depends apache2"
   replaces="php-apache2 php7-apache2"
 
-  install -D -m 755 "$builddir"/sapi/apache2handler/mod_php.so \
-    "$subpkgdir"/usr/lib/apache2/mod_php.so
+  rm -rf "$pkgdir"/etc/apache2
 
   install -D -m 644 "$srcdir"/php-module.conf \
-    "$subpkgdir"/etc/apache2/conf.d/php-module.conf
+    "$subpkgdir"/etc/apache2/conf.d/php$_phpver-module.conf
+
+  _mv "$pkgdir"/usr/lib/apache2 "$subpkgdir"/usr/lib/
 }
 
 phpdbg() {
@@ -416,8 +415,7 @@ phpdbg() {
   replaces="php-phpdbg php7-phpdbg"
   install="$pkgname-phpdbg.post-install"
 
-  install -Dm755 "$builddir"/sapi/phpdbg/phpdbg \
-    "$subpkgdir"/usr/bin/phpdbg$_phpver
+  _mv "$pkgdir"/usr/bin/phpdbg$_phpver "$subpkgdir"/usr/bin/
 }
 
 embed() {
@@ -434,8 +432,7 @@ litespeed() {
   # OpenLiteSpeed requires some additional PHP extensions for admin panel
   depends="$depends $pkgname-bcmath $pkgname-json $pkgname-session"
 
-  mkdir -p "$subpkgdir"/usr/bin
-  mv "$pkgdir"/usr/bin/lsphp "$subpkgdir"/usr/bin/lsphp$_phpver
+  _mv "$pkgdir"/usr/bin/lsphp$_phpver "$subpkgdir"/usr/bin/
 }
 
 cgi() {
@@ -505,11 +502,12 @@ common() {
   depends=""
   replaces="php-common php7-common"
 
-  cd "$pkgdir"
-
-  _mv usr/lib "$subpkgdir"/usr/
-  _mv etc "$subpkgdir"/
+  _mv "$pkgdir"/usr/lib "$subpkgdir"/usr/
+  rm -rf "$pkgdir"/etc/
+  install -Dm644 "$builddir"/php.ini-production "$subpkgdir"/etc/php/$_phpver/php.ini
   mkdir -p "$subpkgdir"/$_extension_confd
+  install -Dm644 "$builddir"/php.ini-development "$subpkgdir"/etc/php/$_phpver/php.ini-development
+  install -Dm644 "$builddir"/php.ini-production "$subpkgdir"/etc/php/$_phpver/php.ini-production
 }
 
 phar() {
@@ -610,6 +608,7 @@ cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d
 01c3c65f153ea92192f2b2694d93a086ffa67c282fe046f877842942692c25666e4154a09aba6c2161f7f2a3b6595f4d79573e9ee74aec774a95f2f9725846f9  fix-tests-devserver.patch
 724a77f756b24dc199f5932827f28023c23b2f8487b6f31a53527b628a53c77a5a3d6c40a9b8b0fb35fd585a4b5ba16212c7f4249bc702101f089ae3c0c027e3  iconv.c.patch
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
+f31a307bbd0318120b787f780b70fd67a4e866c38d551ee290b07d6222d7cdb32af9bfbef2ce39e2c39eaaed3bdb6d9b5e746f952cb626fd2f7864ad67fa73f6  Makefile.frag.patch
 0dde6dfaa9e03a4c84be7ba3df4321c983f4ae60b1919f29285c47db3b580bc938a2bde83c183db2460f4caf6c16261849a0a7a05d1b0b15096b4984ae16371e  php-fpm.initd
 618e8dc8b24fb517c04644bf245f7731f75c2a5a37f9c661ca093373ffcb49fdeb246774be7a1d9e8c947bcb1efbd065866f2d33da0d7750bf029db6233a8f53  php-fpm.logrotate
 6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf"

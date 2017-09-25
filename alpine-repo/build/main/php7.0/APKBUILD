@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.0
 pkgver=7.0.23
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=102
+pkgrel=103
 _apiver=20151012
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -74,6 +74,7 @@ source="http://php.net/distributions/$_pkgreal-$pkgver.tar.xz
   fix-asm-constraints-in-aarch64-multiply-macro.patch
   iconv.c.patch
   install-pear.patch
+  Makefile.frag.patch
   php-fpm.initd
   php-fpm.logrotate
   php-module.conf
@@ -83,6 +84,7 @@ builddir="$srcdir/$_pkgreal-$pkgver"
 _libdir="/usr/lib/php/$_phpver"
 _extension_dir="$_libdir/modules"
 _extension_confd="/etc/php/$_phpver/conf.d"
+_tmpdir="$startdir/tmp"
 
 _extensions="
   bcmath
@@ -197,7 +199,7 @@ _build() {
   local without_pcre_jit
   [ "$CARCH" = "s390x" ] && without_pcre_jit="--without-pcre-jit"
 
-  local processors=$(nproc)
+  local jobs=$(($(nproc)+1))
 
   EXTENSION_DIR=$_extension_dir ./configure \
     --build=$CBUILD \
@@ -207,13 +209,13 @@ _build() {
     --libdir=$_libdir \
     --includedir=/usr/include/php/$_phpver \
     --datadir=/usr/share/php/$_phpver \
-    --sysconfdir=/etc/php/$_phpver \
     --localstatedir=/var \
     --with-layout=GNU \
+    --sysconfdir=/etc/php/$_phpver \
+    --with-config-file-path=/etc/php/$_phpver \
+    --with-config-file-scan-dir=/etc/php/$_phpver/conf.d \
     --with-pic \
     --with-pear=/usr/share/php/$_phpver \
-    --with-config-file-path=/etc/php/$_phpver \
-    --with-config-file-scan-dir=$_extension_confd \
     --disable-short-tags \
     --enable-bcmath=shared \
     --with-bz2=shared \
@@ -296,36 +298,35 @@ _build() {
       --with-libzip=/usr \
     --with-zlib=shared \
       --with-zlib-dir=/usr \
+    --enable-phpdbg \
+    --enable-phpdbg-webhelper \
+    --enable-fpm \
+    --with-fpm-user=www-data \
+    --with-fpm-group=www-data \
     $@
 
-  sed -ri "s/^(EXTRA_LDFLAGS[ ]*\=.*)/\1 -lpthread/" Makefile  # see #183 (from main/php)
+  # https://bugs.alpinelinux.org/issues/183
+  sed -ri "s/^(EXTRA_LDFLAGS[ ]*\=.*)/\1 -lpthread/" Makefile
 
-  make -j$processors
+  make -j$jobs
+
+  make INSTALL_ROOT="$_tmpdir" install
 }
 
 build() {
   cd "$builddir"
 
-  # phpdbg
-  _build --enable-phpdbg \
-         --enable-phpdbg-webhelper \
-         --disable-cgi \
-         --disable-cli
+  # PHP can't be built with Apache and Embed SAPIs at the same time, so we build
+  # embed SAPI and other SAPIs separately.
 
-  # apache2 module
-  _build --disable-phpdbg \
-         --disable-cgi \
-         --disable-cli \
-         --with-apxs2
-  cp libs/libphp7.so sapi/apache2handler/mod_php.so
+  # cli, cgi, phpdbg, fpm, apache, litespeed
+  # https://bugs.php.net/bug.php?id=75250
+  install -Dm644 /etc/apache2/httpd.conf $_tmpdir/etc/apache2/httpd.conf
+  _build --with-apxs2 \
+         --with-litespeed \
 
-  # cgi, cli, fpm, embed, litespeed
-  _build --disable-phpdbg \
-         --enable-fpm \
-         --with-fpm-user=www-data \
-         --with-fpm-group=www-data \
-         --enable-embed \
-         --with-litespeed
+  # embed
+  _build --enable-embed
 }
 
 check() {
@@ -360,9 +361,8 @@ package() {
 
   cd "$builddir"
 
-  make INSTALL_ROOT="$pkgdir" install
-
-  install -Dm644 php.ini-production "$pkgdir"/etc/php/$_phpver/php.ini
+  mkdir -p "$pkgdir"
+  mv $_tmpdir/* "$pkgdir"
 
   local file; for file in pear peardev pecl; do
     sed -i -e "s|/usr/bin/php|/usr/bin/php$_phpver|g" \
@@ -370,7 +370,6 @@ package() {
       "$pkgdir"/usr/bin/$file
   done
 
-  find "$pkgdir" -name '.*' | xargs rm -rf
   rmdir "$pkgdir"/var/run
 }
 
@@ -386,7 +385,6 @@ dev() {
     "$subpkgdir"/usr/bin/
 
   _mv ./$_libdir/build "$subpkgdir"/$_libdir/
-  #_mv "$subpkgdir"/usr/include/php/* "$subpkgdir"/usr/include/php/$_phpver
 }
 
 doc() {
@@ -405,11 +403,12 @@ apache2() {
   depends="$depends apache2"
   replaces="php-apache2 php7-apache2"
 
-  install -D -m 755 "$builddir"/sapi/apache2handler/mod_php.so \
-    "$subpkgdir"/usr/lib/apache2/mod_php.so
+  rm -rf "$pkgdir"/etc/apache2
 
   install -D -m 644 "$srcdir"/php-module.conf \
-    "$subpkgdir"/etc/apache2/conf.d/php-module.conf
+    "$subpkgdir"/etc/apache2/conf.d/php$_phpver-module.conf
+
+  _mv "$pkgdir"/usr/lib/apache2 "$subpkgdir"/usr/lib/
 }
 
 phpdbg() {
@@ -417,8 +416,7 @@ phpdbg() {
   replaces="php-phpdbg php7-phpdbg"
   install="$pkgname-phpdbg.post-install"
 
-  install -Dm755 "$builddir"/sapi/phpdbg/phpdbg \
-    "$subpkgdir"/usr/bin/phpdbg$_phpver
+  _mv "$pkgdir"/usr/bin/phpdbg$_phpver "$subpkgdir"/usr/bin/
 }
 
 embed() {
@@ -435,8 +433,7 @@ litespeed() {
   # OpenLiteSpeed requires some additional PHP extensions for admin panel
   depends="$depends $pkgname-bcmath $pkgname-json $pkgname-session"
 
-  mkdir -p "$subpkgdir"/usr/bin
-  mv "$pkgdir"/usr/bin/lsphp "$subpkgdir"/usr/bin/lsphp$_phpver
+  _mv "$pkgdir"/usr/bin/lsphp$_phpver "$subpkgdir"/usr/bin/
 }
 
 cgi() {
@@ -506,11 +503,12 @@ common() {
   depends=""
   replaces="php-common php7-common"
 
-  cd "$pkgdir"
-
-  _mv usr/lib "$subpkgdir"/usr/
-  _mv etc "$subpkgdir"/
+  _mv "$pkgdir"/usr/lib "$subpkgdir"/usr/
+  rm -rf "$pkgdir"/etc/
+  install -Dm644 "$builddir"/php.ini-production "$subpkgdir"/etc/php/$_phpver/php.ini
   mkdir -p "$subpkgdir"/$_extension_confd
+  install -Dm644 "$builddir"/php.ini-development "$subpkgdir"/etc/php/$_phpver/php.ini-development
+  install -Dm644 "$builddir"/php.ini-production "$subpkgdir"/etc/php/$_phpver/php.ini-production
 }
 
 phar() {
@@ -611,6 +609,7 @@ b96af7136f0bd3c0b8c42a98c36dd35b91b4d102f0704b5b071a9c2291a29a7345a54ebdb83c05f2
 d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad338142de78e4844aed885b1ad1865282072999fb045c8ad7  fix-asm-constraints-in-aarch64-multiply-macro.patch
 724a77f756b24dc199f5932827f28023c23b2f8487b6f31a53527b628a53c77a5a3d6c40a9b8b0fb35fd585a4b5ba16212c7f4249bc702101f089ae3c0c027e3  iconv.c.patch
 f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c939768584f3e4edbe52e8bd6103fb6777462326a9d94e8ab1f505  install-pear.patch
+f31a307bbd0318120b787f780b70fd67a4e866c38d551ee290b07d6222d7cdb32af9bfbef2ce39e2c39eaaed3bdb6d9b5e746f952cb626fd2f7864ad67fa73f6  Makefile.frag.patch
 f20c5dfa88bcbca2adf10a792ea420edb26c3d7e3428b4e49f07a6e5b9ae52a8270b6087b46899036dc86ba1962c92b535be56f31a6a9c341f73cded67698cab  php-fpm.initd
 3a8fa61867526355ba0278b83f01a104a591c46dba4b96d600f5b66bebee30e6aa18b579dbee371f87166a2c9dff3ba7cc5faf2f836dfc91fa5a94970e535fec  php-fpm.logrotate
 6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf

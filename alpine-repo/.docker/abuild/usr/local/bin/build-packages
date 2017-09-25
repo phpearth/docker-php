@@ -70,7 +70,7 @@ fi
 
 for package in $packages; do
   cd /build/main/$package
-  rm -rf src pkg
+  rm -rf src pkg tmp
 
   abuild checksum
   abuild -r -K
