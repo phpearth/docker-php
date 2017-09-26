@@ -5,3 +5,5 @@
 /alpine-repo/build/main/*/src
 /alpine-repo/build/main/*/tmp
 /alpine-repo/.docker/abuild/home/packager/.abuild/phpearth.rsa.priv
+/log/*
+!/log/.gitkeep
