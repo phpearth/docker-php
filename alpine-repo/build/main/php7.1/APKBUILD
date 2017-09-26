@@ -3,9 +3,9 @@
 pkgname=php7.1
 _pkgreal=php
 _phpver=7.1
-pkgver=7.1.9
+pkgver=7.1.10
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=103
+pkgrel=100
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -70,6 +70,7 @@ source="http://php.net/distributions/$_pkgreal-$pkgver.tar.xz
   allow-build-recode-and-imap-together.patch
   config.m4.patch
   configure.patch
+  dba_gdbm.c.patch
   disabled-tests.list
   fix-asm-constraints-in-aarch64-multiply-macro.patch
   fix-tests-devserver.patch
@@ -612,10 +613,11 @@ _mv() {
   mkdir -p "$dest"
   mv $@
 }
-sha512sums="feefaae7edda115c9c10d6a07a9d897343ca972e4e5ec327f383cb28f204ac10956653fc120f0474901e59f32f105dc1a7afe64d49a3ea8bf486377837618013  php-7.1.9.tar.xz
+sha512sums="64f03d7a8928283e2f4f0958168610780553765ac20cf558cd6452ba4474461e74366c41b9bfdaf08b25195ca9c0059a94b77f06d8de3512d251cb2a84113d30  php-7.1.10.tar.xz
 f8ecae241a90cbc3e98aa4deb3d5d35ef555f51380e29f4e182a8060dffeb84be74f030a14c6b452668471030d78964f52795ca74275db05543ccad20ef1f2cc  allow-build-recode-and-imap-together.patch
 0955b336f0847967dbc9760131bacc0238c8b5dc84c09902bae7b2ffa62a78a6d22fd95fb140286e7f8171da128ad9ff3f9e885607242573b75ad8a384353913  config.m4.patch
 547c6a5d3c435920a144c7f69c47f55cdbfd41f9d34012787ef509f9581cd1b8129f0c350144fa61af48014ee5cd9e25a9519e9885a461fde7ad585481a7f5b3  configure.patch
+f16df5c5abf868ff89ec1aa64056d653a1653e937cf1e55a341c1ecb946a46b65bfd6f86058d06d4f9c6b1cf13e23288b73eb85441d7711b48524656118f51b0  dba_gdbm.c.patch
 cd76bd6a6a222e17ba50a11d292925966e30532a464ad2807d8ae5a8c510c63eeb494291f0b0ce1d287f13659d290550d001e77b2fc50c70c3ec175b204a37a7  disabled-tests.list
 d93d3fc015580cf5f75c6cbca4cd980e054b61e1068495da81a7e61f1af2c9ae14f09964c04928ad338142de78e4844aed885b1ad1865282072999fb045c8ad7  fix-asm-constraints-in-aarch64-multiply-macro.patch
 01c3c65f153ea92192f2b2694d93a086ffa67c282fe046f877842942692c25666e4154a09aba6c2161f7f2a3b6595f4d79573e9ee74aec774a95f2f9725846f9  fix-tests-devserver.patch

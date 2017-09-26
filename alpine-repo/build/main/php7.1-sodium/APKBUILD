@@ -1,6 +1,6 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgver=2.0.4
+pkgver=2.0.6
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
@@ -24,16 +24,17 @@ prepare() {
 }
 
 build() {
-  local processors=$(nproc)
+  local jobs=$(($(nproc)+1))
 
   cd "$builddir"
 
   phpize
 
-  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure --prefix=/usr \
+  EXTENSION_DIR=/usr/lib/php/$_phpver/modules ./configure \
+    --prefix=/usr \
     --with-php-config=/usr/bin/php-config
 
-  make -j$processors
+  make -j$jobs
 }
 
 check() {

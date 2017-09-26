@@ -17,9 +17,9 @@ makedepends="coreutils"
 build() {
   cd "$builddir"
 
-  local processors=$(nproc)
+  local jobs=$(($(nproc)+1))
 
-  make -j$processors
+  make -j$jobs
 }
 
 check() {

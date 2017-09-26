@@ -45,7 +45,7 @@ thread.h.patch
 builddir="$srcdir/$_pkgreal-$pkgver"
 
 build() {
-  local processors=$(nproc)
+  local jobs=$(($(nproc)+1))
 
   cd "$builddir"
 
@@ -64,7 +64,7 @@ build() {
     --with-zlib=/usr \
     --with-lsphp7
 
-  make -j$processors
+  make -j$jobs
 }
 
 prepare() {

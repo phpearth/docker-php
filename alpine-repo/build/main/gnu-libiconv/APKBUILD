@@ -16,7 +16,10 @@ options="!check"
 replaces="musl-dev musl-utils"
 
 build() {
+  local jobs=$(($(nproc)+1))
+
   cd "$builddir"
+
   ./configure \
     --build=$CBUILD \
     --host=$CHOST \
@@ -28,7 +31,7 @@ build() {
   # work around rpath issue
   sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
   sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-  make
+  make -j$jobs
 }
 
 package() {

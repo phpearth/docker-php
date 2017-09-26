@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file. This projec
   ```
   PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib/php/7.1/modules/gd.so' - Error relocating /usr/lib/php/7.1/modules/gd.so: libiconv: symbol not found in Unknown on line )
   ```
+* PHP 7.0.24
+* PHP 7.1.10
+* PHP 7.2.0RC3
+* Swoole 1.9.21
+* PECL Libsodium 2.0.6
 * ...
 
 ## [1.1.2] 2017-09-20

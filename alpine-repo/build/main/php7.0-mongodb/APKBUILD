@@ -20,7 +20,7 @@ prepare() {
 }
 
 build() {
-  local processors=$(nproc)
+  local jobs=$(($(nproc)+1))
 
   cd "$builddir"
 
@@ -30,7 +30,7 @@ build() {
     --prefix=/usr \
     --with-php-config=/usr/bin/php-config
 
-  make -j$processors
+  make -j$jobs
 }
 
 check() {
