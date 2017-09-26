@@ -1,4 +1,4 @@
-.PHONY: test build build-packages generate-index abuild-generate-private-key abuild-generate-public-key
+.PHONY: help test build build-packages generate-index abuild-generate-private-key abuild-generate-public-key clean
 .DEFAULT_GOAL := help
 
 help: ## Output usage documentation
