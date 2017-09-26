@@ -1,4 +1,4 @@
-.PHONY: help test build build-packages generate-index abuild-generate-private-key abuild-generate-public-key clean
+.PHONY: help test build build-packages generate-index abuild-generate-private-key abuild-generate-public-key clean sh
 .DEFAULT_GOAL := help
 
 help: ## Output usage documentation
@@ -28,3 +28,6 @@ abuild-generate-public-key: ## Generate new public key
 
 clean: ## Remove pkg and src folders when building packages for Alpine
 	rm -rf alpine-repo/build/main/*/pkg alpine-repo/build/main/*/src
+
+sh: ## Run shell
+	docker-compose -f alpine-repo/.docker/docker-compose.yml run --rm abuild sh
