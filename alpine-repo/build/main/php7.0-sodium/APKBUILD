@@ -1,6 +1,6 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgver=2.0.6
+pkgver=2.0.7
 pkgrel=0
 _phpver=7.0
 _php=php$_phpver
@@ -37,7 +37,7 @@ build() {
 check() {
   cd "$builddir"
 
-  local allow_fail='no'
+  local allow_fail='yes'
 
   NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
     SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
@@ -52,4 +52,4 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="bf3eea53f062611e5be2704fa2208376efb30d5e51ab72d1ab6ccf08d78ec8490d1c8cd09624374488fdfd0cfe3fdbf86733fc36fcad9026bb776618ddd70884  libsodium-2.0.4.tgz"
+sha512sums="1aadbfb150b3d86d98c7ac5e099a2b0be45b695f7c5b57ec59d01acc7dc27a58141c5177565fa900007dd2457cbda0577dcb561a7cdeeaf62294b9bf7e7dc939  libsodium-2.0.7.tgz"

@@ -14,6 +14,7 @@ depends="$_php-common"
 makedepends="$_php-dev coreutils linux-headers"
 source="http://pecl.php.net/get/$_pkgreal-$pkgver.tgz"
 builddir="$srcdir/$_pkgreal-$pkgver"
+options="!check"
 
 prepare() {
   default_prepare
@@ -51,4 +52,4 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "extension=$_pkgreal" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="4c94e1dea0d63aaae625ede83873eed6413cf3d72238992ffd62d582b969ab0504aceac57af1a9de74957e02f8c7be969a355f45079e0c8372acde7c806a9529  swoole-1.9.20.tgz"
+sha512sums="8173772ed3f2b89763882c332e3a66ff92a5c4512920a4f101c06264b61e473c76a87b6f20be75083120742ccbbc7cd2c203288f478796c535bdf96b40f361c5  swoole-1.9.21.tgz"
