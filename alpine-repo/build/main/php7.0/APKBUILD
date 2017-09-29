@@ -4,7 +4,7 @@ pkgname=php7.0
 _pkgreal=php
 _phpver=7.0
 pkgver=7.0.24
-pkgrel=0
+pkgrel=1
 _apiver=20151012
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -20,6 +20,8 @@ _depends_phar="$pkgname $pkgname-zlib"
 # index based on number of dependencies.
 _depends_mysqli="$pkgname-mysqlnd $pkgname-openssl"
 _depends_iconv="gnu-libiconv"
+# https://bugs.php.net/bug.php?id=75219
+_depends_openssl="libressl"
 makedepends="
   apache2
   apache2-dev

@@ -5,7 +5,7 @@ _pkgreal=php
 _phpver=7.1
 pkgver=7.1.10
 # Package release number is started at 100 so it overwrites the official package
-pkgrel=100
+pkgrel=101
 _apiver=20160303
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -21,6 +21,8 @@ _depends_phar="$pkgname $pkgname-zlib"
 # index based on number of dependencies.
 _depends_mysqli="$pkgname-mysqlnd $pkgname-openssl"
 _depends_iconv="gnu-libiconv"
+# https://bugs.php.net/bug.php?id=75219
+_depends_openssl="libressl"
 makedepends="
   apache2
   apache2-dev
