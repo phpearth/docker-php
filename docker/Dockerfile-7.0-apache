@@ -57,8 +57,12 @@ ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.p
 RUN set -x \
     && echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
-    && mkdir /run/apache2
+    && mkdir /run/apache2 \
+    && ln -sf /dev/stdout /var/log/apache2/access.log \
+    && ln -sf /dev/stderr /var/log/apache2/error.log
 
 COPY tags/apache /
+
+EXPOSE 80
 
 CMD ["/sbin/runit-wrapper"]

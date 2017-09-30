@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file. This projec
 * Swoole 1.9.21
 * PECL Libsodium 2.0.7
 * PECL Redis 3.1.4
+* [Apache bug fixed](https://github.com/php-earth/docker-php/issues/4)
 * ...
 
 ## [1.1.2] 2017-09-20

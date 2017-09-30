@@ -4,7 +4,7 @@ pkgname=php7.0
 _pkgreal=php
 _phpver=7.0
 pkgver=7.0.24
-pkgrel=1
+pkgrel=2
 _apiver=20151012
 pkgdesc="The PHP $_phpver language runtime engine"
 url="http://www.php.net/"
@@ -79,7 +79,7 @@ source="http://php.net/distributions/$_pkgreal-$pkgver.tar.xz
   Makefile.frag.patch
   php-fpm.initd
   php-fpm.logrotate
-  php-module.conf
+  php7-module.conf
   tidy-buffio.patch
   "
 builddir="$srcdir/$_pkgreal-$pkgver"
@@ -407,10 +407,11 @@ apache2() {
 
   rm -rf "$pkgdir"/etc/apache2
 
-  install -D -m 644 "$srcdir"/php-module.conf \
-    "$subpkgdir"/etc/apache2/conf.d/php$_phpver-module.conf
+  install -D -m 644 "$srcdir"/php7-module.conf \
+    "$subpkgdir"/etc/apache2/conf.d/php7-module.conf
 
   _mv "$pkgdir"/usr/lib/apache2 "$subpkgdir"/usr/lib/
+  mv "$subpkgdir"/usr/lib/apache2/libphp7.so "$subpkgdir"/usr/lib/apache2/mod_php7.so
 }
 
 phpdbg() {
@@ -615,5 +616,5 @@ f1177cbf6b1f44402f421c3d317aab1a2a40d0b1209c11519c1158df337c8945f3a313d689c93976
 f31a307bbd0318120b787f780b70fd67a4e866c38d551ee290b07d6222d7cdb32af9bfbef2ce39e2c39eaaed3bdb6d9b5e746f952cb626fd2f7864ad67fa73f6  Makefile.frag.patch
 f20c5dfa88bcbca2adf10a792ea420edb26c3d7e3428b4e49f07a6e5b9ae52a8270b6087b46899036dc86ba1962c92b535be56f31a6a9c341f73cded67698cab  php-fpm.initd
 3a8fa61867526355ba0278b83f01a104a591c46dba4b96d600f5b66bebee30e6aa18b579dbee371f87166a2c9dff3ba7cc5faf2f836dfc91fa5a94970e535fec  php-fpm.logrotate
-6136c37663bdda37ec4f9e1585e8af93521759a05c390e4e24d22b5ea7a62e0c0c06a84d246a16300f1ceac9c559105be740e9259286530f6a3dacd6949fa717  php-module.conf
+274bd7b0b2b7002fa84c779640af37b59258bb37b05cb7dd5c89452977d71807f628d91b523b5039608376d1f760f3425d165242ca75ee5129b2730e71c4e198  php7-module.conf
 6894c9cba7752a3406e774d9efc0e058c37433493c1c20101e9563bf247c112157a67e306b06b9517b0422eca521f543d637a6cbd2cea7639e43f13d773b3d2b  tidy-buffio.patch"
