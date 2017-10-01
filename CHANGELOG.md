@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* ...
+
+## [1.1.3] 2017-10-01
+
 * Refactored PHP APKBUILD files
 * PHPUnit 6.3.1
 * Fixed bug with PHP bundled libgd not working with provided GNU libiconv package:
@@ -16,10 +20,9 @@ All notable changes to this project will be documented in this file. This projec
 * PHP 7.1.10
 * PHP 7.2.0RC3
 * Swoole 1.9.21
-* PECL Libsodium 2.0.7
+* PECL Libsodium 2.0.8
 * PECL Redis 3.1.4
 * [Apache bug fixed](https://github.com/php-earth/docker-php/issues/4)
-* ...
 
 ## [1.1.2] 2017-09-20
 

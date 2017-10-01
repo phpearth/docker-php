@@ -1,6 +1,6 @@
 # Maintainer: Peter Kokot <peterkokot@gmail.com>
 
-pkgver=2.0.7
+pkgver=2.0.8
 # Package release number is started at 100 so it overwrites the official package
 pkgrel=100
 _phpver=7.1
@@ -55,4 +55,4 @@ package() {
   install -d "$pkgdir"/etc/php/$_phpver/conf.d
   echo "extension=$_pkgreal.so" > "$pkgdir"/etc/php/$_phpver/conf.d/$_pkgreal.ini
 }
-sha512sums="1aadbfb150b3d86d98c7ac5e099a2b0be45b695f7c5b57ec59d01acc7dc27a58141c5177565fa900007dd2457cbda0577dcb561a7cdeeaf62294b9bf7e7dc939  libsodium-2.0.7.tgz"
+sha512sums="3f63d7ac852355dd1a877e6292c04d30b6f7bbd8137ce875f2b3db3f4788534309bba40f5916a59051a70404f5517935bea5338856982c2dba8c604e964512f9  libsodium-2.0.8.tgz"
