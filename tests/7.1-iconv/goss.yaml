@@ -1,0 +1,6 @@
+command:
+  php iconv.php:
+    exit-status: 0
+    stdout: ['!/./']
+    stderr: ['!/./']
+    timeout: 10000
