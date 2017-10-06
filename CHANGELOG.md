@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* PHPUnit 6.4.0
 * ...
 
 ## [1.1.3] 2017-10-01
