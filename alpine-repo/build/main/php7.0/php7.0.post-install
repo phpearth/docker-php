@@ -1,9 +1,0 @@
-#!/bin/sh
-
-_suffix="7.0"
-
-link=$(readlink /usr/bin/php)
-
-if [[ "$link" != "/usr/bin/php7.1" && "$link" != "/usr/bin/php7.2" ]] || [[ ! -f "$link" ]]; then
-  ln -sf /usr/bin/php$_suffix /usr/bin/php
-fi

@@ -8,7 +8,7 @@ Carefully crafted Docker images for PHP developers with PHP 7.0, PHP 7.1, PHP 7.
 * Optional Composer installation
 * Optional PHPUnit installation
 * [runit](http://smarden.org/runit/) for running multiple services without overhead
-* Alpine base image with PHP.earth PHP repositories
+* Alpine base image with [PHP.earth PHP repositories](https://php.earth/alpine)
 * Optimized Docker image sizes
 * Multiple PHP versions
 

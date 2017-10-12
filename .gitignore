@@ -1,9 +1,0 @@
-/alpine-repo/repo/*
-!/alpine-repo/repo
-!/alpine-repo/repo/.gitkeep
-/alpine-repo/build/main/*/pkg
-/alpine-repo/build/main/*/src
-/alpine-repo/build/main/*/tmp
-/alpine-repo/.docker/abuild/home/packager/.abuild/phpearth.rsa.priv
-/log/*
-!/log/.gitkeep
