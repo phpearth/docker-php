@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM phpearth/php:7.0
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -9,16 +9,13 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vendor="PHP.earth" \
       org.label-schema.name="docker-php" \
-      org.label-schema.description="Docker For PHP Developers - Docker image with PHP 7.0, Nginx, and Alpine" \
+      org.label-schema.description="Docker For PHP Developers - Docker image with Alpine, PHP 7.0, and Nginx" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
 ENV \
-    # When using Composer, disable the warning about running commands as root/super user
-    COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
     DEPS="nginx \
         nginx-mod-http-headers-more \
-        php7.0 \
         php7.0-bcmath \
         php7.0-calendar \
         php7.0-mbstring \
@@ -48,15 +45,9 @@ ENV \
         php7.0-json \
         php7.0-posix \
         php7.0-fpm \
-        curl \
-        ca-certificates \
         runit"
 
-# PHP.earth Alpine repository for better developer experience
-ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
-
 RUN set -x \
-    && echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log

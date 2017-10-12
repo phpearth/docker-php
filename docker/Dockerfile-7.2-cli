@@ -9,13 +9,12 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vendor="PHP.earth" \
       org.label-schema.name="docker-php" \
-      org.label-schema.description="Docker For PHP Developers - Docker image with Alpine, PHP 7.2, and OpenLiteSpeed" \
+      org.label-schema.description="Docker For PHP Developers - Docker image with Alpine, PHP CLI 7.2 and few PHP extensions" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
 ENV \
     # Persistent runtime dependencies
-    DEPS="runit \
-        php7.2-bcmath \
+    DEPS="php7.2-bcmath \
         php7.2-calendar \
         php7.2-mbstring \
         php7.2-exif \
@@ -42,15 +41,10 @@ ENV \
         php7.2-fileinfo \
         php7.2-iconv \
         php7.2-json \
-        php7.2-posix \
-        php7.2-litespeed \
-        litespeed"
+        php7.2-posix"
 
 RUN set -x \
-    && apk add --no-cache $DEPS \
-    && ln -sf /dev/stdout /var/lib/litespeed/logs/access.log \
-    && ln -sf /dev/stderr /var/lib/litespeed/logs/error.log
+    && echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
+    && apk add --no-cache $DEPS
 
-COPY tags/litespeed /
-
-CMD ["/sbin/runit-wrapper"]
+CMD ["php", "-a"]
