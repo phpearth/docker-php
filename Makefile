@@ -46,3 +46,5 @@ build: ## Build all images and push them to Docker Hub
 	docker push phpearth/php:7.2-cli
 	docker push phpearth/php:7.2-litespeed
 	docker push phpearth/php:7.2-nginx
+	docker tag phpearth/php:7.2 phpearth/php:latest
+	docker push phpearth/php:latest
