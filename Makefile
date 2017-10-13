@@ -1,4 +1,4 @@
-.PHONY: help test build
+.PHONY: help test build build-all push-all build-and-push
 .DEFAULT_GOAL := help
 
 help: ## Output usage documentation
@@ -9,25 +9,30 @@ test: ## Run all tests; Usage: make test [t="<test-folder-1> <test-folder-2> ...
 	cd tests; \
 	./test "$(t)"
 
-build: ## Build all images and push them to Docker Hub
-	docker build --no-cache -t phpearth/php:7.0 -f docker/Dockerfile-7.0 docker
-	docker build --no-cache -t phpearth/php:7.0-apache -f docker/Dockerfile-7.0-apache docker
-	docker build --no-cache -t phpearth/php:7.0-cgi -f docker/Dockerfile-7.0-cgi docker
-	docker build --no-cache -t phpearth/php:7.0-cli -f docker/Dockerfile-7.0-cli docker
-	docker build --no-cache -t phpearth/php:7.0-litespeed -f docker/Dockerfile-7.0-litespeed docker
-	docker build --no-cache -t phpearth/php:7.0-nginx -f docker/Dockerfile-7.0-nginx docker
-	docker build --no-cache -t phpearth/php:7.1 -f docker/Dockerfile-7.1 docker
-	docker build --no-cache -t phpearth/php:7.1-apache -f docker/Dockerfile-7.1-apache docker
-	docker build --no-cache -t phpearth/php:7.1-cgi -f docker/Dockerfile-7.1-cgi docker
-	docker build --no-cache -t phpearth/php:7.1-cli -f docker/Dockerfile-7.1-cli docker
-	docker build --no-cache -t phpearth/php:7.1-litespeed -f docker/Dockerfile-7.1-litespeed docker
-	docker build --no-cache -t phpearth/php:7.1-nginx -f docker/Dockerfile-7.1-nginx docker
-	docker build --no-cache -t phpearth/php:7.2 -f docker/Dockerfile-7.2 docker
-	docker build --no-cache -t phpearth/php:7.2-apache -f docker/Dockerfile-7.2-apache docker
-	docker build --no-cache -t phpearth/php:7.2-cgi -f docker/Dockerfile-7.2-cgi docker
-	docker build --no-cache -t phpearth/php:7.2-cli -f docker/Dockerfile-7.2-cli docker
-	docker build --no-cache -t phpearth/php:7.2-litespeed -f docker/Dockerfile-7.2-litespeed docker
-	docker build --no-cache -t phpearth/php:7.2-nginx -f docker/Dockerfile-7.2-nginx docker
+build: ## Build image. Usage: make build TAG="7.0-cli"
+	docker build --no-cache --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` -t phpearth/php:$(TAG) -f docker/Dockerfile-$(TAG) docker
+
+build-all: ## Build all images
+	make build TAG="7.0"
+	make build TAG="7.0-apache"
+	make build TAG="7.0-cgi"
+	make build TAG="7.0-cli"
+	make build TAG="7.0-litespeed"
+	make build TAG="7.0-nginx"
+	make build TAG="7.1"
+	make build TAG="7.1-apache"
+	make build TAG="7.1-cgi"
+	make build TAG="7.1-cli"
+	make build TAG="7.1-litespeed"
+	make build TAG="7.1-nginx"
+	make build TAG="7.2"
+	make build TAG="7.2-apache"
+	make build TAG="7.2-cgi"
+	make build TAG="7.2-cli"
+	make build TAG="7.2-litespeed"
+	make build TAG="7.2-nginx"
+
+push-all: ## Push all built images to Docker Hub
 	docker push phpearth/php:7.0
 	docker push phpearth/php:7.0-apache
 	docker push phpearth/php:7.0-cgi
@@ -48,3 +53,7 @@ build: ## Build all images and push them to Docker Hub
 	docker push phpearth/php:7.2-nginx
 	docker tag phpearth/php:7.2 phpearth/php:latest
 	docker push phpearth/php:latest
+
+build-and-push: ## Build all images and push them to Docker Hub
+	make build-all
+	make push-all
