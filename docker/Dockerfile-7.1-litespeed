@@ -1,4 +1,4 @@
-FROM phpearth/php:7.1
+FROM alpine:3.6
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -9,12 +9,17 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vendor="PHP.earth" \
       org.label-schema.name="docker-php" \
-      org.label-schema.description="Docker For PHP Developers - Docker image with Alpine, PHP 7.1, and OpenLiteSpeed" \
+      org.label-schema.description="Docker For PHP Developers - Docker image with PHP 7.1, OpenLiteSpeed, and Alpine" \
       org.label-schema.url="https://github.com/php-earth/docker-php"
 
 ENV \
+    # When using Composer, disable the warning about running commands as root/super user
+    COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
-    DEPS="runit \
+    DEPS="curl \
+        ca-certificates \
+        runit \
+        php7.1 \
         php7.1-bcmath \
         php7.1-calendar \
         php7.1-mbstring \
@@ -46,7 +51,11 @@ ENV \
         php7.1-litespeed \
         litespeed"
 
+# PHP.earth Alpine repository for better developer experience
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+
 RUN set -x \
+    && echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
     && ln -sf /dev/stdout /var/lib/litespeed/logs/access.log \
     && ln -sf /dev/stderr /var/lib/litespeed/logs/error.log
