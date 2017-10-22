@@ -59,7 +59,7 @@ version (e.g. 1.x.y) is released by the following release process:
 
 * **2. Update changelog**
 
-  Create an entry in [CHANGELOG.md](CHANGELOG.md) describing all the changes from
+  Create an entry in [CHANGELOG.md](/CHANGELOG.md) describing all the changes from
   previous release.
 
 * **3. Tag a new release**
