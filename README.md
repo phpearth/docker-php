@@ -221,4 +221,4 @@ neat way to expose additional metadata about particular Docker object. We use
 
 ## License and contributing
 
-[Contributions](https://github.com/php-earth/docker-php/blob/master/CONTRIBUTING.md) are most welcome. This repository is released under the [MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).
+[Contributions](https://github.com/php-earth/docker-php/blob/master/.github/CONTRIBUTING.md) are most welcome. This repository is released under the [MIT license](https://github.com/php-earth/docker-php/blob/master/LICENSE).
