@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [1.2.0] 2017-10-25
 
+* PHP 7.2.0RC5
+* PHP 7.1.11
+* PHP 7.0.25
 * New images with only PHP CLI from PHP.earth Alpine repos
 * Alpine repository moved to its own [location](https://github.com/php-earth/alpine)
   and repository folder structure refactored
