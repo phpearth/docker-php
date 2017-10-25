@@ -1,4 +1,4 @@
-FROM phpearth/test:7.2
+FROM phpearth/test:7.2-cli
 
 RUN apk add --no-cache \
     php7.2-apcu \

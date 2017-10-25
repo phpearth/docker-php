@@ -6,11 +6,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* ...
+
+## [1.2.0] 2017-10-25
+
 * New images with only PHP CLI from PHP.earth Alpine repos
 * Alpine repository moved to its own [location](https://github.com/php-earth/alpine)
   and repository folder structure refactored
-* PHPUnit 6.4.0
-* ...
 
 ## [1.1.3] 2017-10-01
 
