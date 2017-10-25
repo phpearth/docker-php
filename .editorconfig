@@ -11,9 +11,9 @@ insert_final_newline = true
 [*.md]
 trim_trailing_whitespace = false
 
-[{docker/hooks/build, docker/hooks/post_push}]
+[{docker/hooks/build,docker/hooks/post_push}]
 indent_style = space
-indent_size = 2
+indent_size = 4
 
 [docker/Dockerfile*]
 indent_style = space
@@ -23,12 +23,12 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
-[{Makefile}]
+[Makefile]
 indent_style = tab
 indent_size = 4
 tab_width = 4
 
-[{APKBUILD}]
+[APKBUILD]
 indent_style = space
 indent_size = 2
 
