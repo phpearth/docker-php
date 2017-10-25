@@ -6,7 +6,7 @@ help: ## Output usage documentation
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 test: ## Run all tests; Usage: make test [t="<test-folder-1> <test-folder-2> ..."]
-	cd tests; \
+	@cd tests; \
 	./test "$(t)"
 
 build: ## Build image. Usage: make build TAG="7.0-cli"

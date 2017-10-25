@@ -1,4 +1,4 @@
-FROM phpearth/test:7.2-cli
+FROM phpearth/test:7.1-cli
 
 RUN mkdir -p /usr/src/app
 
