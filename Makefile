@@ -1,4 +1,4 @@
-.PHONY: help test build build-all push-all build-and-push
+.PHONY: help test build build-all push-all build-and-push clean
 .DEFAULT_GOAL := help
 
 help: ## Output usage documentation
@@ -10,7 +10,7 @@ test: ## Run all tests; Usage: make test [t="<test-folder-1> <test-folder-2> ...
 	./test "$(t)"
 
 build: ## Build image. Usage: make build TAG="7.0-cli"
-	docker build --no-cache --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` -t phpearth/php:$(TAG) -f docker/Dockerfile-$(TAG) docker
+	@docker build --no-cache --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` -t phpearth/php:$(TAG) -f docker/Dockerfile-$(TAG) docker
 
 build-all: ## Build all images
 	make build TAG="7.0"
@@ -33,27 +33,31 @@ build-all: ## Build all images
 	make build TAG="7.2-nginx"
 
 push-all: ## Push all built images to Docker Hub
-	docker push phpearth/php:7.0
-	docker push phpearth/php:7.0-apache
-	docker push phpearth/php:7.0-cgi
-	docker push phpearth/php:7.0-cli
-	docker push phpearth/php:7.0-litespeed
-	docker push phpearth/php:7.0-nginx
-	docker push phpearth/php:7.1
-	docker push phpearth/php:7.1-apache
-	docker push phpearth/php:7.1-cgi
-	docker push phpearth/php:7.1-cli
-	docker push phpearth/php:7.1-litespeed
-	docker push phpearth/php:7.1-nginx
-	docker push phpearth/php:7.2
-	docker push phpearth/php:7.2-apache
-	docker push phpearth/php:7.2-cgi
-	docker push phpearth/php:7.2-cli
-	docker push phpearth/php:7.2-litespeed
-	docker push phpearth/php:7.2-nginx
-	docker tag phpearth/php:7.2 phpearth/php:latest
-	docker push phpearth/php:latest
+	@docker push phpearth/php:7.0
+	@docker push phpearth/php:7.0-apache
+	@docker push phpearth/php:7.0-cgi
+	@docker push phpearth/php:7.0-cli
+	@docker push phpearth/php:7.0-litespeed
+	@docker push phpearth/php:7.0-nginx
+	@docker push phpearth/php:7.1
+	@docker push phpearth/php:7.1-apache
+	@docker push phpearth/php:7.1-cgi
+	@docker push phpearth/php:7.1-cli
+	@docker push phpearth/php:7.1-litespeed
+	@docker push phpearth/php:7.1-nginx
+	@docker push phpearth/php:7.2
+	@docker push phpearth/php:7.2-apache
+	@docker push phpearth/php:7.2-cgi
+	@docker push phpearth/php:7.2-cli
+	@docker push phpearth/php:7.2-litespeed
+	@docker push phpearth/php:7.2-nginx
+	@docker tag phpearth/php:7.2 phpearth/php:latest
+	@docker push phpearth/php:latest
 
 build-and-push: ## Build all images and push them to Docker Hub
 	make build-all
 	make push-all
+
+clean:
+	@docker rm -f $(docker ps -a -q)
+	@docker rmi -f $(docker images -q)
