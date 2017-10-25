@@ -17,8 +17,8 @@ ENV \
     COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
     DEPS="php7.0 \
-          curl \
-          ca-certificates"
+        curl \
+        ca-certificates"
 
 # PHP.earth Alpine repository for better developer experience
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
