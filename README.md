@@ -4,6 +4,10 @@
 
 Carefully crafted Docker images for PHP developers with PHP 7.0, PHP 7.1, PHP 7.2, Nginx, OpenLiteSpeed, and Apache HTTP Server.
 
+<div align="center">
+  <img src="https://cdn.rawgit.com/php-earth/logo/master/svg/indigo.svg" width="300">
+</div>
+
 * Fast and simple PHP extensions installation
 * Optional Composer installation
 * Optional PHPUnit installation
