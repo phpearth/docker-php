@@ -8,9 +8,10 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
-## [1.2.1] 2017-10-28
+## [1.2.1] 2017-10-29
 
 * Add phar extension to all Docker images except minimal ones.
+* Use PHP.earth Alpine packages with custom compiler optimization flags.
 
 ## [1.2.0] 2017-10-25
 
