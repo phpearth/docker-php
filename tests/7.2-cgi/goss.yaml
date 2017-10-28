@@ -23,6 +23,7 @@ command:
     - mbstring
     - openssl
     - pcre
+    - Phar
     - posix
     - readline
     - Reflection

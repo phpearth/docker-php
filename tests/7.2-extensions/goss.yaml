@@ -27,6 +27,7 @@ command:
     - mongodb
     - openssl
     - pcre
+    - Phar
     - posix
     - readline
     - redis
