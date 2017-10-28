@@ -17,6 +17,7 @@ ENV \
     COMPOSER_ALLOW_SUPERUSER=1 \
     # Persistent runtime dependencies
     DEPS="php7.0 \
+        php7.0-phar \
         php7.0-bcmath \
         php7.0-calendar \
         php7.0-mbstring \

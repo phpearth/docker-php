@@ -19,6 +19,7 @@ ENV \
     DEPS="nginx \
         nginx-mod-http-headers-more \
         php7.0 \
+        php7.0-phar \
         php7.0-bcmath \
         php7.0-calendar \
         php7.0-mbstring \

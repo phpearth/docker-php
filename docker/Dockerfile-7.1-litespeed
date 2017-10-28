@@ -20,6 +20,7 @@ ENV \
         ca-certificates \
         runit \
         php7.1 \
+        php7.1-phar \
         php7.1-bcmath \
         php7.1-calendar \
         php7.1-mbstring \

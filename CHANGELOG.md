@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file. This projec
 
 * ...
 
+## [1.2.1] 2017-10-28
+
+* Add phar extension to all Docker images except minimal ones.
+
 ## [1.2.0] 2017-10-25
 
 * PHP 7.2.0RC5
