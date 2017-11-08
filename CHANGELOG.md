@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* PHP 7.2.0RC6
 * ...
 
 ## [1.2.1] 2017-10-29
