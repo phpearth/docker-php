@@ -3,4 +3,4 @@
 exec 2>&1
 source /env
 
-exec /var/lib/litespeed/bin/lswsctrl start
+exec /var/lib/litespeed/bin/lshttpd start
