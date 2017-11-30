@@ -26,7 +26,7 @@ The following list contains all current Docker tags and what is included in each
 
 | System | Docker Tag | Features | Size |
 | ------ | ---------- | -------- | ---- |
-| **PHP 7.2.0RC6**@Alpine 3.6 | [`latest`, `7.2`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
+| **PHP 7.2.0**@Alpine 3.6 | [`latest`, `7.2`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
 | | [`7.2-cli`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-cli) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cli.svg)](https://microbadger.com/images/phpearth/php:7.2-cli "Image size") |
 | | [`7.2-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-litespeed) | OpenLiteSpeed 1.4.28 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed "Image size") |
 | | [`7.2-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/Dockerfile-7.2-nginx) | Nginx 1.12.2, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx "Image size") |
@@ -49,8 +49,8 @@ Tags follow PHP release cycle and [PHP supported versions timeline](http://php.n
 
 | PHP     | Active Support Until | Security Support Until | Info |
 | ------- | -------------------- | ---------------------- | ---- |
-| **7.2** | TBD                  | TBD                    | Next PHP version, unstable |
-| **7.1** | 2018-12-01           | 2019-12-01             | Current recommended branch for production |
+| **7.2** | 2019-11-30           | 2020-11-20             | Current recommended branch for production |
+| **7.1** | 2018-12-01           | 2019-12-01             | Previous stable branch |
 | **7.0** | 2017-12-03           | 2018-12-03             | Previous branch for legacy projects |
 
 ## Quick usage
@@ -60,7 +60,7 @@ Tags follow PHP release cycle and [PHP supported versions timeline](http://php.n
 `Dockerfile` for running Nginx HTTP server with PHP FPM:
 
 ```Dockerfile
-FROM phpearth/php:7.1-nginx
+FROM phpearth/php:7.2-nginx
 ```
 
 Build Docker image and run Docker container:
@@ -83,7 +83,7 @@ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp phpearth/php php s
 To install Composer:
 
 ```Dockerfile
-FROM phpearth/php:7.1-nginx
+FROM phpearth/php:7.2-nginx
 
 RUN apk add --no-cache composer
 ```
@@ -93,7 +93,7 @@ RUN apk add --no-cache composer
 To install PHPUnit:
 
 ```Dockerfile
-FROM phpearth/php:7.1-nginx
+FROM phpearth/php:7.2-nginx
 
 RUN apk add --no-cache phpunit
 ```
@@ -103,7 +103,7 @@ RUN apk add --no-cache phpunit
 To run OpenLiteSpeed web server:
 
 ```Dockerfile
-FROM phpearth/php:7.1-litespeed
+FROM phpearth/php:7.2-litespeed
 ```
 
 ### PHP extensions
@@ -111,15 +111,15 @@ FROM phpearth/php:7.1-litespeed
 To install additional PHP extensions, you can use packages from the [PHP.earth Alpine repository](https://php.earth/docs/linux/alpine):
 
 ```Dockerfile
-FROM phpearth/php:7.1-nginx
+FROM phpearth/php:7.2-nginx
 
-RUN apk add --no-cache php7.1-sodium php7.1-intl php7.1-pdo_mysql
+RUN apk add --no-cache php7.2-sodium php7.2-intl php7.2-pdo_mysql
 ```
 
 or install them with `pecl`:
 
 ```bash
-apk add --no-cache php7.1-dev gcc g++
+apk add --no-cache php7.2-dev gcc g++
 pecl install {extension-name}
 ```
 
@@ -129,10 +129,10 @@ In case you'd need an additional extension in the PHP.earth repository, [open an
 
 ### Docker Compose
 
-Docker Compose simplifies usage of multiple containers of your application. In this example we'll run an Nginx web server with PHP 7.1 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
+Docker Compose simplifies usage of multiple containers of your application. In this example we'll run an Nginx web server with PHP 7.2 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
 
 ```Dockerfile
-FROM phpearth/php:7.1-nginx
+FROM phpearth/php:7.2-nginx
 ```
 
 The `docker-compose.yml` file:
@@ -167,12 +167,12 @@ docker-compose up
 
 And there should be `phpinfo()` output visible on `http://localhost`. Make sure there isn't any other service listening on port 80 before running above command.
 
-### PHP 7.0 and PHP 7.2
+### PHP 7.0 and PHP 7.1
 
-To use PHP 7.0 or 7.2 use Docker images with `7.2` or `7.0`:
+To use PHP 7.0 or 7.1 use Docker images with `7.0` or `7.1`:
 
 ```Dockerfile
-FROM phpearth/php:7.2-nginx
+FROM phpearth/php:7.1-nginx
 
 RUN apk add --no-cache composer
 ```
@@ -186,7 +186,7 @@ FROM alpine:3.6
 
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 RUN echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
-    && apk add --no-cache php7.1
+    && apk add --no-cache php7.2
 ```
 
 PHP.earth Alpine packages are prefixed with `php7.0`, `php7.1` and `php7.2`.
