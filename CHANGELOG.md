@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2017-01-01
 
+* Alpine 3.7
 * PHP 7.2.0 stable
 * ...
 
