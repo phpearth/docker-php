@@ -8,4 +8,5 @@ RUN apk add --no-cache \
     php7.1-mongodb \
     php7.1-redis \
     php7.1-swoole \
-    php7.1-xdebug
+    php7.1-xdebug \
+    php7.1-yaml

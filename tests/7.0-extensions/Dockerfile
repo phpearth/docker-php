@@ -9,4 +9,5 @@ RUN set -x \
         php7.0-mongodb \
         php7.0-redis \
         php7.0-swoole \
-        php7.0-xdebug
+        php7.0-xdebug \
+        php7.0-yaml
