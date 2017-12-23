@@ -7,11 +7,6 @@ file:
     exists: true
     linked-to: /dev/stderr
     filetype: symlink
-port:
-  tcp:8088:
-    listening: true
-    ip:
-    - 0.0.0.0
 process:
   lshttpd:
     running: true
