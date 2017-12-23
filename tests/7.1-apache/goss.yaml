@@ -20,8 +20,6 @@ file:
 package:
   apache2:
     installed: true
-    versions:
-    - 2.4.27-r1
 port:
   tcp:80:
     listening: false

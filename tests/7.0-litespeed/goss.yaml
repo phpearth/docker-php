@@ -13,7 +13,7 @@ port:
     ip:
     - 0.0.0.0
 process:
-  litespeed:
+  lshttpd:
     running: true
 http:
   http://localhost:8088:
