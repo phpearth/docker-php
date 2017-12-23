@@ -3,6 +3,6 @@
 docker build -t phpearth/test:7.1-litespeed -f ../../docker/Dockerfile-7.1-litespeed ../../docker || exit 1
 
 i=0
-time dgoss run phpearth/test:7.1-litespeed || ((i++))
+time dgoss run -p 8088:8088 phpearth/test:7.1-litespeed || ((i++))
 
 exit $i

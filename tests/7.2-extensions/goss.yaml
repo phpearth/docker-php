@@ -43,6 +43,7 @@ command:
     - sysvsem
     - sysvshm
     - tokenizer
+    - xdebug
     - xml
     - xmlreader
     - xmlwriter
@@ -50,6 +51,7 @@ command:
     - zip
     - zlib
     - '[Zend Modules]'
+    - Xdebug
     - Zend OPcache
     stderr: []
     timeout: 10000
