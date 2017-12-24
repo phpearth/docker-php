@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file. This projec
 
 * Alpine 3.7
 * PHP 7.2.0 stable
+* Fix OpenLiteSpeed images to run the server properly
+* Expose important web server ports in Docker images
 * ...
 
 ## [1.2.2] 2017-11-22
