@@ -8,7 +8,7 @@ file:
     linked-to: /dev/stderr
     filetype: symlink
 process:
-  lshttpd:
+  litespeed:
     running: true
 http:
   http://localhost:8088:
