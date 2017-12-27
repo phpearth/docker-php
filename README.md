@@ -125,9 +125,9 @@ pecl install {extension-name}
 
 In case you'd need an additional extension in the PHP.earth repository, [open an issue](https://github.com/php-earth/docker-php/issues).
 
-### Docker Compose
+### Docker Stack
 
-Docker Compose simplifies usage of multiple containers of your application. In this example we'll run an Nginx web server with PHP 7.2 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
+Docker Stack is way of orchestration of Docker services and simplifies running multiple services of your application. In this example we'll run an Nginx web server with PHP 7.2 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
 
 ```Dockerfile
 FROM phpearth/php:7.2-nginx
@@ -140,13 +140,13 @@ version: '3.3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: my-dev-image
     volumes:
       - .:/var/www/html
     ports:
-      - 80:80
+      - mode: host
+        target: 80
+        published: 80
 ```
 
 The `index.php` file:
@@ -160,7 +160,12 @@ phpinfo();
 Finally we run:
 
 ```bash
-docker-compose up
+# Initialize a new Swarm for development
+docker swarm init
+# Build above image
+docker build -t my-dev-image -f Dockerfile .
+# Deploy the above stack up and running
+docker stack deploy -c docker-compose.yaml mystack
 ```
 
 And there should be `phpinfo()` output visible on `http://localhost`. Make sure there isn't any other service listening on port 80 before running above command.
