@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/php-earth/docker-php/master.svg?style=plastic)](https://travis-ci.org/php-earth/docker-php) [![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/php-earth/docker-php.svg?style=plastic "MIT License")](https://github.com/php-earth/docker-php/blob/master/LICENSE)
 
-Carefully crafted Docker images for PHP developers with PHP 7.2, PHP 7.1, PHP 7.0, Nginx, OpenLiteSpeed, and Apache HTTP Server.
+Carefully crafted Docker images for PHP developers with PHP 7.2, PHP 7.1, PHP 7.0, Nginx, OpenLiteSpeed, Apache HTTP Server, and Lighttpd.
 
 ![PHP.earth](https://cdn.rawgit.com/php-earth/logo/master/svg/indigo_300x300.svg "PHP.earth")
 
@@ -26,18 +26,21 @@ The following list contains all current Docker tags and what is included in each
 | ------ | ---------- | -------- | ---- |
 | **PHP 7.2.0**@Alpine 3.7 | [`latest`, `7.2`](https://github.com/php-earth/docker-php/tree/master/docker/7.2.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
 | | [`7.2-cli`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cli.svg)](https://microbadger.com/images/phpearth/php:7.2-cli "Image size") |
+| | [`7.2-lighttpd`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-lighttpd.Dockerfile) | Lighttpd 1.4.48 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.2-lighttpd "Image size") |
 | | [`7.2-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-litespeed.Dockerfile) | OpenLiteSpeed 1.4.28 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed "Image size") |
 | | [`7.2-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-nginx.Dockerfile) | Nginx 1.12.2, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-nginx.svg)](https://microbadger.com/images/phpearth/php:7.2-nginx "Image size") |
 | | [`7.2-apache`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-apache.Dockerfile) | Apache 2.4.27 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-apache.svg)](https://microbadger.com/images/phpearth/php:7.2-apache "Image size") |
 | | [`7.2-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-cgi.Dockerfile) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cgi.svg)](https://microbadger.com/images/phpearth/php:7.2-cgi "Image size") |
 | **PHP 7.1.12**@Alpine 3.7 | [`7.1`](https://github.com/php-earth/docker-php/tree/master/docker/7.1.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1.svg)](https://microbadger.com/images/phpearth/php:7.1 "Image size") |
 | | [`7.1-cli`](https://github.com/php-earth/docker-php/tree/master/docker/7.1-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-cli.svg)](https://microbadger.com/images/phpearth/php:7.1-cli "Image size") |
+| | [`7.1-lighttpd`](https://github.com/php-earth/docker-php/tree/master/docker/7.1-lighttpd.Dockerfile) | Lighttpd 1.4.48 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.1-lighttpd "Image size") |
 | | [`7.1-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/7.1-litespeed.Dockerfile) | OpenLiteSpeed 1.4.28 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.1-litespeed "Image size") |
 | | [`7.1-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/7.1-nginx.Dockerfile) | Nginx 1.12.2, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-nginx.svg)](https://microbadger.com/images/phpearth/php:7.1-nginx "Image size") |
 | | [`7.1-apache`](https://github.com/php-earth/docker-php/tree/master/docker/7.1-apache.Dockerfile) | Apache 2.4.27 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-apache.svg)](https://microbadger.com/images/phpearth/php:7.1-apache "Image size") |
 | | [`7.1-cgi`](https://github.com/php-earth/docker-php/tree/master/docker/7.1-cgi.Dockerfile) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.1-cgi.svg)](https://microbadger.com/images/phpearth/php:7.1-cgi "Image size") |
 | **PHP 7.0.26**@Alpine 3.7 | [`7.0`](https://github.com/php-earth/docker-php/tree/master/docker/7.0.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0.svg)](https://microbadger.com/images/phpearth/php:7.0 "Image size") |
 | | [`7.0-cli`](https://github.com/php-earth/docker-php/tree/master/docker/7.0-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-cli.svg)](https://microbadger.com/images/phpearth/php:7.0-cli "Image size") |
+| | [`7.0-lighttpd`](https://github.com/php-earth/docker-php/tree/master/docker/7.0-lighttpd.Dockerfile) | Lighttpd 1.4.48 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.0-lighttpd "Image size") |
 | | [`7.0-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/7.0-litespeed.Dockerfile) | OpenLiteSpeed 1.4.28 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.0-litespeed "Image size") |
 | | [`7.0-nginx`](https://github.com/php-earth/docker-php/tree/master/docker/7.0-nginx.Dockerfile) | Nginx 1.12.2, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-nginx.svg)](https://microbadger.com/images/phpearth/php:7.0-nginx "Image size") |
 | | [`7.0-apache`](https://github.com/php-earth/docker-php/tree/master/docker/7.0-apache.Dockerfile) | Apache 2.4.27 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.0-apache.svg)](https://microbadger.com/images/phpearth/php:7.0-apache "Image size") |
@@ -102,6 +105,14 @@ To run OpenLiteSpeed web server:
 
 ```Dockerfile
 FROM phpearth/php:7.2-litespeed
+```
+
+### Lighttpd
+
+To run Lighttpd web server:
+
+```Dockerfile
+FROM phpearth/php:7.2-lighttpd
 ```
 
 ### PHP extensions
