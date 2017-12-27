@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker build --no-cache -t phpearth/test:7.1-cli -f ../../docker/Dockerfile-7.1-cli ../../docker || exit 1
+docker build --no-cache -t phpearth/test:7.1-cli -f ../../docker/7.1-cli.Dockerfile ../../docker || exit 1
 docker build --no-cache -t phpearth/test:7.1-iconv -f Dockerfile .
 
 i=0

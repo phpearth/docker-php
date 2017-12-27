@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker build -t phpearth/test:7.2-apache -f ../../docker/Dockerfile-7.2-apache ../../docker || exit 1
+docker build -t phpearth/test:7.2-apache -f ../../docker/7.2-apache.Dockerfile ../../docker || exit 1
 
 i=0
 time dgoss run -p 80:80 phpearth/test:7.2-apache || ((i++))

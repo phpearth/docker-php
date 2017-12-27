@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker build -t phpearth/test:7.0-cgi -f ../../docker/Dockerfile-7.0-cgi ../../docker || exit 1
+docker build -t phpearth/test:7.0-cgi -f ../../docker/7.0-cgi.Dockerfile ../../docker || exit 1
 
 i=0
 time dgoss run -it phpearth/test:7.0-cgi || ((i++))

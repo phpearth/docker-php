@@ -15,7 +15,7 @@ trim_trailing_whitespace = false
 indent_style = space
 indent_size = 4
 
-[docker/Dockerfile*]
+[docker/*.Dockerfile]
 indent_style = space
 indent_size = 4
 

@@ -10,7 +10,7 @@ test: ## Run all tests; Usage: make test [t="<test-folder-1> <test-folder-2> ...
 	./test "$(t)"
 
 build: ## Build image. Usage: make build TAG="7.0-cli"
-	@docker build --no-cache --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` -t phpearth/php:$(TAG) -f docker/Dockerfile-$(TAG) docker
+	@docker build --no-cache --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` -t phpearth/php:$(TAG) -f docker/$(TAG).Dockerfile docker
 
 build-all: ## Build all images
 	make build TAG="7.0"
