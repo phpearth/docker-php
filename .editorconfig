@@ -24,9 +24,8 @@ indent_style = space
 indent_size = 2
 
 [Makefile]
-indent_style = tab
+indent_style = space
 indent_size = 4
-tab_width = 4
 
 [APKBUILD]
 indent_style = space
