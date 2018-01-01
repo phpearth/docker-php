@@ -8,4 +8,4 @@ before_install:
   - curl -L https://goss.rocks/install | sudo sh
 
 script:
-  - make test
+  - cd tests && ./test
