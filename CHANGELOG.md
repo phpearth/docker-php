@@ -4,14 +4,17 @@ All notable changes to this project will be documented in this file. This projec
 [keeps a CHANGELOG](http://keepachangelog.com/) and adheres to
 [Semantic Versioning](http://semver.org/).
 
-## [UNREALEASED] 2017-01-01
+## [UNREALEASED] 2018-01-01
+
+* ...
+
+## [1.2.3] 2018-01-03
 
 * Alpine 3.7
 * PHP 7.2.0 stable
 * Fix OpenLiteSpeed images to run the server properly
 * Expose important web server ports in Docker images
 * New Lighttpd web server images
-* ...
 
 ## [1.2.2] 2017-11-22
 
