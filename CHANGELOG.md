@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 
 * PHP 7.0.27
 * PHP 7.1.13
+* PHP 7.2.1
 * ...
 
 ## [1.2.3] 2018-01-03
