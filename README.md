@@ -24,7 +24,7 @@ The following list contains all current Docker tags and what is included in each
 
 | System | Docker Tag | Features | Size |
 | ------ | ---------- | -------- | ---- |
-| **PHP 7.2.1**@Alpine 3.7 | [`latest`, `7.2`](https://github.com/php-earth/docker-php/tree/master/docker/7.2.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
+| **PHP 7.2.2**@Alpine 3.7 | [`latest`, `7.2`](https://github.com/php-earth/docker-php/tree/master/docker/7.2.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
 | | [`7.2-cli`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cli.svg)](https://microbadger.com/images/phpearth/php:7.2-cli "Image size") |
 | | [`7.2-lighttpd`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-lighttpd.Dockerfile) | Lighttpd 1.4.48 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.2-lighttpd "Image size") |
 | | [`7.2-litespeed`](https://github.com/php-earth/docker-php/tree/master/docker/7.2-litespeed.Dockerfile) | OpenLiteSpeed 1.4.28 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.2-litespeed "Image size") |
