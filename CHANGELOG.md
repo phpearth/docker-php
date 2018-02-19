@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2018-01-01
 
+* OpenLiteSpeed 1.5.0 RC2
 * OpenLiteSpeed 1.4.29
 * PHP 7.1.14
 * PHP 7.2.2
