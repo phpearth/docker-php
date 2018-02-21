@@ -24,6 +24,7 @@ command:
     - libxml
     - mbstring
     - memcached
+    - meminfo
     - mongodb
     - openssl
     - pcre

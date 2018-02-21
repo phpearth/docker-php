@@ -5,6 +5,7 @@ RUN apk add --no-cache \
     php7.2-imagick \
     php7.2-sodium \
     php7.2-memcached \
+    php7.2-meminfo \
     php7.2-mongodb \
     php7.2-redis \
     php7.2-swoole \
