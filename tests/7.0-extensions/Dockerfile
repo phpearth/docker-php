@@ -3,6 +3,7 @@ FROM phpearth/test:7.0-cli
 RUN set -x \
     && apk add --no-cache \
         php7.0-apcu \
+        php7.0-cmark \
         php7.0-imagick \
         php7.0-sodium \
         php7.0-memcached \

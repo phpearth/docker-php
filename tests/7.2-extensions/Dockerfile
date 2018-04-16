@@ -2,6 +2,7 @@ FROM phpearth/test:7.2-cli
 
 RUN apk add --no-cache \
     php7.2-apcu \
+    php7.2-cmark \
     php7.2-imagick \
     php7.2-sodium \
     php7.2-memcached \
