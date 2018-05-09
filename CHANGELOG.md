@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [UNREALEASED] 2018-01-01
 
+* Repository moved to github.com/phpearth
 * PHP 7.2.4
 * PHP 7.1.16
 * PHP 7.0.29

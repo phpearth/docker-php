@@ -64,7 +64,7 @@ version (e.g. 1.x.y) is released by the following release process:
 
 * **3. Tag a new release**
 
-  Tag a new version on [GitHub](https://github.com/php-earth/docker-php/releases).
+  Tag a new version on [GitHub](https://github.com/phpearth/docker-php/releases).
 
 * **4. Docker images**
 
