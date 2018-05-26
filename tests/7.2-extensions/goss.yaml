@@ -13,6 +13,7 @@ command:
     - curl
     - date
     - dom
+    - ds
     - exif
     - fileinfo
     - filter
