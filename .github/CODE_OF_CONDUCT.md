@@ -8,4 +8,4 @@ gender identity and expression, level of experience, nationality, personal
 appearance, race, religion, or sexual identity and orientation.
 
 The latest and full version of the code of conduct is available on the
-[PHP.earth website](https://php.earth/conduct).
+[PHP.earth website](https://conduct.php.earth).
