@@ -1,10 +1,13 @@
 # Changelog
 
 All notable changes to this project will be documented in this file. This project
-[keeps a CHANGELOG](http://keepachangelog.com/) and adheres to
-[Semantic Versioning](http://semver.org/).
+[keeps a CHANGELOG](http://keepachangelog.com/) based on the time changes.
 
-## [UNREALEASED] 2018-01-01
+## 2018-06-22
+
+* PHP 7.3 images
+
+## 2018-06-21
 
 * Repository moved to github.com/phpearth
 * PHP 7.2.4
@@ -20,13 +23,13 @@ All notable changes to this project will be documented in this file. This projec
 * PHP 7.1.14
 * PHP 7.2.2
 
-## [1.2.4] 2018-02-01
+## 2018-02-01
 
 * PHP 7.0.27
 * PHP 7.1.13
 * PHP 7.2.1
 
-## [1.2.3] 2018-01-03
+## 2018-01-03
 
 * Alpine 3.7
 * PHP 7.2.0 stable
@@ -34,19 +37,19 @@ All notable changes to this project will be documented in this file. This projec
 * Expose important web server ports in Docker images
 * New Lighttpd web server images
 
-## [1.2.2] 2017-11-22
+## 2017-11-22
 
 * PHP 7.2.0RC6
 * PHP 7.1.12
 * PHP 7.0.26
 * OpenLiteSpeed 1.4.28
 
-## [1.2.1] 2017-10-29
+## 2017-10-29
 
 * Add phar extension to all Docker images except minimal ones.
 * Use PHP.earth Alpine packages with custom compiler optimization flags.
 
-## [1.2.0] 2017-10-25
+## 2017-10-25
 
 * PHP 7.2.0RC5
 * PHP 7.1.11
@@ -55,7 +58,7 @@ All notable changes to this project will be documented in this file. This projec
 * Alpine repository moved to its own [location](https://github.com/php-earth/alpine)
   and repository folder structure refactored
 
-## [1.1.3] 2017-10-01
+## 2017-10-01
 
 * Refactored PHP APKBUILD files
 * PHPUnit 6.3.1
@@ -71,7 +74,7 @@ All notable changes to this project will be documented in this file. This projec
 * PECL Redis 3.1.4
 * [Apache bug fixed](https://github.com/php-earth/docker-php/issues/4)
 
-## [1.1.2] 2017-09-20
+## 2017-09-20
 
 * Swoole 1.9.20
 * OpenLiteSpeed 1.4.27
@@ -82,7 +85,7 @@ All notable changes to this project will be documented in this file. This projec
 * Composer 1.5.2
 * [iconv bug fix](https://github.com/php-earth/docker-php/issues/3)
 
-## [1.1.1] 2017-08-14
+## 2017-08-14
 
 * Refactor and fix multiple issues with Alpine repository packages
 * Swoole 1.9.18
@@ -93,12 +96,12 @@ All notable changes to this project will be documented in this file. This projec
 * PHP 7.0.22
 * New tests
 
-## [1.1.0] 2017-07-06
+## 2017-07-06
 
 * Debian based images removed in favor of Alpine for smallest possible sizes
 * Introducing PHP.earth Alpine repository
 
-## [1.0.5] 2017-06-20
+## 2017-06-20
 
 * Apache HTTP Server
 * PHP CGI
@@ -106,14 +109,14 @@ All notable changes to this project will be documented in this file. This projec
 * Improved documentation
 * Tests
 
-## [1.0.4] 2017-06-12
+## 2017-06-12
 
 * Repository location refactored
 * PEAR removed
 * PHP 7.2.0alpha1
 * Composer installation script with optional prestissimo plugin
 
-## [1.0.3] 2017-06-03
+## 2017-06-03
 
 * OpenLiteSpeed 1.4.26
 * New tag added for OpenLiteSpeed on Alpine
@@ -121,7 +124,7 @@ All notable changes to this project will be documented in this file. This projec
 * Move intl, xsl and gettext PHP extensions to installation script
 * Optimize Debian images size
 
-## [1.0.2] 2017-05-29
+## 2017-05-29
 
 * Improved script for downloading PHP extensions
 * Fixed minor bug in script for downloading Composer
@@ -129,56 +132,56 @@ All notable changes to this project will be documented in this file. This projec
 * Refactor Dockerfiles
 * PHP GD extension moved to installation script
 
-## [1.0.1] 2017-05-27
+## 2017-05-27
 
 * Refactored Docker tags
 * Upgraded to Alpine 3.6 base images
 * Installation script for Composer and Prestissimo plugin for parallel downloading
   of PHP packages
 
-## [1.0.0] 2017-05-13
+## 2017-05-13
 
 * Repository refactored
 * PHP 7.1.5
 
-## [0.0.9] 2017-04-13
+## 2017-04-13
 
 * PHP 7.1.4
 
-## [0.0.8] 2017-04-01
+## 2017-04-01
 
 * Xdebug extension
 
-## [0.0.7] 2017-04-01
+## 2017-04-01
 
 * Fixed OpenLiteSpeed installation dependencies
 
-## [0.0.6] 2017-04-01
+## 2017-04-01
 
 * Added support for multiple PHP extensions
 * Documentation improvements
 * Composer removed from base images
 
-## [0.0.5] 2017-03-31
+## 2017-03-31
 
 * xmlrpc support
 * postgresql and pdo_pgsql support
 * gmp support
 * recode support
 
-## [0.0.4] 2017-03-28
+## 2017-03-28
 
 * The imagick PECL extension support
 
-## [0.0.3] 2017-03-27
+## 2017-03-27
 
 * The memcached extension support
 
-## [0.0.2] 2017-03-21
+## 2017-03-21
 
 * Tidy extension support
 * WDDX extension support
 
-## [0.0.1] 2017-03-20
+## 2017-03-20
 
 * Initial release with PHP 7.1.3

@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/phpearth/docker-php/master.svg?style=plastic)](https://travis-ci.org/phpearth/docker-php) [![Docker Automated build](https://img.shields.io/docker/automated/phpearth/php.svg?style=plastic)](https://hub.docker.com/r/phpearth/php/) [![MIT License](https://img.shields.io/github/license/phpearth/docker-php.svg?style=plastic "MIT License")](https://github.com/phpearth/docker-php/blob/master/LICENSE)
 
-Carefully crafted Docker images for PHP developers with PHP 7.2, PHP 7.1, PHP 7.0, Nginx, OpenLiteSpeed, Apache HTTP Server, and Lighttpd.
+Carefully crafted Docker images for PHP developers with PHP 7.3, PHP 7.2, PHP 7.1, PHP 7.0, Nginx, OpenLiteSpeed, Apache HTTP Server, and Lighttpd.
 
 ![PHP.earth](https://cdn.rawgit.com/phpearth/logo/master/svg/indigo_300x300.svg "PHP.earth")
 
@@ -24,6 +24,13 @@ The following list contains all current Docker tags and what is included in each
 
 | System | Docker Tag | Features | Size |
 | ------ | ---------- | -------- | ---- |
+| **PHP 7.3.0alpha2**@Alpine 3.7 | [`7.3`](https://github.com/phpearth/docker-php/tree/master/docker/7.3.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3.svg)](https://microbadger.com/images/phpearth/php:7.3 "Image size") |
+| | [`7.3-cli`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-cli.svg)](https://microbadger.com/images/phpearth/php:7.3-cli "Image size") |
+| | [`7.3-lighttpd`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-lighttpd.Dockerfile) | Lighttpd 1.4.48 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.3-lighttpd "Image size") |
+| | [`7.3-litespeed`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-litespeed.Dockerfile) | OpenLiteSpeed 1.5.0 RC3 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.3-litespeed "Image size") |
+| | [`7.3-nginx`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-nginx.Dockerfile) | Nginx 1.12.2, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-nginx.svg)](https://microbadger.com/images/phpearth/php:7.3-nginx "Image size") |
+| | [`7.3-apache`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-apache.Dockerfile) | Apache 2.4.33 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-apache.svg)](https://microbadger.com/images/phpearth/php:7.3-apache "Image size") |
+| | [`7.3-cgi`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-cgi.Dockerfile) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-cgi.svg)](https://microbadger.com/images/phpearth/php:7.3-cgi "Image size") |
 | **PHP 7.2.6**@Alpine 3.7 | [`latest`, `7.2`](https://github.com/phpearth/docker-php/tree/master/docker/7.2.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2.svg)](https://microbadger.com/images/phpearth/php:7.2 "Image size") |
 | | [`7.2-cli`](https://github.com/phpearth/docker-php/tree/master/docker/7.2-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-cli.svg)](https://microbadger.com/images/phpearth/php:7.2-cli "Image size") |
 | | [`7.2-lighttpd`](https://github.com/phpearth/docker-php/tree/master/docker/7.2-lighttpd.Dockerfile) | Lighttpd 1.4.48 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.2-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.2-lighttpd "Image size") |
@@ -50,6 +57,7 @@ Tags follow PHP release cycle and [PHP supported versions timeline](http://php.n
 
 | PHP     | Active Support Until | Security Support Until | Info |
 | ------- | -------------------- | ---------------------- | ---- |
+| **7.3** | TBD                  | TBD                    | Upcoming PHP release, final stable in November 2018 |
 | **7.2** | 2019-11-30           | 2020-11-20             | Current recommended branch for production |
 | **7.1** | 2018-12-01           | 2019-12-01             | Previous stable branch |
 | **7.0** | 2017-12-03           | 2018-12-03             | Previous branch for legacy projects |
@@ -203,7 +211,7 @@ RUN echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
     && apk add --no-cache php7.2
 ```
 
-PHP.earth Alpine packages are prefixed with `php7.2`, `php7.1`, and `php7.0`.
+PHP.earth Alpine packages are prefixed with `php7.3`, `php7.2`, `php7.1`, and `php7.0`.
 
 ## Building Images
 

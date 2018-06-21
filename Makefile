@@ -40,10 +40,20 @@ build-72: ## Build PHP 7.2 images
   make build TAG="7.2-litespeed"
   make build TAG="7.2-nginx"
 
+build-73: ## Build PHP 7.3 images
+  make build TAG="7.3"
+  make build TAG="7.3-apache"
+  make build TAG="7.3-cgi"
+  make build TAG="7.3-cli"
+  make build TAG="7.3-lighttpd"
+  make build TAG="7.3-litespeed"
+  make build TAG="7.3-nginx"
+
 build-all: ## Build all images
   make build-70
   make build-71
   make build-72
+  make build-73
 
 push-70: ## Push built PHP 7.0 images to Docker Hub
   @docker push phpearth/php:7.0
@@ -74,10 +84,20 @@ push-72: ## Push built PHP 7.2 images to Docker Hub
   @docker tag phpearth/php:7.2 phpearth/php:latest
   @docker push phpearth/php:latest
 
+push-73: ## Push built PHP 7.3 images to Docker Hub
+  @docker push phpearth/php:7.3
+  @docker push phpearth/php:7.3-apache
+  @docker push phpearth/php:7.3-cgi
+  @docker push phpearth/php:7.3-cli
+  @docker push phpearth/php:7.3-lighttpd
+  @docker push phpearth/php:7.3-litespeed
+  @docker push phpearth/php:7.3-nginx
+
 push-all: ## Push all built images to Docker Hub
   make push-70
   make push-71
   make push-72
+  make push-73
 
 build-and-push-70: ## Build and push PHP 7.0 images to Docker Hub
   make build-70
@@ -90,6 +110,10 @@ build-and-push-71: ## Build and push PHP 7.1 images to Docker Hub
 build-and-push-72: ## Build and push PHP 7.2 images to Docker Hub
   make build-72
   make push-72
+
+build-and-push-73: ## Build and push PHP 7.3 images to Docker Hub
+  make build-73
+  make push-73
 
 build-and-push: ## Build all images and push them to Docker Hub
   make build-all
