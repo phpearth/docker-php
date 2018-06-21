@@ -59,14 +59,13 @@ version (e.g. 1.x.y) is released by the following release process:
 
 * **2. Update changelog**
 
-  Create an entry in [CHANGELOG.md](/CHANGELOG.md) describing all the changes from
-  previous release.
+  Create an entry in [CHANGELOG.md](/CHANGELOG.md) describing all the changes
+  from previous release.
 
-* **3. Tag a new release**
+* **3. Docker images**
 
-  Tag a new version on [GitHub](https://github.com/phpearth/docker-php/releases).
+  Build and push Docker images to [Docker Hub](https://hub.docker.com/r/phpearth/php/).
 
-* **4. Docker images**
-
-  With a new tag release, Docker images are build automatically on
-  [Docker Hub](https://hub.docker.com/r/phpearth/php/).
+  ```bash
+  make build-and-push
+  ```
