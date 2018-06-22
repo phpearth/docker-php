@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 ## 2018-06-22
 
 * PHP 7.3 images
+* PHP 7.2.7
 
 ## 2018-06-21
 
