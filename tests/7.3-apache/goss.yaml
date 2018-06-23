@@ -1,0 +1,37 @@
+file:
+  /var/log/apache2/access.log:
+    exists: true
+    mode: "0777"
+    size: 11
+    owner: root
+    group: wheel
+    linked-to: /dev/stdout
+    filetype: symlink
+    contains: []
+  /var/log/apache2/error.log:
+    exists: true
+    mode: "0777"
+    size: 11
+    owner: root
+    group: wheel
+    linked-to: /dev/stderr
+    filetype: symlink
+    contains: []
+package:
+  apache2:
+    installed: true
+port:
+  tcp:80:
+    listening: false
+    ip: []
+process:
+  httpd:
+    running: true
+http:
+  http://localhost:
+    status: 200
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 5000
+    body:
+    - It works!

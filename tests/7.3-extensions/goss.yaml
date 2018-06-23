@@ -1,0 +1,61 @@
+command:
+  php -m:
+    exit-status: 0
+    stdout:
+    - '[PHP Modules]'
+    - apcu
+    - bcmath
+    - bz2
+    - calendar
+    - cmark
+    - Core
+    - ctype
+    - curl
+    - date
+    - dom
+    - ds
+    - exif
+    - fileinfo
+    - filter
+    - ftp
+    - hash
+    - iconv
+    - imagick
+    - json
+    - sodium
+    - libxml
+    - mbstring
+    - memcached
+    - meminfo
+    - mongodb
+    - openssl
+    - pcre
+    - Phar
+    - posix
+    - readline
+    - redis
+    - Reflection
+    - session
+    - shmop
+    - SimpleXML
+    - sockets
+    - SPL
+    - standard
+    - swoole
+    - sysvmsg
+    - sysvsem
+    - sysvshm
+    - tokenizer
+    - xdebug
+    - xml
+    - xmlreader
+    - xmlwriter
+    - yaml
+    - Zend OPcache
+    - zip
+    - zlib
+    - '[Zend Modules]'
+    - Xdebug
+    - Zend OPcache
+    stderr: []
+    timeout: 10000

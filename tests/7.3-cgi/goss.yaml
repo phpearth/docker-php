@@ -1,0 +1,49 @@
+command:
+  php-cgi -m:
+    exit-status: 0
+    stdout:
+    - '[PHP Modules]'
+    - bcmath
+    - bz2
+    - calendar
+    - cgi-fcgi
+    - Core
+    - ctype
+    - curl
+    - date
+    - dom
+    - exif
+    - fileinfo
+    - filter
+    - ftp
+    - hash
+    - iconv
+    - json
+    - libxml
+    - mbstring
+    - openssl
+    - pcre
+    - Phar
+    - posix
+    - readline
+    - Reflection
+    - session
+    - shmop
+    - SimpleXML
+    - sockets
+    - SPL
+    - standard
+    - sysvmsg
+    - sysvsem
+    - sysvshm
+    - tokenizer
+    - xml
+    - xmlreader
+    - xmlwriter
+    - Zend OPcache
+    - zip
+    - zlib
+    - '[Zend Modules]'
+    - Zend OPcache
+    stderr: []
+    timeout: 10000

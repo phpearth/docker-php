@@ -1,0 +1,19 @@
+command:
+  phpunit --version:
+    exit-status: 0
+    stdout:
+    - 'by Sebastian Bergmann and contributors.'
+    stderr: []
+    timeout: 10000
+  phpunit --atleast-version 8:
+    exit-status: 1
+    stdout:
+    - ''
+    stderr: []
+    timeout: 10000
+  phpunit --atleast-version 6.3:
+    exit-status: 0
+    stdout:
+    - ''
+    stderr: []
+    timeout: 10000

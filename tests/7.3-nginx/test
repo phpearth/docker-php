@@ -1,0 +1,8 @@
+#!/bin/bash
+
+docker build -t phpearth/test:7.3-nginx -f ../../docker/7.3-nginx.Dockerfile ../../docker || exit 1
+
+i=0
+time dgoss run phpearth/test:7.3-nginx || ((i++))
+
+exit $i

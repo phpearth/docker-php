@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker build -t phpearth/test:7.3-cli -f ../../docker/7.3-cli.Dockerfile ../../docker || exit 1
+docker build -t phpearth/test:7.3-composer -f Dockerfile .
+
+i=0
+time dgoss run -it phpearth/test:7.3-composer || ((i++))
+
+exit $i

@@ -1,0 +1,5 @@
+command:
+  php argon.php:
+    exit-status: 0
+    stderr: ['!/./']
+    timeout: 10000

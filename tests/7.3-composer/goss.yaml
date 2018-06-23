@@ -1,0 +1,7 @@
+command:
+  composer about:
+    exit-status: 0
+    stdout:
+    - 'Composer - Package Management for PHP'
+    stderr: []
+    timeout: 10000
