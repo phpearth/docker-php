@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. This project
 [keeps a CHANGELOG](http://keepachangelog.com/) based on the time changes.
 
+## 2018-07-21
+
+* Alpine 3.8
+* PHP 7.0.31
+* PHP 7.1.19
+* PHP 7.2.8
+* PHP 7.3.0 alpha 4
+
 ## 2018-06-22
 
 * PHP 7.3 images
