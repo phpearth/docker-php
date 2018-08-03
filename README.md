@@ -10,13 +10,13 @@ Carefully crafted Docker images for PHP developers with PHP 7.3, PHP 7.2, PHP 7.
 * Optional Composer installation
 * Optional PHPUnit installation
 * [runit](http://smarden.org/runit/) for running multiple services without overhead
-* Alpine base image with [PHP.earth PHP repositories](https://php.earth/docs/linux/alpine)
+* Alpine base image with [PHP.earth PHP repositories](https://docs.php.earth/linux/alpine)
 * Optimized Docker image sizes
 * Multiple PHP versions
 
 ## Documentation
 
-Documentation with Docker and PHP recipes is available on [PHP.earth](https://php.earth/docs/docker).
+Documentation with Docker and PHP recipes is available on [PHP.earth](https://docs.php.earth/docker).
 
 ## Docker tags
 
@@ -125,7 +125,7 @@ FROM phpearth/php:7.2-lighttpd
 
 ### PHP extensions
 
-To install additional PHP extensions, you can use packages from the [PHP.earth Alpine repository](https://php.earth/docs/linux/alpine):
+To install additional PHP extensions, you can use packages from the [PHP.earth Alpine repository](https://docs.php.earth/linux/alpine):
 
 ```Dockerfile
 FROM phpearth/php:7.2-nginx
@@ -201,7 +201,7 @@ RUN apk add --no-cache composer
 
 ## PHP.earth Alpine repository
 
-These Docker images include the latest PHP versions and packages for Alpine Linux via the 3rd party [PHP.earth Alpine repository](https://php.earth/docs/linux/alpine).
+These Docker images include the latest PHP versions and packages for Alpine Linux via the 3rd party [PHP.earth Alpine repository](https://docs.php.earth/linux/alpine).
 
 ```Dockerfile
 FROM alpine:3.8
