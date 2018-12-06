@@ -2,7 +2,7 @@
 
 TAG=$(echo $IMAGE_NAME| cut -d':' -f 2)
 
-if [ "$TAG" == "7.2" ]; then
+if [ "$TAG" == "7.3" ]; then
   docker tag $IMAGE_NAME $DOCKER_REPO:latest
   docker push $DOCKER_REPO:latest
 fi

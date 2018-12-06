@@ -57,10 +57,10 @@ Tags follow PHP release cycle and [PHP supported versions timeline](http://php.n
 
 | PHP     | Active Support Until | Security Support Until | Info |
 | ------- | -------------------- | ---------------------- | ---- |
-| **7.3** | TBD                  | TBD                    | Upcoming PHP release, final stable in December 2018 |
-| **7.2** | 2019-11-30           | 2020-11-20             | Current recommended branch for production |
-| **7.1** | 2018-12-01           | 2019-12-01             | Previous stable branch |
-| **7.0** | 2017-12-03           | 2018-12-03             | Previous branch for legacy projects |
+| **7.3** | TBD                  | TBD                    | Current recommended branch for production |
+| **7.2** | 2019-11-30           | 2020-11-20             | Previous stable branch |
+| **7.1** | 2018-12-01           | 2019-12-01             | Previous branch for legacy projects |
+| **7.0** | 2017-12-03           | 2018-12-03             | Previous branch for legacy projects, not supported anymore |
 
 ## Quick usage
 
@@ -69,7 +69,7 @@ Tags follow PHP release cycle and [PHP supported versions timeline](http://php.n
 `Dockerfile` for running Nginx HTTP server with PHP FPM:
 
 ```Dockerfile
-FROM phpearth/php:7.2-nginx
+FROM phpearth/php:7.3-nginx
 ```
 
 Build Docker image and run Docker container:
@@ -92,7 +92,7 @@ docker run -it --rm -v `pwd`:/usr/src/myapp -w /usr/src/myapp phpearth/php php s
 To install Composer:
 
 ```Dockerfile
-FROM phpearth/php:7.2-nginx
+FROM phpearth/php:7.3-nginx
 
 RUN apk add --no-cache composer
 ```
@@ -102,7 +102,7 @@ RUN apk add --no-cache composer
 To install PHPUnit:
 
 ```Dockerfile
-FROM phpearth/php:7.2-nginx
+FROM phpearth/php:7.3-nginx
 
 RUN apk add --no-cache phpunit
 ```
@@ -112,7 +112,7 @@ RUN apk add --no-cache phpunit
 To run OpenLiteSpeed web server:
 
 ```Dockerfile
-FROM phpearth/php:7.2-litespeed
+FROM phpearth/php:7.3-litespeed
 ```
 
 ### Lighttpd
@@ -120,7 +120,7 @@ FROM phpearth/php:7.2-litespeed
 To run Lighttpd web server:
 
 ```Dockerfile
-FROM phpearth/php:7.2-lighttpd
+FROM phpearth/php:7.3-lighttpd
 ```
 
 ### PHP extensions
@@ -128,15 +128,15 @@ FROM phpearth/php:7.2-lighttpd
 To install additional PHP extensions, you can use packages from the [PHP.earth Alpine repository](https://docs.php.earth/linux/alpine):
 
 ```Dockerfile
-FROM phpearth/php:7.2-nginx
+FROM phpearth/php:7.3-nginx
 
-RUN apk add --no-cache php7.2-sodium php7.2-intl php7.2-pdo_mysql
+RUN apk add --no-cache php7.3-sodium php7.3-intl php7.3-pdo_mysql
 ```
 
 or install them with `pecl`:
 
 ```bash
-apk add --no-cache php7.2-dev gcc g++
+apk add --no-cache php7.3-dev gcc g++
 pecl install {extension-name}
 ```
 
@@ -146,10 +146,10 @@ In case you'd need an additional extension in the PHP.earth repository, [open an
 
 ### Docker Stack
 
-Docker Stack is way of orchestration of Docker services and simplifies running multiple services of your application. In this example we'll run an Nginx web server with PHP 7.2 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
+Docker Stack is way of orchestration of Docker services and simplifies running multiple services of your application. In this example we'll run an Nginx web server with PHP 7.3 FPM with `docker-compose.yml` file. In a new project directory create a `Dockerfile`:
 
 ```Dockerfile
-FROM phpearth/php:7.2-nginx
+FROM phpearth/php:7.3-nginx
 ```
 
 The `docker-compose.yml` file:
@@ -189,12 +189,12 @@ docker stack deploy -c docker-compose.yaml mystack
 
 And there should be `phpinfo()` output visible on `http://localhost`. Make sure there isn't any other service listening on port 80 before running above command.
 
-### PHP 7.0 and PHP 7.1
+### PHP 7.0, 7.1, PHP 7.2
 
-To use PHP 7.0 or 7.1 use Docker images with `7.0` or `7.1`:
+To use older versions PHP 7.0, 7.1, or 7.2 use Docker images with `7.0`, `7.1`, or `7.2`:
 
 ```Dockerfile
-FROM phpearth/php:7.1-nginx
+FROM phpearth/php:7.2-nginx
 
 RUN apk add --no-cache composer
 ```
@@ -208,7 +208,7 @@ FROM alpine:3.8
 
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 RUN echo "https://repos.php.earth/alpine" >> /etc/apk/repositories \
-    && apk add --no-cache php7.2
+    && apk add --no-cache php7.3
 ```
 
 PHP.earth Alpine packages are prefixed with `php7.3`, `php7.2`, `php7.1`, and `php7.0`.
