@@ -81,8 +81,6 @@ push-72: ## Push built PHP 7.2 images to Docker Hub
   @docker push phpearth/php:7.2-lighttpd
   @docker push phpearth/php:7.2-litespeed
   @docker push phpearth/php:7.2-nginx
-  @docker tag phpearth/php:7.2 phpearth/php:latest
-  @docker push phpearth/php:latest
 
 push-73: ## Push built PHP 7.3 images to Docker Hub
   @docker push phpearth/php:7.3
@@ -92,6 +90,8 @@ push-73: ## Push built PHP 7.3 images to Docker Hub
   @docker push phpearth/php:7.3-lighttpd
   @docker push phpearth/php:7.3-litespeed
   @docker push phpearth/php:7.3-nginx
+  @docker tag phpearth/php:7.3 phpearth/php:latest
+  @docker push phpearth/php:latest
 
 push-all: ## Push all built images to Docker Hub
   make push-70
