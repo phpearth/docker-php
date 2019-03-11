@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -57,7 +57,7 @@ ENV \
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
 RUN set -x \
-    && echo "https://repos.php.earth/alpine/v3.8" >> /etc/apk/repositories \
+    && echo "https://repos.php.earth/alpine/v3.9" >> /etc/apk/repositories \
     && apk add --no-cache $DEPS \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
