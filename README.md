@@ -24,6 +24,13 @@ The following list contains all current Docker tags and what is included in each
 
 | System | Docker Tag | Features | Size |
 | ------ | ---------- | -------- | ---- |
+| **PHP 7.4.0-dev**@Alpine 3.9.3 | [`7.4`](https://github.com/phpearth/docker-php/tree/master/docker/7.4.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4.svg)](https://microbadger.com/images/phpearth/php:7.4 "Image size") |
+| | [`7.4-cli`](https://github.com/phpearth/docker-php/tree/master/docker/7.4-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4-cli.svg)](https://microbadger.com/images/phpearth/php:7.4-cli "Image size") |
+| | [`7.4-lighttpd`](https://github.com/phpearth/docker-php/tree/master/docker/7.4-lighttpd.Dockerfile) | Lighttpd 1.4.52 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.4-lighttpd "Image size") |
+| | [`7.4-litespeed`](https://github.com/phpearth/docker-php/tree/master/docker/7.4-litespeed.Dockerfile) | OpenLiteSpeed 1.5.0 RC3 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4-litespeed.svg)](https://microbadger.com/images/phpearth/php:7.4-litespeed "Image size") |
+| | [`7.4-nginx`](https://github.com/phpearth/docker-php/tree/master/docker/7.4-nginx.Dockerfile) | Nginx 1.14.2, FPM | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4-nginx.svg)](https://microbadger.com/images/phpearth/php:7.4-nginx "Image size") |
+| | [`7.4-apache`](https://github.com/phpearth/docker-php/tree/master/docker/7.4-apache.Dockerfile) | Apache 2.4.38 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4-apache.svg)](https://microbadger.com/images/phpearth/php:7.4-apache "Image size") |
+| | [`7.4-cgi`](https://github.com/phpearth/docker-php/tree/master/docker/7.4-cgi.Dockerfile) | PHP CGI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.4-cgi.svg)](https://microbadger.com/images/phpearth/php:7.4-cgi "Image size") |
 | **PHP 7.3.4**@Alpine 3.9.3 | [`latest`, `7.3`](https://github.com/phpearth/docker-php/tree/master/docker/7.3.Dockerfile) | Small PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3.svg)](https://microbadger.com/images/phpearth/php:7.3 "Image size") |
 | | [`7.3-cli`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-cli.Dockerfile) | PHP CLI | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-cli.svg)](https://microbadger.com/images/phpearth/php:7.3-cli "Image size") |
 | | [`7.3-lighttpd`](https://github.com/phpearth/docker-php/tree/master/docker/7.3-lighttpd.Dockerfile) | Lighttpd 1.4.52 | [![](https://images.microbadger.com/badges/image/phpearth/php:7.3-lighttpd.svg)](https://microbadger.com/images/phpearth/php:7.3-lighttpd "Image size") |
@@ -57,6 +64,7 @@ Tags follow PHP release cycle and [PHP supported versions timeline](http://php.n
 
 | PHP     | Active Support Until | Security Support Until | Info |
 | ------- | -------------------- | ---------------------- | ---- |
+| **7.4** | TBD                  | TBD                    | Development 7.4 branch for testing |
 | **7.3** | TBD                  | TBD                    | Current recommended branch for production |
 | **7.2** | 2019-11-30           | 2020-11-20             | Previous stable branch |
 | **7.1** | 2018-12-01           | 2019-12-01             | Previous branch for legacy projects |
