@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project
 [keeps a CHANGELOG](http://keepachangelog.com/) based on the time changes.
 
+## 2019-05-10
+
+* PHP 7.4.0-dev
+
 ## 2018-12-06
 
 * PHP 7.3.0
