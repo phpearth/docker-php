@@ -15,11 +15,12 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 # PHP_INI_DIR to be symmetrical with official php docker image
 ENV PHP_INI_DIR /etc/php/7.4
 
-ENV \
-    # When using Composer, disable the warning about running commands as root/super user
-    COMPOSER_ALLOW_SUPERUSER=1 \
-    # Persistent runtime dependencies
-    DEPS="nginx \
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Persistent runtime dependencies
+ARG DEPS="\
+        nginx \
         nginx-mod-http-headers-more \
         php7.4 \
         php7.4-phar \
@@ -54,7 +55,8 @@ ENV \
         php7.4-fpm \
         curl \
         ca-certificates \
-        runit"
+        runit \
+"
 
 # PHP.earth Alpine repository for better developer experience
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
