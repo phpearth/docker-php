@@ -12,11 +12,15 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.description="Docker For PHP Developers - Docker image with PHP 7.4, Apache, and Alpine" \
       org.label-schema.url="https://github.com/phpearth/docker-php"
 
-ENV \
-    # When using Composer, disable the warning about running commands as root/super user
-    COMPOSER_ALLOW_SUPERUSER=1 \
-    # Persistent runtime dependencies
-    DEPS="php7.4 \
+# PHP_INI_DIR to be symmetrical with official php docker image
+ENV PHP_INI_DIR /etc/php/7.4
+
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Persistent runtime dependencies
+ARG DEPS="\
+        php7.4 \
         php7.4-phar \
         php7.4-bcmath \
         php7.4-calendar \
@@ -50,7 +54,8 @@ ENV \
         curl \
         ca-certificates \
         runit \
-        apache2"
+        apache2 \
+"
 
 # PHP.earth Alpine repository for better developer experience
 ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub

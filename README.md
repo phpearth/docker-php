@@ -148,6 +148,23 @@ apk add --no-cache php7.3-dev gcc g++
 pecl install {extension-name}
 ```
 
+### PHP ini settings
+
+To configure extra [php.ini](https://www.php.net/manual/en/ini.php): settings,
+create application specific `php.ini` and copy the file into docker image:
+
+
+```ini
+# php.ini
+memory_limit = 512M
+```
+
+```Dockerfile
+FROM phpearth/php:7.3-nginx
+
+COPY php.ini $PHP_INI_DIR/conf.d/my-app.ini
+```
+
 #### Missing extension?
 
 In case you'd need an additional extension in the PHP.earth repository, [open an issue](https://github.com/phpearth/docker-php/issues).
